@@ -23,11 +23,11 @@ namespace SuperPongDesktop
 	static class Program
 #endif
 	{
-		private static GameStateManager game;
+		private static GameManager game;
 
 		internal static void RunGame()
 		{
-			game = new GameStateManager();
+			game = new GameManager();
 			game.Run();
 #if !__IOS__ && !__TVOS__
 			game.Dispose();
