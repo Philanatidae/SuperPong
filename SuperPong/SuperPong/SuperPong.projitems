@@ -6,7 +6,7 @@
     <SharedGUID>{2435FF32-8FA0-41EF-AFE8-C2158F5A899F}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>SuperPongCore</Import_RootNamespace>
+    <Import_RootNamespace>SuperPong</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
@@ -14,5 +14,13 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\InputSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\InputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\PrimaryKeyboardInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\SecondaryKeyboardInputMethod.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Input\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Input\Methods\" />
   </ItemGroup>
 </Project>
