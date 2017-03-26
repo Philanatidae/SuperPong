@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPongDesktop", "SuperPongDesktop\SuperPongDesktop.csproj", "{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPong.Desktop", "SuperPong.Desktop\SuperPong.Desktop.csproj", "{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SuperPong", "SuperPong\SuperPong.shproj", "{2435FF32-8FA0-41EF-AFE8-C2158F5A899F}"
 EndProject

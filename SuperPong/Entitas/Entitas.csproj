@@ -30,9 +30,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="EntitasCache.cs" />
     <Compile Include="EntitasException.cs" />
     <Compile Include="IComponent.cs" />
