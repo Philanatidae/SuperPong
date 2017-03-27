@@ -66,6 +66,7 @@ namespace SuperPong
 			_currentState = nextState;
 
 			_currentState.Content = new Microsoft.Xna.Framework.Content.ContentManager(Services);
+			_currentState.Content.RootDirectory = "Content";
 			_currentState.LoadContent();
 			_currentState.Show();
 		}

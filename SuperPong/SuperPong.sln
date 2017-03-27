@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPong.Desktop", "SuperP
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SuperPong", "SuperPong\SuperPong.shproj", "{2435FF32-8FA0-41EF-AFE8-C2158F5A899F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "Entitas\Entitas.csproj", "{D182B943-EFE5-4536-973F-73B5562BFFE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis", "Artemis\Artemis.csproj", "{407B1E2A-5E46-4E23-8152-B251261F9EFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +17,9 @@ Global
 		{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}.Debug|x86.Build.0 = Debug|x86
 		{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}.Release|x86.ActiveCfg = Release|x86
 		{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}.Release|x86.Build.0 = Release|x86
-		{D182B943-EFE5-4536-973F-73B5562BFFE1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D182B943-EFE5-4536-973F-73B5562BFFE1}.Debug|x86.Build.0 = Debug|Any CPU
-		{D182B943-EFE5-4536-973F-73B5562BFFE1}.Release|x86.ActiveCfg = Release|Any CPU
-		{D182B943-EFE5-4536-973F-73B5562BFFE1}.Release|x86.Build.0 = Release|Any CPU
+		{407B1E2A-5E46-4E23-8152-B251261F9EFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{407B1E2A-5E46-4E23-8152-B251261F9EFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{407B1E2A-5E46-4E23-8152-B251261F9EFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{407B1E2A-5E46-4E23-8152-B251261F9EFC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

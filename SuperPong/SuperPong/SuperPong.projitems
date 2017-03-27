@@ -22,5 +22,7 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
     <Folder Include="$(MSBuildThisFileDirectory)Input\Methods\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Systems\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Components\" />
   </ItemGroup>
 </Project>

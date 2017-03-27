@@ -84,9 +84,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas\Entitas.csproj">
-      <Project>{D182B943-EFE5-4536-973F-73B5562BFFE1}</Project>
-      <Name>Entitas</Name>
+    <ProjectReference Include="..\Artemis\Artemis.csproj">
+      <Project>{407B1E2A-5E46-4E23-8152-B251261F9EFC}</Project>
+      <Name>Artemis</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
