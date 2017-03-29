@@ -84,9 +84,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Artemis\Artemis.csproj">
-      <Project>{407B1E2A-5E46-4E23-8152-B251261F9EFC}</Project>
-      <Name>Artemis</Name>
+    <ProjectReference Include="..\ECS\ECS.csproj">
+      <Project>{E8CCAA87-52FB-45C8-8B42-EF668FBB7018}</Project>
+      <Name>ECS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
