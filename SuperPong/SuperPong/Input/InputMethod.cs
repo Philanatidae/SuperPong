@@ -1,21 +1,17 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace SuperPong.Input.Methods
+namespace SuperPong.Input
 {
 	public abstract class InputMethod
 	{
-		protected byte _buttons;
-
-		public InputMethod()
-		{
-		}
+		protected InputSnapshot _snapshot;
 
 		public abstract void Update(GameTime gameTime);
 
 		public InputSnapshot GetSnapshot()
 		{
-			return new InputSnapshot(_buttons);
+			return _snapshot;
 		}
 
 	}

@@ -15,13 +15,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputSnapshot.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\InputMethod.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\PrimaryKeyboardInputMethod.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\Methods\SecondaryKeyboardInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\InputComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\TransformComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\BallComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\EdgeComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\PaddleComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\SpriteComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\InputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\PrimaryKeyboardInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\SecondaryKeyboardInputMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Input\Methods\" />
     <Folder Include="$(MSBuildThisFileDirectory)Systems\" />
     <Folder Include="$(MSBuildThisFileDirectory)Components\" />
   </ItemGroup>

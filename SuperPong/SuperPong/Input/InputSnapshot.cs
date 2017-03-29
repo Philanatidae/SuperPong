@@ -10,7 +10,7 @@ namespace SuperPong.Input
 
 	public class InputSnapshot
 	{
-		byte _buttons;
+		internal byte _buttons;
 
 		public InputSnapshot():this(0)
 		{

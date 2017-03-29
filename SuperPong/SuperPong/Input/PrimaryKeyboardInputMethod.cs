@@ -2,26 +2,22 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace SuperPong.Input.Methods
+namespace SuperPong.Input
 {
 	public class PrimaryKeyboardInputMethod : InputMethod
 	{
-		public PrimaryKeyboardInputMethod()
-		{
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			KeyboardState currentState = Keyboard.GetState();
 
-			_buttons = 0;
+			_snapshot._buttons = 0;
 			if (currentState.IsKeyDown(Keys.W))
 			{
-				_buttons |= (byte)Buttons.Up;
+				_snapshot._buttons |= (byte)Buttons.Up;
 			}
 			if (currentState.IsKeyDown(Keys.S))
 			{
-				_buttons |= (byte)Buttons.Down;
+				_snapshot._buttons |= (byte)Buttons.Down;
 			}
 		}
 	}

@@ -2,14 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace SuperPong.Input.Methods
+namespace SuperPong.Input
 {
 	public class SecondaryKeyboardInputMethod : InputMethod
 	{
-		public SecondaryKeyboardInputMethod()
-		{
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			KeyboardState currentState = Keyboard.GetState();
