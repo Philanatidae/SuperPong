@@ -7,13 +7,26 @@ namespace SuperPong
 {
 	public abstract class GameState
 	{
-		protected GameManager _gameManager;
-		internal ContentManager Content;
+		protected GameManager GameManager
+		{
+			get;
+			private set;
+		}
+		protected ContentManager Content
+		{
+			get;
+			private set;
+		}
 
 		public GameState(GameManager gameManager)
 		{
-			_gameManager = gameManager;
+			GameManager = gameManager;
+
+			Content = new ContentManager(gameManager.Services);
+			Content.RootDirectory = "Content";
 		}
+
+		public abstract void Initialize();
 
 		public abstract void LoadContent();
 

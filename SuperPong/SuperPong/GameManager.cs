@@ -1,13 +1,13 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using SuperPong.Input;
 
 namespace SuperPong
 {
 	public class GameManager : Game
 	{
-		private GraphicsDeviceManager _graphics;
+		GraphicsDeviceManager _graphics;
 
-		private GameState _currentState;
+		GameState _currentState;
 
 		public GraphicsDeviceManager Graphics
 		{
@@ -21,16 +21,24 @@ namespace SuperPong
 		{
 			_graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+
+			Graphics.PreferredBackBufferWidth = 960;
+			Graphics.PreferredBackBufferHeight = 600;
 		}
 
 		protected override void Initialize()
 		{
+			IsMouseVisible = true;
+
 			base.Initialize();
 		}
 
 		protected override void LoadContent()
 		{
 			// Global Content
+
+			// Load first game state
+			ChangeState(new MainGameState(this, new PrimaryKeyboardInputMethod(), new SecondaryKeyboardInputMethod()));
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -55,7 +63,7 @@ namespace SuperPong
 			base.Draw(gameTime);
 		}
 
-		public void changeState(GameState nextState)
+		public void ChangeState(GameState nextState)
 		{
 			if (_currentState != null)
 			{
@@ -64,9 +72,8 @@ namespace SuperPong
 			}
 
 			_currentState = nextState;
+			_currentState.Initialize();
 
-			_currentState.Content = new Microsoft.Xna.Framework.Content.ContentManager(Services);
-			_currentState.Content.RootDirectory = "Content";
 			_currentState.LoadContent();
 			_currentState.Show();
 		}

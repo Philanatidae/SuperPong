@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ECS;
 
-namespace ECS
+namespace SuperPong.Systems
 {
 	public abstract class EntitySystem
 	{
@@ -11,7 +11,7 @@ namespace ECS
 			_engine = engine;
 		}
 
-		public abstract void Update(GameTime gameTime);
+		public abstract void Update(float dt);
 
 		public Engine getEngine()
 		{

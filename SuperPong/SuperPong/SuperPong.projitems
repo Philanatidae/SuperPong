@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\InputSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\InputComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\TransformComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\BallComponent.cs" />
@@ -24,10 +25,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PrimaryKeyboardInputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\SecondaryKeyboardInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainGameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\PaddleSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\PaddleEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Pong.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Global.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\BallMovementSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\BoundingRect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Resources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\RenderSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\EntitySystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\BallEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\EdgeEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Camera.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
     <Folder Include="$(MSBuildThisFileDirectory)Systems\" />
     <Folder Include="$(MSBuildThisFileDirectory)Components\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
   </ItemGroup>
 </Project>
