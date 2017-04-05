@@ -28,6 +28,7 @@ namespace SuperPong
 			Graphics.PreferredBackBufferWidth = 960;
 			Graphics.PreferredBackBufferHeight = 600;
 
+			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += Window_ClientSizeChanged;
 		}
 
