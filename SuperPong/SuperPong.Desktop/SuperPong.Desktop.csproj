@@ -88,6 +88,10 @@
       <Project>{E8CCAA87-52FB-45C8-8B42-EF668FBB7018}</Project>
       <Name>ECS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Events\Events.csproj">
+      <Project>{E549B0DC-2E18-4704-8BC7-641F26625B31}</Project>
+      <Name>Events</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

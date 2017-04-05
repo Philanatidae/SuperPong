@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Events;
+using Microsoft.Xna.Framework;
+using SuperPong.Events;
 using SuperPong.Input;
 
 namespace SuperPong
@@ -24,6 +27,8 @@ namespace SuperPong
 
 			Graphics.PreferredBackBufferWidth = 960;
 			Graphics.PreferredBackBufferHeight = 600;
+
+			Window.ClientSizeChanged += Window_ClientSizeChanged;
 		}
 
 		protected override void Initialize()
@@ -76,6 +81,12 @@ namespace SuperPong
 
 			_currentState.LoadContent();
 			_currentState.Show();
+		}
+
+		void Window_ClientSizeChanged(object sender, EventArgs e)
+		{
+			EventManager.Instance.TriggerEvent(new ResizeEvent(Window.ClientBounds.Width,
+			                                                   Window.ClientBounds.Height));
 		}
 	}
 }
