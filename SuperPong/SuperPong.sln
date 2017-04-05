@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECS", "ECS\ECS.csproj", "{E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPong.Tests", "SuperPong.Tests\SuperPong.Tests.csproj", "{2B91C036-7CCA-467F-9A30-0A68E11F0B7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Events\Events.csproj", "{E549B0DC-2E18-4704-8BC7-641F26625B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -27,5 +29,9 @@ Global
 		{2B91C036-7CCA-467F-9A30-0A68E11F0B7B}.Debug|x86.Build.0 = Debug|Any CPU
 		{2B91C036-7CCA-467F-9A30-0A68E11F0B7B}.Release|x86.ActiveCfg = Release|Any CPU
 		{2B91C036-7CCA-467F-9A30-0A68E11F0B7B}.Release|x86.Build.0 = Release|Any CPU
+		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Debug|x86.Build.0 = Debug|Any CPU
+		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Release|x86.ActiveCfg = Release|Any CPU
+		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
