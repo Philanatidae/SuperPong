@@ -1,10 +1,12 @@
 ﻿using System;
 using ECS;
+using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Entities;
+using SuperPong.Events;
 using SuperPong.Input;
 using SuperPong.Systems;
 
@@ -37,6 +39,8 @@ namespace SuperPong
 		public override void Initialize()
 		{
 			_mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
+			// The camera response to size changes
+			EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
 
 			InitSystems();
 		}
@@ -109,6 +113,12 @@ namespace SuperPong
 		public override void Draw(GameTime gameTime)
 		{
 			_renderSystem.Draw(_mainCamera.TransformMatrix, gameTime);
+		}
+
+		public override void Dispose()
+		{
+			// Remove listeners
+			EventManager.Instance.UnregisterListener(_mainCamera);
 		}
 	}
 }

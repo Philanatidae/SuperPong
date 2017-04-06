@@ -25,8 +25,8 @@ namespace SuperPong
 			_graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 
-			Graphics.PreferredBackBufferWidth = 960;
-			Graphics.PreferredBackBufferHeight = 600;
+			Graphics.PreferredBackBufferWidth = (int)Constants.Global.SCREEN_WIDTH;
+			Graphics.PreferredBackBufferHeight = (int)Constants.Global.SCREEN_HEIGHT;
 
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -75,6 +75,7 @@ namespace SuperPong
 			{
 				_currentState.Hide();
 				_currentState.UnloadContent();
+				_currentState.Dispose();
 			}
 
 			_currentState = nextState;

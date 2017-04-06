@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace SuperPong
 {
-	public abstract class GameState
+	public abstract class GameState : IDisposable
 	{
 		protected GameManager GameManager
 		{
@@ -42,5 +42,7 @@ namespace SuperPong
 		public abstract void Update(GameTime gameTime);
 
 		public abstract void Draw(GameTime gameTime);
+
+		public abstract void Dispose();
 	}
 }

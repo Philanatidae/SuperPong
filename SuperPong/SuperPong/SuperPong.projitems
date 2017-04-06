@@ -25,7 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PrimaryKeyboardInputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\SecondaryKeyboardInputMethod.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MainGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\PaddleSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\PaddleEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Pong.cs" />
@@ -39,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EdgeEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ResizeEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)States\MainGameState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -48,5 +48,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
+    <Folder Include="$(MSBuildThisFileDirectory)States\" />
   </ItemGroup>
 </Project>
