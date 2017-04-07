@@ -25,6 +25,9 @@ namespace SuperPong
 		RenderSystem _renderSystem;
 
 		Camera _mainCamera;
+		Camera _pongCamera;
+
+		RenderTarget2D _pongRenderTarget;
 
 		public MainGameState(GameManager gameManager,
 		                     InputMethod player1InputMethod,
@@ -38,8 +41,17 @@ namespace SuperPong
 		public override void Initialize()
 		{
 			_mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
+			_pongCamera = new Camera(GameManager.GraphicsDevice.Viewport);
 			// The camera response to size changes
 			EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
+
+			PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
+			_pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
+												   pp.BackBufferWidth,
+												   pp.BackBufferHeight,
+												   true,
+			                                       SurfaceFormat.Color,
+			                                       DepthFormat.None);
 
 			InitSystems();
 		}
@@ -111,9 +123,44 @@ namespace SuperPong
 
 		public override void Draw(GameTime gameTime)
 		{
-			_renderSystem.Draw(_mainCamera.TransformMatrix,
-			                   Constants.Render.GROUP_MASK_ALL,
-			                   gameTime);
+			DrawPong(gameTime);
+			DrawRemainder(gameTime);
+		}
+
+		void DrawPong(GameTime gameTime)
+		{
+			GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
+			_renderSystem.DrawEntities(_pongCamera.TransformMatrix,
+							   Constants.Pong.RENDER_GROUP,
+							   gameTime);
+			GameManager.GraphicsDevice.SetRenderTarget(null);
+
+			_renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
+			                               null,
+			                               null,
+			                               null,
+			                               null,
+			                               null,
+			                                _mainCamera.TransformMatrix);
+			_renderSystem.SpriteBatch.Draw(_pongRenderTarget,
+			                               Constants.Pong.BUFFER_RENDER_POSITION * RenderSystem.FlipY,
+										   null,
+										   Color.White,
+										   0,
+			                               new Vector2(_pongRenderTarget.Width / 2,
+			                                           _pongRenderTarget.Height / 2),
+										   Vector2.One,
+										   SpriteEffects.None,
+										   0);
+			_renderSystem.SpriteBatch.End();
+		}
+
+		void DrawRemainder(GameTime gameTime)
+		{
+			// Render everything else (everything not pong)
+			_renderSystem.DrawEntities(_mainCamera.TransformMatrix,
+							   (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
+							   gameTime);
 		}
 
 		public override void Dispose()

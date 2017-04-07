@@ -1,8 +1,12 @@
-﻿namespace SuperPong.Constants
+﻿using Microsoft.Xna.Framework;
+
+namespace SuperPong.Constants
 {
 	public class Pong
 	{
 		public static readonly byte RENDER_GROUP = Render.GROUP_TWO;
+
+		public static readonly Vector2 BUFFER_RENDER_POSITION = new Vector2(0, -100);
 
 		public static readonly float PLAYFIELD_WIDTH = 480;
 		public static readonly float PLAYFIELD_HEIGHT = 300;

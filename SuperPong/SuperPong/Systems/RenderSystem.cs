@@ -10,8 +10,8 @@ namespace SuperPong.Systems
 	{
 		readonly Engine _engine;
 
-		readonly Vector2 FlipY = new Vector2(1, -1);
-		readonly Vector2 HalfHalf = new Vector2(0.5f, 0.5f);
+		public static readonly Vector2 FlipY = new Vector2(1, -1);
+		public static readonly Vector2 HalfHalf = new Vector2(0.5f, 0.5f);
 
 		Family _spriteFamily = Family.All(typeof(SpriteComponent), typeof(TransformComponent)).Get();
 		Family _fontFamily = Family.All(typeof(FontComponent), typeof(TransformComponent)).Get();
@@ -19,6 +19,12 @@ namespace SuperPong.Systems
 		ImmutableList<Entity> _fontEntities;
 
 		SpriteBatch _spriteBatch;
+		public SpriteBatch SpriteBatch
+		{
+			get {
+				return _spriteBatch;
+			}
+		}
 
 		public RenderSystem(GraphicsDevice graphics, Engine engine)
 		{
@@ -29,17 +35,17 @@ namespace SuperPong.Systems
 			_spriteBatch = new SpriteBatch(graphics);
 		}
 
-		public void Draw(GameTime gameTime)
+		public void DrawEntities(GameTime gameTime)
 		{
-			Draw(Constants.Render.GROUP_MASK_ALL, gameTime);
+			DrawEntities(Constants.Render.GROUP_MASK_ALL, gameTime);
 		}
 
-		public void Draw(byte groupMask, GameTime gameTime)
+		public void DrawEntities(byte groupMask, GameTime gameTime)
 		{
-			Draw(Matrix.Identity, groupMask, gameTime);
+			DrawEntities(Matrix.Identity, groupMask, gameTime);
 		}
 
-		public void Draw(Matrix transformMatrix, byte groupMask, GameTime gameTime)
+		public void DrawEntities(Matrix transformMatrix, byte groupMask, GameTime gameTime)
 		{
 			_spriteBatch.Begin(SpriteSortMode.Deferred,
 							   null,
