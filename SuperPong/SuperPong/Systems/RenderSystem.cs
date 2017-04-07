@@ -1,6 +1,7 @@
 ﻿using ECS;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
 using SuperPong.Components;
 
 namespace SuperPong.Systems
@@ -13,7 +14,9 @@ namespace SuperPong.Systems
 		readonly Vector2 HalfHalf = new Vector2(0.5f, 0.5f);
 
 		Family _spriteFamily = Family.All(typeof(SpriteComponent), typeof(TransformComponent)).Get();
+		Family _fontFamily = Family.All(typeof(FontComponent), typeof(TransformComponent)).Get();
 		ImmutableList<Entity> _spriteEntities;
+		ImmutableList<Entity> _fontEntities;
 
 		SpriteBatch _spriteBatch;
 
@@ -21,6 +24,7 @@ namespace SuperPong.Systems
 		{
 			_engine = engine;
 			_spriteEntities = engine.GetEntitiesFor(_spriteFamily);
+			_fontEntities = engine.GetEntitiesFor(_fontFamily);
 
 			_spriteBatch = new SpriteBatch(graphics);
 		}
@@ -59,6 +63,25 @@ namespace SuperPong.Systems
 				                  scale,
 								  SpriteEffects.None,
 								  0);
+			}
+
+			foreach (Entity entity in _fontEntities)
+			{
+				FontComponent fontComp = entity.GetComponent<FontComponent>();
+				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
+
+				Vector2 scale = Vector2.One;
+				Vector2 origin = fontComp.Font.MeasureString(fontComp.Content);
+
+				_spriteBatch.DrawString(fontComp.Font,
+										fontComp.Content,
+										transformComp.position * FlipY,
+										fontComp.Color,
+										transformComp.rotation,
+										origin,
+										scale,
+										SpriteEffects.None,
+										0);
 			}
 
 			_spriteBatch.End();
