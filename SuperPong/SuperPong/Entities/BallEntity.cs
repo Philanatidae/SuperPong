@@ -5,6 +5,7 @@ using SuperPong.Components;
 
 namespace SuperPong.Entities
 {
+
 	public class BallEntity
 	{
 		public static Entity Create(Engine engine, Texture2D texture, Vector2 position)
@@ -14,7 +15,8 @@ namespace SuperPong.Entities
 			entity.AddComponent(new TransformComponent(position));
 			entity.AddComponent(new SpriteComponent(texture,
 													new Vector2(Constants.Pong.BALL_WIDTH,
-			                                                    Constants.Pong.BALL_HEIGHT)));
+									    Constants.Pong.BALL_HEIGHT)));
+			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
 			entity.AddComponent(new BallComponent());
 
 			return entity;

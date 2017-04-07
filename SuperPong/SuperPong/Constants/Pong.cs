@@ -1,8 +1,9 @@
-﻿using System;
-namespace SuperPong.Constants
+﻿namespace SuperPong.Constants
 {
 	public class Pong
 	{
+		public static readonly byte RENDER_GROUP = Render.GROUP_TWO;
+
 		public static readonly float PLAYFIELD_WIDTH = 480;
 		public static readonly float PLAYFIELD_HEIGHT = 300;
 

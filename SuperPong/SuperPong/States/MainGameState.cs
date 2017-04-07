@@ -1,9 +1,7 @@
-﻿using System;
-using ECS;
+﻿using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.BitmapFonts;
 using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Entities;
@@ -82,15 +80,15 @@ namespace SuperPong
 			BallEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL), Vector2.Zero);
 
 			Entity paddle1 = PaddleEntity.Create(_engine,
-			                                     Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
-			                                     new Vector2(-Constants.Pong.PADDLE_STARTING_X,
-			                                                 Constants.Pong.PADDLE_STARTING_Y),
-			                                     new Vector2(1, 0)); // Left paddle normal points right
+			                                         Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+			                                         new Vector2(-Constants.Pong.PADDLE_STARTING_X,
+			                                                     Constants.Pong.PADDLE_STARTING_Y),
+			                                         new Vector2(1, 0)); // Left paddle normal points right
 			Entity paddle2 = PaddleEntity.Create(_engine,
-												 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
-												 new Vector2(Constants.Pong.PADDLE_STARTING_X,
-															 Constants.Pong.PADDLE_STARTING_Y),
-												 new Vector2(-1, 0)); // Right paddle normal points left
+								 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+								 new Vector2(Constants.Pong.PADDLE_STARTING_X,
+											 Constants.Pong.PADDLE_STARTING_Y),
+								 new Vector2(-1, 0)); // Right paddle normal points left
 
 			paddle1.AddComponent(new InputComponent(_player1InputMethod));
 			paddle2.AddComponent(new InputComponent(_player2InputMethod));
@@ -113,7 +111,9 @@ namespace SuperPong
 
 		public override void Draw(GameTime gameTime)
 		{
-			_renderSystem.Draw(_mainCamera.TransformMatrix, gameTime);
+			_renderSystem.Draw(_mainCamera.TransformMatrix,
+			                   Constants.Render.GROUP_MASK_ALL,
+			                   gameTime);
 		}
 
 		public override void Dispose()

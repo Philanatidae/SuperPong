@@ -31,10 +31,15 @@ namespace SuperPong.Systems
 
 		public void Draw(GameTime gameTime)
 		{
-			Draw(Matrix.Identity, gameTime);
+			Draw(Constants.Render.GROUP_MASK_ALL, gameTime);
 		}
 
-		public void Draw(Matrix transformMatrix, GameTime gameTime)
+		public void Draw(byte groupMask, GameTime gameTime)
+		{
+			Draw(Matrix.Identity, groupMask, gameTime);
+		}
+
+		public void Draw(Matrix transformMatrix, byte groupMask, GameTime gameTime)
 		{
 			_spriteBatch.Begin(SpriteSortMode.Deferred,
 							   null,
@@ -47,6 +52,10 @@ namespace SuperPong.Systems
 			foreach (Entity entity in _spriteEntities)
 			{
 				SpriteComponent spriteComp = entity.GetComponent<SpriteComponent>();
+				if((spriteComp.RenderGroup & groupMask) == 0) {
+					continue;
+				}
+
 				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
 				Vector2 scale = new Vector2(spriteComp.Bounds.X / spriteComp.Texture.Width,
@@ -68,6 +77,11 @@ namespace SuperPong.Systems
 			foreach (Entity entity in _fontEntities)
 			{
 				FontComponent fontComp = entity.GetComponent<FontComponent>();
+				if ((fontComp.RenderGroup & groupMask) == 0)
+				{
+					continue;
+				}
+
 				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
 				Vector2 scale = Vector2.One;

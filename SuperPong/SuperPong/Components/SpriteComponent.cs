@@ -18,5 +18,7 @@ namespace SuperPong.Components
 
 		public Texture2D Texture;
 		public Vector2 Bounds;
+
+		public byte RenderGroup = 0x1;
 	}
 }

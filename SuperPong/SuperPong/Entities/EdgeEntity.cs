@@ -18,6 +18,7 @@ namespace SuperPong.Entities
 			entity.AddComponent(new TransformComponent(new Vector2(0, yPos)));
 			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.PLAYFIELD_WIDTH,
 			                                                             Constants.Pong.EDGE_HEIGHT)));
+			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
 			entity.AddComponent(new EdgeComponent());
 
 			return entity;

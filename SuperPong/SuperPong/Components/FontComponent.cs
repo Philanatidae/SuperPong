@@ -19,5 +19,7 @@ namespace SuperPong.Components
 		public BitmapFont Font;
 		public string Content;
 		public Color Color = Color.White;
+
+		public byte RenderGroup = 0x1;
 	}
 }

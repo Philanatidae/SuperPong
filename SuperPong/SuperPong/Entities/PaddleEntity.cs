@@ -14,6 +14,7 @@ namespace SuperPong.Entities
 			entity.AddComponent(new TransformComponent(position));
 			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.PADDLE_WIDTH,
 																		 Constants.Pong.PADDLE_HEIGHT)));
+			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
 			entity.AddComponent(new PaddleComponent(normal));
 
 			return entity;

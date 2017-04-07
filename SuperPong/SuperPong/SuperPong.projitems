@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)States\MainGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\FontComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\ScoreTrackerComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Render.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
