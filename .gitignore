@@ -60,3 +60,15 @@ monodroid*.msi
 
 # NuGet
 /SuperPong/packages
+
+!/SuperPong/SuperPong.Desktop/MonoGame.Framework.dll.config
+!/SuperPong/SuperPong.Desktop/libSDL2-2.0.0.dylib
+!/SuperPong/SuperPong.Desktop/libopenal.1.dylib
+!/SuperPong/SuperPong.Desktop/x64/SDL2.dll
+!/SuperPong/SuperPong.Desktop/x64/libSDL2-2.0.so.0
+!/SuperPong/SuperPong.Desktop/x64/libopenal.so.1
+!/SuperPong/SuperPong.Desktop/x64/soft_oal.dll
+!/SuperPong/SuperPong.Desktop/x86/SDL2.dll
+!/SuperPong/SuperPong.Desktop/x86/libSDL2-2.0.so.0
+!/SuperPong/SuperPong.Desktop/x86/libopenal.so.1
+!/SuperPong/SuperPong.Desktop/x86/soft_oal.dll
