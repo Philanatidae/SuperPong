@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperPong.Desktop", "SuperPong.Desktop\SuperPong.Desktop.csproj", "{BB528BF0-E5F3-47BB-A0FF-2FF84A1A6FA1}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SuperPong", "SuperPong\SuperPong.shproj", "{2435FF32-8FA0-41EF-AFE8-C2158F5A899F}"
@@ -12,6 +13,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Events\Events.csproj", "{E549B0DC-2E18-4704-8BC7-641F26625B31}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SuperPong\SuperPong.projitems*{2435ff32-8fa0-41ef-afe8-c2158f5a899f}*SharedItemsImports = 13
+		SuperPong\SuperPong.projitems*{bb528bf0-e5f3-47bb-a0ff-2ff84a1a6fa1}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
@@ -33,5 +38,8 @@ Global
 		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Debug|x86.Build.0 = Debug|Any CPU
 		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Release|x86.ActiveCfg = Release|Any CPU
 		{E549B0DC-2E18-4704-8BC7-641F26625B31}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
