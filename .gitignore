@@ -47,6 +47,8 @@ _ReSharper*/
 # Office Temp Files
 ~$*
 
+*.vs
+
 #monodroid private beta
 monodroid*.msi
 /CompiledContent/Android/IgnoreMe.dll
@@ -55,3 +57,6 @@ monodroid*.msi
 /CompiledContent/Windows/IgnoreMe.dll
 *.cachefile
 *.dll
+
+# NuGet
+/SuperPong/packages
