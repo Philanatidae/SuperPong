@@ -24,6 +24,10 @@ namespace SuperPong
 		BallMovementSystem _ballMovementSystem;
 		RenderSystem _renderSystem;
 
+		Texture2D _paddleTexture;
+		Texture2D _ballTexture;
+		Texture2D _edgeTexture;
+
 		Camera _mainCamera;
 		Camera _pongCamera;
 
@@ -74,9 +78,9 @@ namespace SuperPong
 
 		public override void LoadContent()
 		{
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
+			_paddleTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
+			_ballTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
+			_edgeTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
 		}
 
 		public override void Show()
@@ -86,18 +90,18 @@ namespace SuperPong
 
 		void CreateEntities()
 		{
-			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE), true);
-			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE), false);
+			EdgeEntity.Create(_engine, _edgeTexture, true);
+			EdgeEntity.Create(_engine, _edgeTexture, false);
 
-			BallEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL), Vector2.Zero);
+			BallEntity.Create(_engine, _ballTexture, Vector2.Zero);
 
 			Entity paddle1 = PaddleEntity.Create(_engine,
-			                                         Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+			                                     	_paddleTexture,
 			                                         new Vector2(-Constants.Pong.PADDLE_STARTING_X,
 			                                                     Constants.Pong.PADDLE_STARTING_Y),
 			                                         new Vector2(1, 0)); // Left paddle normal points right
 			Entity paddle2 = PaddleEntity.Create(_engine,
-								 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+                                 _paddleTexture,
 								 new Vector2(Constants.Pong.PADDLE_STARTING_X,
 											 Constants.Pong.PADDLE_STARTING_Y),
 								 new Vector2(-1, 0)); // Right paddle normal points left
