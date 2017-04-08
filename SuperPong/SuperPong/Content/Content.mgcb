@@ -3,7 +3,7 @@
 
 /outputDir:bin/$(Platform)
 /intermediateDir:obj/$(Platform)
-/platform:Windows
+/platform:MacOSX
 /config:
 /profile:Reach
 /compress:False
@@ -67,9 +67,6 @@
 /processorParam:TextureFormat=Color
 /build:fonts/Score_0.png
 
-#begin effects/WarpEffect.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:effects/WarpEffect.fx
+#begin effects/WarpEffect.xnb
+/copy:effects/WarpEffect.xnb
 
