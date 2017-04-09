@@ -18,7 +18,7 @@ namespace SuperPong.Constants
 		public static readonly float PADDLE_WIDTH = 10;
 		public static readonly float PADDLE_HEIGHT = 60;
 		public static readonly float PADDLE_SPEED = 240;
-		public static readonly float PADDLE_STARTING_X = PLAYFIELD_WIDTH / 2 - 2 * PADDLE_WIDTH;
+		public static readonly float PADDLE_STARTING_X = PLAYFIELD_WIDTH / 2 - 2.5f * PADDLE_WIDTH;
 		public static readonly float PADDLE_STARTING_Y = 0;
 
 		public static readonly float BALL_WIDTH = 15;
