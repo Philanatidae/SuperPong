@@ -16,7 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\InputSystem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\InputComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\TransformComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\BallComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\EdgeComponent.cs" />
@@ -45,6 +44,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\BallBounceEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\GoalComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\GoalEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\PlayerComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\GoalSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\GoalEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

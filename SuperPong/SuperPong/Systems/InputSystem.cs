@@ -5,7 +5,7 @@ namespace SuperPong.Systems
 {
 	public class InputSystem : EntitySystem
 	{
-		Family _family = Family.All(typeof(InputComponent)).Get();
+		Family _family = Family.All(typeof(PlayerComponent)).Get();
 		ImmutableList<Entity> _entities;
 
 		public InputSystem(Engine engine) :base(engine)
@@ -17,8 +17,8 @@ namespace SuperPong.Systems
 		{
 			foreach (Entity entity in _entities)
 			{
-				InputComponent inputComp = entity.GetComponent<InputComponent>();
-				inputComp.InputMethod.Update(dt);
+				PlayerComponent playerComp = entity.GetComponent<PlayerComponent>();
+				playerComp.Player.InputMethod.Update(dt);
 			}
 		}
 	}

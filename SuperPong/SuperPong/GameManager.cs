@@ -44,7 +44,9 @@ namespace SuperPong
 			// Global Content
 
 			// Load first game state
-			ChangeState(new MainGameState(this, new PrimaryKeyboardInputMethod(), new SecondaryKeyboardInputMethod()));
+			Player player1 = new Player(0, "Player 1", new PrimaryKeyboardInputMethod());
+			Player player2 = new Player(1, "Player 2", new SecondaryKeyboardInputMethod());
+			ChangeState(new MainGameState(this, player1, player2));
 		}
 
 		protected override void Update(GameTime gameTime)

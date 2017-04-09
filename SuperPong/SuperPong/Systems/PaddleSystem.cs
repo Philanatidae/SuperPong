@@ -6,7 +6,7 @@ namespace SuperPong.Systems
 {
 	public class PaddleSystem : EntitySystem
 	{
-		Family _family = Family.All(typeof(PaddleComponent), typeof(InputComponent), typeof(TransformComponent)).Get();
+		Family _family = Family.All(typeof(PaddleComponent), typeof(PlayerComponent), typeof(TransformComponent)).Get();
 		ImmutableList<Entity> _entities;
 
 		public PaddleSystem(Engine engine) : base(engine)
@@ -19,14 +19,14 @@ namespace SuperPong.Systems
 			foreach (Entity entity in _entities)
 			{
 				PaddleComponent paddleComp = entity.GetComponent<PaddleComponent>();
-				InputComponent inputComp = entity.GetComponent<InputComponent>();
+				PlayerComponent playerComp = entity.GetComponent<PlayerComponent>();
 				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
-				if (inputComp.Input.IsButtonDown(Input.Buttons.Up))
+				if (playerComp.Input.IsButtonDown(Input.Buttons.Up))
 				{
 					transformComp.position.Y += Constants.Pong.PADDLE_SPEED * dt;
 				}
-				if (inputComp.Input.IsButtonDown(Input.Buttons.Down))
+				if (playerComp.Input.IsButtonDown(Input.Buttons.Down))
 				{
 					transformComp.position.Y -= Constants.Pong.PADDLE_SPEED * dt;
 				}

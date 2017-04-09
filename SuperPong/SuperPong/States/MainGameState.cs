@@ -13,8 +13,8 @@ namespace SuperPong
 {
 	public class MainGameState : GameState
 	{
-		InputMethod _player1InputMethod;
-		InputMethod _player2InputMethod;
+		Player _player1;
+		Player _player2;
 
 		float _acculmulator;
 
@@ -22,6 +22,7 @@ namespace SuperPong
 		InputSystem _inputSystem;
 		PaddleSystem _paddleSystem;
 		BallMovementSystem _ballMovementSystem;
+		GoalSystem _goalSystem;
 		RenderSystem _renderSystem;
 
 		Texture2D _paddleTexture;
@@ -35,12 +36,12 @@ namespace SuperPong
 		RenderTarget2D _pongRenderTarget;
 
 		public MainGameState(GameManager gameManager,
-		                     InputMethod player1InputMethod,
-		                     InputMethod player2InputMethod)
+		                     Player player1,
+		                     Player player2)
 			:base(gameManager)
 		{
-			_player1InputMethod = player1InputMethod;
-			_player2InputMethod = player2InputMethod;
+			_player1 = player1;
+			_player2 = player2;
 		}
 
 		public override void Initialize()
@@ -68,6 +69,7 @@ namespace SuperPong
 			_inputSystem = new InputSystem(_engine);
 			_paddleSystem = new PaddleSystem(_engine);
 			_ballMovementSystem = new BallMovementSystem(_engine);
+			_goalSystem = new GoalSystem(_engine);
 
 			_renderSystem = new RenderSystem(GameManager.GraphicsDevice, _engine);
 		}
@@ -100,11 +102,9 @@ namespace SuperPong
 			                  new Vector2(0, 1));
 
 			GoalEntity.Create(_engine, _goalTexture,
-			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0),
-			                  new Vector2(1, 0));
+			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
 			GoalEntity.Create(_engine, _goalTexture,
-			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0),
-							  new Vector2(-1, 0));
+			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
 
 			BallEntity.Create(_engine, _ballTexture, Vector2.Zero);
 
@@ -119,8 +119,8 @@ namespace SuperPong
 											 Constants.Pong.PADDLE_STARTING_Y),
 								 new Vector2(-1, 0)); // Right paddle normal points left
 
-			paddle1.AddComponent(new InputComponent(_player1InputMethod));
-			paddle2.AddComponent(new InputComponent(_player2InputMethod));
+			paddle1.AddComponent(new PlayerComponent(_player1));
+			paddle2.AddComponent(new PlayerComponent(_player2));
 		}
 
 		public override void Update(GameTime gameTime)
@@ -135,6 +135,7 @@ namespace SuperPong
 
 				_paddleSystem.Update(Constants.Global.TICK_RATE);
 				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
+				_goalSystem.Update(Constants.Global.TICK_RATE);
 			}
 		}
 

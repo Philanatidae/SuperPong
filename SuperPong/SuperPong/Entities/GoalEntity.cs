@@ -7,7 +7,7 @@ namespace SuperPong.Entities
 {
 	public static class GoalEntity
 	{
-		public static Entity Create(Engine engine, Texture2D texture, Vector2 position, Vector2 normal)
+		public static Entity Create(Engine engine, Texture2D texture, Vector2 position)
 		{
 			Entity entity = engine.CreateEntity();
 
@@ -15,7 +15,7 @@ namespace SuperPong.Entities
 			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.GOAL_WIDTH,
 			                                                             Constants.Pong.PLAYFIELD_HEIGHT)));
 			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
-			entity.AddComponent(new GoalComponent(normal));
+			entity.AddComponent(new GoalComponent());
 
 			return entity;
 		}
