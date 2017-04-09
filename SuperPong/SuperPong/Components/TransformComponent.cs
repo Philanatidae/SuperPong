@@ -9,17 +9,17 @@ namespace SuperPong.Components
 		{
 		}
 
-		public TransformComponent(Vector2 position)
+		public TransformComponent(Vector2 position) :this(position, 0)
 		{
-			this.position = position;
 		}
 
 		public TransformComponent(Vector2 position, float rotation)
 		{
-			this.rotation = rotation;
+			Position = position;
+			Rotation = rotation;
 		}
 
-		public Vector2 position;
-		public float rotation;
+		public Vector2 Position;
+		public float Rotation;
 	}
 }

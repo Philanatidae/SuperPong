@@ -70,10 +70,10 @@ namespace SuperPong.Systems
 				                             spriteComp.Texture.Bounds.Height) * HalfHalf;
  
 				_spriteBatch.Draw(spriteComp.Texture,
-								  transformComp.position * FlipY,
+								  transformComp.Position * FlipY,
 								  null,
 								  Color.White,
-				                  transformComp.rotation,
+				                  transformComp.Rotation,
 				                  origin,
 				                  scale,
 								  SpriteEffects.None,
@@ -95,9 +95,9 @@ namespace SuperPong.Systems
 
 				_spriteBatch.DrawString(fontComp.Font,
 										fontComp.Content,
-										transformComp.position * FlipY,
+										transformComp.Position * FlipY,
 										fontComp.Color,
-										transformComp.rotation,
+										transformComp.Rotation,
 										origin,
 										scale,
 										SpriteEffects.None,

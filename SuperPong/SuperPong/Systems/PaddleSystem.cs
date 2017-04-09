@@ -24,20 +24,20 @@ namespace SuperPong.Systems
 
 				if (playerComp.Input.IsButtonDown(Input.Buttons.Up))
 				{
-					transformComp.position.Y += Constants.Pong.PADDLE_SPEED * dt;
+					transformComp.Position.Y += Constants.Pong.PADDLE_SPEED * dt;
 				}
 				if (playerComp.Input.IsButtonDown(Input.Buttons.Down))
 				{
-					transformComp.position.Y -= Constants.Pong.PADDLE_SPEED * dt;
+					transformComp.Position.Y -= Constants.Pong.PADDLE_SPEED * dt;
 				}
 
-				if (transformComp.position.Y + paddleComp.Height / 2 > Constants.Pong.PLAYFIELD_HEIGHT / 2)
+				if (transformComp.Position.Y + paddleComp.Height / 2 > Constants.Pong.PLAYFIELD_HEIGHT / 2)
 				{
-					transformComp.position.Y = Constants.Pong.PLAYFIELD_HEIGHT / 2 - paddleComp.Height / 2;
+					transformComp.Position.Y = Constants.Pong.PLAYFIELD_HEIGHT / 2 - paddleComp.Height / 2;
 				}
-				if (transformComp.position.Y - paddleComp.Height / 2 < -Constants.Pong.PLAYFIELD_HEIGHT / 2)
+				if (transformComp.Position.Y - paddleComp.Height / 2 < -Constants.Pong.PLAYFIELD_HEIGHT / 2)
 				{
-					transformComp.position.Y = -Constants.Pong.PLAYFIELD_HEIGHT / 2 + paddleComp.Height / 2;
+					transformComp.Position.Y = -Constants.Pong.PLAYFIELD_HEIGHT / 2 + paddleComp.Height / 2;
 				}
 			}
 		}

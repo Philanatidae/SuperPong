@@ -26,8 +26,8 @@ namespace SuperPong.Systems
 			foreach (Entity goalEntity in _goalEntities)
 			{
 				TransformComponent goalTransformComp = goalEntity.GetComponent<TransformComponent>();
-				BoundingRect goalAABB = new BoundingRect(goalTransformComp.position.X - Constants.Pong.GOAL_WIDTH / 2,
-				                                         goalTransformComp.position.Y - Constants.Pong.PLAYFIELD_HEIGHT / 2,
+				BoundingRect goalAABB = new BoundingRect(goalTransformComp.Position.X - Constants.Pong.GOAL_WIDTH / 2,
+				                                         goalTransformComp.Position.Y - Constants.Pong.PLAYFIELD_HEIGHT / 2,
 				                                         Constants.Pong.GOAL_WIDTH,
 				                                         Constants.Pong.PLAYFIELD_HEIGHT);
 
@@ -36,19 +36,19 @@ namespace SuperPong.Systems
 					TransformComponent ballTransformComp = ballEntity.GetComponent<TransformComponent>();
 					BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
 
-					BoundingRect ballAABB = new BoundingRect(ballTransformComp.position.X - ballComp.Width / 2,
-															ballTransformComp.position.Y - ballComp.Height / 2,
+					BoundingRect ballAABB = new BoundingRect(ballTransformComp.Position.X - ballComp.Width / 2,
+															ballTransformComp.Position.Y - ballComp.Height / 2,
 															ballComp.Width,
 													 		ballComp.Height);
 
 					if (ballAABB.Intersects(goalAABB))
 					{
-						Vector2 goalNormal = goalTransformComp.position - ballTransformComp.position;
+						Vector2 goalNormal = goalTransformComp.Position - ballTransformComp.Position;
 						goalNormal.Normalize();
 
-						Vector2 ballEdge = ballTransformComp.position
+						Vector2 ballEdge = ballTransformComp.Position
 															+ new Vector2(ballComp.Width, ballComp.Height) * -goalNormal;
-						Vector2 goalEdge = goalTransformComp.position
+						Vector2 goalEdge = goalTransformComp.Position
 															+ new Vector2(Constants.Pong.GOAL_WIDTH,
 						                                                  Constants.Pong.GOAL_HEIGHT)
 															* goalNormal;

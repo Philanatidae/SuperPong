@@ -51,8 +51,8 @@ namespace SuperPong.Systems
 				ballComp.Direction -= 2 * MathHelper.Pi;
 			}
 
-			BoundingRect ballAABB = new BoundingRect(transformComp.position.X - ballComp.Width / 2,
-			                                        transformComp.position.Y - ballComp.Height / 2,
+			BoundingRect ballAABB = new BoundingRect(transformComp.Position.X - ballComp.Width / 2,
+			                                        transformComp.Position.Y - ballComp.Height / 2,
 			                                        ballComp.Width,
 			                                         ballComp.Height);
 			// Paddles
@@ -61,8 +61,8 @@ namespace SuperPong.Systems
 				PaddleComponent paddleComp = paddleEntity.GetComponent<PaddleComponent>();
 				TransformComponent paddleTransformComp = paddleEntity.GetComponent<TransformComponent>();
 
-				BoundingRect paddleAABB = new BoundingRect(paddleTransformComp.position.X - paddleComp.Width / 2,
-				                                           paddleTransformComp.position.Y - paddleComp.Height / 2,
+				BoundingRect paddleAABB = new BoundingRect(paddleTransformComp.Position.X - paddleComp.Width / 2,
+				                                           paddleTransformComp.Position.Y - paddleComp.Height / 2,
 				                                           paddleComp.Width,
 				                                           paddleComp.Height);
 
@@ -71,9 +71,9 @@ namespace SuperPong.Systems
 					if (!paddleComp.IgnoreCollisions)
 					{
 						{
-							Vector2 ballEdge = transformComp.position
+							Vector2 ballEdge = transformComp.Position
 							                                + new Vector2(ballComp.Width, ballComp.Height) * -paddleComp.Normal;
-							Vector2 paddleEdge = paddleTransformComp.position
+							Vector2 paddleEdge = paddleTransformComp.Position
 							                                        + new Vector2(paddleComp.Width, paddleComp.Height) * paddleComp.Normal;
 
 							Vector2 bouncePosition = (ballEdge + paddleEdge) / 2;
@@ -106,17 +106,17 @@ namespace SuperPong.Systems
 				EdgeComponent edgeComp = edgeEntity.GetComponent<EdgeComponent>();
 				TransformComponent edgeTransformComp = edgeEntity.GetComponent<TransformComponent>();
 
-				BoundingRect edgeAABB = new BoundingRect(edgeTransformComp.position.X - Constants.Pong.PLAYFIELD_WIDTH / 2,
-														 edgeTransformComp.position.Y - Constants.Pong.EDGE_HEIGHT / 2,
+				BoundingRect edgeAABB = new BoundingRect(edgeTransformComp.Position.X - Constants.Pong.PLAYFIELD_WIDTH / 2,
+														 edgeTransformComp.Position.Y - Constants.Pong.EDGE_HEIGHT / 2,
 				                                         Constants.Pong.EDGE_WIDTH,
 														 Constants.Pong.EDGE_HEIGHT);
 
 				if (ballAABB.Intersects(edgeAABB))
 				{
 					{
-						Vector2 ballEdge = transformComp.position
+						Vector2 ballEdge = transformComp.Position
 						                                + new Vector2(ballComp.Width, ballComp.Height) * -edgeComp.Normal;
-						Vector2 edgeEdge = edgeTransformComp.position
+						Vector2 edgeEdge = edgeTransformComp.Position
 						                                      + new Vector2(Constants.Pong.EDGE_WIDTH,
 						                                                    Constants.Pong.EDGE_HEIGHT)
 						                                      * edgeComp.Normal;
@@ -144,8 +144,8 @@ namespace SuperPong.Systems
 			TransformComponent transformComp = ballEntity.GetComponent<TransformComponent>();
 			BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
 
-			transformComp.position.X += (float)Math.Cos(ballComp.Direction) * ballComp.Velocity * dt;
-			transformComp.position.Y += (float)Math.Sin(ballComp.Direction) * ballComp.Velocity * dt;
+			transformComp.Position.X += (float)Math.Cos(ballComp.Direction) * ballComp.Velocity * dt;
+			transformComp.Position.Y += (float)Math.Sin(ballComp.Direction) * ballComp.Velocity * dt;
 		}
 
 		Vector2 getReflectionVector(Vector2 colliding, Vector2 normal)
