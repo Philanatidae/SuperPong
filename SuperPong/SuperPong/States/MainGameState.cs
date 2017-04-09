@@ -90,8 +90,12 @@ namespace SuperPong
 
 		void CreateEntities()
 		{
-			EdgeEntity.Create(_engine, _edgeTexture, true);
-			EdgeEntity.Create(_engine, _edgeTexture, false);
+			EdgeEntity.Create(_engine, _edgeTexture,
+							  new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2),
+			                  new Vector2(0, -1));
+			EdgeEntity.Create(_engine, _edgeTexture,
+			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
+			                  new Vector2(0, 1));
 
 			BallEntity.Create(_engine, _ballTexture, Vector2.Zero);
 

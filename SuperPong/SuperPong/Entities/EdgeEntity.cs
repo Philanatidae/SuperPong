@@ -7,19 +7,15 @@ namespace SuperPong.Entities
 {
 	public class EdgeEntity
 	{
-		public static Entity Create(Engine engine, Texture2D texture, bool isTop)
+		public static Entity Create(Engine engine, Texture2D texture, Vector2 position, Vector2 normal)
 		{
 			Entity entity = engine.CreateEntity();
 
-			float yPos = Constants.Pong.PLAYFIELD_HEIGHT / 2;
-			yPos += Constants.Pong.EDGE_HEIGHT / 2;
-			yPos *= (isTop ? 1 : -1);
-
-			entity.AddComponent(new TransformComponent(new Vector2(0, yPos)));
+			entity.AddComponent(new TransformComponent(position));
 			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.PLAYFIELD_WIDTH,
 			                                                             Constants.Pong.EDGE_HEIGHT)));
 			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
-			entity.AddComponent(new EdgeComponent());
+			entity.AddComponent(new EdgeComponent(normal));
 
 			return entity;
 		}
