@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Common;
 using SuperPong.Components;
+using SuperPong.Directors;
 using SuperPong.Entities;
 using SuperPong.Events;
 using SuperPong.Input;
@@ -24,6 +25,8 @@ namespace SuperPong
 		BallMovementSystem _ballMovementSystem;
 		GoalSystem _goalSystem;
 		RenderSystem _renderSystem;
+
+		PongDirector _director;
 
 		Texture2D _paddleTexture;
 		Texture2D _ballTexture;
@@ -60,6 +63,9 @@ namespace SuperPong
 			                                       DepthFormat.None);
 
 			InitSystems();
+
+			_director = new PongDirector(_engine);
+			_director.RegisterEvents();
 		}
 
 		void InitSystems()
@@ -137,6 +143,8 @@ namespace SuperPong
 				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
 				_goalSystem.Update(Constants.Global.TICK_RATE);
 			}
+
+			_director.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -185,6 +193,7 @@ namespace SuperPong
 		{
 			// Remove listeners
 			EventManager.Instance.UnregisterListener(_mainCamera);
+			_director.UnregisterEvents();
 		}
 	}
 }
