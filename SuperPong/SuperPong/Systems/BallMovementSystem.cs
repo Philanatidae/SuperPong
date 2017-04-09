@@ -1,8 +1,10 @@
 ﻿using System;
+using Events;
 using ECS;
 using Microsoft.Xna.Framework;
 using SuperPong.Common;
 using SuperPong.Components;
+using SuperPong.Events;
 
 namespace SuperPong.Systems
 {
@@ -49,6 +51,20 @@ namespace SuperPong.Systems
 			if (transformComp.position.Y + ballComp.Width / 2 >= Constants.Pong.PLAYFIELD_HEIGHT / 2
 			   || transformComp.position.Y - ballComp.Width / 2 <= -Constants.Pong.PLAYFIELD_HEIGHT / 2)
 			{
+				// Send event
+				{
+					float ballTopOrBottom = transformComp.position.Y
+						+ ballComp.Height / 2 * (transformComp.position.Y / (float)Math.Abs(transformComp.position.Y));
+
+					float edgeTopOrBottom = Constants.Pong.PLAYFIELD_HEIGHT / 2 * (transformComp.position.Y / (float)Math.Abs(transformComp.position.Y));
+					edgeTopOrBottom += Constants.Pong.EDGE_HEIGHT / 2 * -(transformComp.position.Y / (float)Math.Abs(transformComp.position.Y));
+
+					Vector2 bouncePosition = new Vector2();
+					bouncePosition.X = transformComp.position.X;
+					bouncePosition.Y = (ballTopOrBottom + edgeTopOrBottom) / 2;
+					EventManager.Instance.TriggerEvent(new BallBounceEvent(ballEntity, null, bouncePosition));
+				}
+
 				// Determine normal of the edge
 				float nYComp = -transformComp.position.Y / Math.Abs(transformComp.position.Y);
 				Vector2 edgeNormal = new Vector2(0, nYComp);
@@ -83,6 +99,16 @@ namespace SuperPong.Systems
 				{
 					if (!paddleComp.IgnoreCollisions)
 					{
+						{
+							Vector2 ballEdge = transformComp.position
+							                                + new Vector2(ballComp.Width, ballComp.Height) * -paddleComp.Normal;
+							Vector2 paddleEdge = paddleTransformComp.position
+							                                        + new Vector2(paddleComp.Width, paddleComp.Height) * paddleComp.Normal;
+
+							Vector2 bouncePosition = (ballEdge + paddleEdge) / 2;
+							EventManager.Instance.TriggerEvent(new BallBounceEvent(ballEntity, paddleEntity, bouncePosition));
+						}
+
 						// Determine directional vector of ball
 						Vector2 ballDirection = new Vector2((float)Math.Cos(ballComp.Direction),
 															(float)Math.Sin(ballComp.Direction));
