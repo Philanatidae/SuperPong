@@ -54,7 +54,7 @@ namespace SuperPong.Systems
 															* goalNormal;
 
 						Vector2 goalPosition = (ballEdge + goalEdge) / 2;
-						EventManager.Instance.TriggerEvent(new GoalEvent(ballEntity, goalEntity, goalPosition));
+						EventManager.Instance.QueueEvent(new GoalEvent(ballEntity, goalEntity, goalPosition));
 					}
 				}
 			}

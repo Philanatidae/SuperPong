@@ -16,6 +16,7 @@ namespace Events
 		}
 
 		Dictionary<Type, List<IEventListener>> _listeners = new Dictionary<Type, List<IEventListener>>();
+		List<IEvent> _queue = new List<IEvent>();
 
 		public void RegisterListener<T>(IEventListener listener) where T : IEvent
 		{
@@ -62,6 +63,20 @@ namespace Events
 			EnsureInitiatedListener(type);
 
 			return _listeners[type].Remove(listener);
+		}
+
+		public void QueueEvent(IEvent evt)
+		{
+			_queue.Add(evt);
+		}
+
+		public void Dispatch()
+		{
+			while (_queue.Count > 0)
+			{
+				TriggerEvent(_queue[0]);
+				_queue.RemoveAt(0);
+			}
 		}
 
 		public bool TriggerEvent(IEvent evt)

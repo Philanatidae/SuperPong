@@ -77,7 +77,7 @@ namespace SuperPong.Systems
 							                                        + new Vector2(paddleComp.Width, paddleComp.Height) * paddleComp.Normal;
 
 							Vector2 bouncePosition = (ballEdge + paddleEdge) / 2;
-							EventManager.Instance.TriggerEvent(new BallBounceEvent(ballEntity, paddleEntity, bouncePosition));
+							EventManager.Instance.QueueEvent(new BallBounceEvent(ballEntity, paddleEntity, bouncePosition));
 						}
 
 						// Determine directional vector of ball
@@ -122,7 +122,7 @@ namespace SuperPong.Systems
 						                                      * edgeComp.Normal;
 
 						Vector2 bouncePosition = (ballEdge + edgeEdge) / 2;
-						EventManager.Instance.TriggerEvent(new BallBounceEvent(ballEntity, edgeEntity, bouncePosition));
+						EventManager.Instance.QueueEvent(new BallBounceEvent(ballEntity, edgeEntity, bouncePosition));
 					}
 
 					// Determine directional vector of ball

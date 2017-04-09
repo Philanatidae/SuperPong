@@ -56,6 +56,8 @@ namespace SuperPong
 				_currentState.Update(gameTime);
 			}
 
+			EventManager.Instance.Dispatch();
+
 			base.Update(gameTime);
 		}
 
@@ -89,7 +91,7 @@ namespace SuperPong
 
 		void Window_ClientSizeChanged(object sender, EventArgs e)
 		{
-			EventManager.Instance.TriggerEvent(new ResizeEvent(Window.ClientBounds.Width,
+			EventManager.Instance.QueueEvent(new ResizeEvent(Window.ClientBounds.Width,
 			                                                   Window.ClientBounds.Height));
 		}
 	}

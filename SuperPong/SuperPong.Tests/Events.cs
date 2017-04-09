@@ -22,7 +22,7 @@ namespace SuperPong.Tests
 
 			Assert.DoesNotThrow(() =>
 			{
-				EventManager.Instance.TriggerEvent(new Event1());
+				EventManager.Instance.QueueEvent(new Event1());
 			});
 
 			Listener1 listener = new Listener1();
@@ -50,17 +50,17 @@ namespace SuperPong.Tests
 
 			EventManager.Instance.RegisterListener<Event1>(listener1);
 
-			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
+			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
 
 			EventManager.Instance.RegisterListener<Event1>(listener2);
-			Assert.True(EventManager.Instance.TriggerEvent(new Event1()));
+			Assert.True(EventManager.Instance.QueueEvent(new Event1()));
 
 			EventManager.Instance.UnregisterListener<Event1>(listener2);
-			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
+			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
 
 			EventManager.Instance.RegisterListener<Event1>(listener2);
 			EventManager.Instance.UnregisterListener(listener2);
-			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
+			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
 
 			Assert.That(() =>
 			{
@@ -70,7 +70,7 @@ namespace SuperPong.Tests
 				{
 					eventPropogated = true;
 				}));
-				EventManager.Instance.TriggerEvent(new Event1());
+				EventManager.Instance.QueueEvent(new Event1());
 
 				return eventPropogated;
 			});
