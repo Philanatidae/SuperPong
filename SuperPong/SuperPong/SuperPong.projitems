@@ -48,6 +48,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\PlayerComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\GoalSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\GoalEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\ProcessManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\Process.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\IntervalProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -58,5 +62,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
     <Folder Include="$(MSBuildThisFileDirectory)States\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
   </ItemGroup>
 </Project>
