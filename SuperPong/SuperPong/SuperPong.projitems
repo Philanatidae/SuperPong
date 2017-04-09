@@ -43,6 +43,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\ScoreTrackerComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Render.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\BallBounceEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\GoalComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\GoalEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

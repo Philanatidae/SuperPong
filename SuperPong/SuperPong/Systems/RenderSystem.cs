@@ -49,7 +49,7 @@ namespace SuperPong.Systems
 		{
 			_spriteBatch.Begin(SpriteSortMode.Deferred,
 							   null,
-							   null,
+			                   SamplerState.PointClamp,
 							   null,
 							   null,
 							   null,

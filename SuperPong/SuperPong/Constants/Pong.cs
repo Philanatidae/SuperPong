@@ -11,6 +11,8 @@ namespace SuperPong.Constants
 		public static readonly float PLAYFIELD_WIDTH = 480;
 		public static readonly float PLAYFIELD_HEIGHT = 300;
 
+		public static readonly float GOAL_WIDTH = 3f;
+
 		public static readonly float EDGE_HEIGHT = 3f;
 
 		public static readonly float PADDLE_WIDTH = 10;

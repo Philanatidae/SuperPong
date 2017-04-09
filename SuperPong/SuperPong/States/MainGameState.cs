@@ -27,6 +27,7 @@ namespace SuperPong
 		Texture2D _paddleTexture;
 		Texture2D _ballTexture;
 		Texture2D _edgeTexture;
+		Texture2D _goalTexture;
 
 		Camera _mainCamera;
 		Camera _pongCamera;
@@ -81,6 +82,7 @@ namespace SuperPong
 			_paddleTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
 			_ballTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
 			_edgeTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
+			_goalTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
 		}
 
 		public override void Show()
@@ -96,6 +98,13 @@ namespace SuperPong
 			EdgeEntity.Create(_engine, _edgeTexture,
 			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
 			                  new Vector2(0, 1));
+
+			GoalEntity.Create(_engine, _goalTexture,
+			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0),
+			                  new Vector2(1, 0));
+			GoalEntity.Create(_engine, _goalTexture,
+			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0),
+							  new Vector2(-1, 0));
 
 			BallEntity.Create(_engine, _ballTexture, Vector2.Zero);
 
@@ -145,7 +154,7 @@ namespace SuperPong
 
 			_renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
 			                               null,
-			                               null,
+			                                SamplerState.PointWrap,
 			                               null,
 			                               null,
 			                               null,
