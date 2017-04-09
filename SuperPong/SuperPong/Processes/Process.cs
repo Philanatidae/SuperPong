@@ -26,7 +26,7 @@ namespace SuperPong.Processes
 		}
 		internal void SetActive(bool active)
 		{
-			_active = false;
+			_active = active;
 		}
 
 		public bool IsPaused()

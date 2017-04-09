@@ -53,6 +53,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\IntervalProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directors\PongDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\Pong\CreateBall.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\Command.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -65,5 +67,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)States\" />
     <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Processes\Pong\" />
   </ItemGroup>
 </Project>

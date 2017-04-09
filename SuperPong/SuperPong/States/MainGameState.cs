@@ -1,4 +1,5 @@
-﻿using ECS;
+﻿using System;
+using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +13,7 @@ using SuperPong.Systems;
 
 namespace SuperPong
 {
-	public class MainGameState : GameState
+	public class MainGameState : GameState, IPongDirectorOwner
 	{
 		Player _player1;
 		Player _player2;
@@ -37,6 +38,22 @@ namespace SuperPong
 		Camera _pongCamera;
 
 		RenderTarget2D _pongRenderTarget;
+
+		public Engine Engine
+		{
+			get
+			{
+				return _engine;
+			}
+		}
+
+		public Texture2D BallTexture
+		{
+			get
+			{
+				return _ballTexture;
+			}
+		}
 
 		public MainGameState(GameManager gameManager,
 		                     Player player1,
@@ -64,7 +81,7 @@ namespace SuperPong
 
 			InitSystems();
 
-			_director = new PongDirector(_engine);
+			_director = new PongDirector(this);
 			_director.RegisterEvents();
 		}
 

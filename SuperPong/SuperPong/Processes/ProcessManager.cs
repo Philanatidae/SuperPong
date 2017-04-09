@@ -40,7 +40,7 @@ namespace SuperPong.Processes
 					i--;
 					continue;
 				}
-				else if (curr.IsActive() && !curr.IsPaused())
+				if (curr.IsActive() && !curr.IsPaused())
 				{
 					curr.Update(gameTime);
 				}
