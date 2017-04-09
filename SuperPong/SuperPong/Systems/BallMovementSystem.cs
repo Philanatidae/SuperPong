@@ -108,7 +108,7 @@ namespace SuperPong.Systems
 
 				BoundingRect edgeAABB = new BoundingRect(edgeTransformComp.position.X - Constants.Pong.PLAYFIELD_WIDTH / 2,
 														 edgeTransformComp.position.Y - Constants.Pong.EDGE_HEIGHT / 2,
-														 Constants.Pong.PLAYFIELD_WIDTH,
+				                                         Constants.Pong.EDGE_WIDTH,
 														 Constants.Pong.EDGE_HEIGHT);
 
 				if (ballAABB.Intersects(edgeAABB))
@@ -116,12 +116,12 @@ namespace SuperPong.Systems
 					{
 						Vector2 ballEdge = transformComp.position
 						                                + new Vector2(ballComp.Width, ballComp.Height) * -edgeComp.Normal;
-						Vector2 paddleEdge = edgeTransformComp.position
-						                                      + new Vector2(Constants.Pong.PLAYFIELD_WIDTH,
+						Vector2 edgeEdge = edgeTransformComp.position
+						                                      + new Vector2(Constants.Pong.EDGE_WIDTH,
 						                                                    Constants.Pong.EDGE_HEIGHT)
 						                                      * edgeComp.Normal;
 
-						Vector2 bouncePosition = (ballEdge + paddleEdge) / 2;
+						Vector2 bouncePosition = (ballEdge + edgeEdge) / 2;
 						EventManager.Instance.TriggerEvent(new BallBounceEvent(ballEntity, edgeEntity, bouncePosition));
 					}
 

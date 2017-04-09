@@ -13,7 +13,7 @@ namespace SuperPong.Entities
 
 			entity.AddComponent(new TransformComponent(position));
 			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.GOAL_WIDTH,
-			                                                             Constants.Pong.PLAYFIELD_HEIGHT)));
+			                                                             Constants.Pong.GOAL_HEIGHT)));
 			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
 			entity.AddComponent(new GoalComponent());
 

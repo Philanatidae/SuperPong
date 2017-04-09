@@ -50,7 +50,7 @@ namespace SuperPong.Systems
 															+ new Vector2(ballComp.Width, ballComp.Height) * -goalNormal;
 						Vector2 goalEdge = goalTransformComp.position
 															+ new Vector2(Constants.Pong.GOAL_WIDTH,
-																		  Constants.Pong.PLAYFIELD_HEIGHT)
+						                                                  Constants.Pong.GOAL_HEIGHT)
 															* goalNormal;
 
 						Vector2 goalPosition = (ballEdge + goalEdge) / 2;

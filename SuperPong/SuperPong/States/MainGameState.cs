@@ -96,10 +96,10 @@ namespace SuperPong
 		{
 			EdgeEntity.Create(_engine, _edgeTexture,
 							  new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2),
-			                  new Vector2(0, -1));
+			                  new Vector2(0, -1)); // Top edge points down
 			EdgeEntity.Create(_engine, _edgeTexture,
 			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
-			                  new Vector2(0, 1));
+			                  new Vector2(0, 1)); // Bottom edge points up
 
 			GoalEntity.Create(_engine, _goalTexture,
 			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
