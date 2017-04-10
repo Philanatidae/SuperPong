@@ -3,6 +3,7 @@ using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.BitmapFonts;
 using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Directors;
@@ -25,6 +26,7 @@ namespace SuperPong
 		PaddleSystem _paddleSystem;
 		BallMovementSystem _ballMovementSystem;
 		GoalSystem _goalSystem;
+		LivesSystem _livesSystem;
 		RenderSystem _renderSystem;
 
 		PongDirector _director;
@@ -33,6 +35,7 @@ namespace SuperPong
 		Texture2D _ballTexture;
 		Texture2D _edgeTexture;
 		Texture2D _goalTexture;
+		BitmapFont _livesFont;
 
 		Camera _mainCamera;
 		Camera _pongCamera;
@@ -93,8 +96,11 @@ namespace SuperPong
 			_paddleSystem = new PaddleSystem(_engine);
 			_ballMovementSystem = new BallMovementSystem(_engine);
 			_goalSystem = new GoalSystem(_engine);
+			_livesSystem = new LivesSystem(_engine);
 
 			_renderSystem = new RenderSystem(GameManager.GraphicsDevice, _engine);
+
+			_livesSystem.RegisterEventListeners();
 		}
 
 		public override void Hide()
@@ -108,6 +114,8 @@ namespace SuperPong
 			_ballTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
 			_edgeTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
 			_goalTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
+
+			_livesFont = Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 		}
 
 		public override void Show()
@@ -145,6 +153,10 @@ namespace SuperPong
 
 			paddle1.AddComponent(new PlayerComponent(_player1));
 			paddle2.AddComponent(new PlayerComponent(_player2));
+
+			// Lives count
+			LivesEntity.Create(_engine, _livesFont, new Vector2(-250, 225), _player1, 3);
+			LivesEntity.Create(_engine, _livesFont, new Vector2(250, 225), _player2, 3);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -160,6 +172,7 @@ namespace SuperPong
 				_paddleSystem.Update(Constants.Global.TICK_RATE);
 				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
 				_goalSystem.Update(Constants.Global.TICK_RATE);
+				_livesSystem.Update(Constants.Global.TICK_RATE);
 			}
 
 			_director.Update(gameTime);
@@ -211,6 +224,7 @@ namespace SuperPong
 		{
 			// Remove listeners
 			EventManager.Instance.UnregisterListener(_mainCamera);
+			_livesSystem.UnregisterEventListeners();
 			_director.UnregisterEvents();
 		}
 	}

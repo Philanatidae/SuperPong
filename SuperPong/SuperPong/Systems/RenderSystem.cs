@@ -91,7 +91,7 @@ namespace SuperPong.Systems
 				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
 				Vector2 scale = Vector2.One;
-				Vector2 origin = fontComp.Font.MeasureString(fontComp.Content);
+				Vector2 origin = fontComp.Font.MeasureString(fontComp.Content) / 2;
 
 				_spriteBatch.DrawString(fontComp.Font,
 										fontComp.Content,

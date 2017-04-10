@@ -20,6 +20,6 @@ namespace SuperPong.Components
 		public string Content;
 		public Color Color = Color.White;
 
-		public byte RenderGroup = 0x1;
+		public byte RenderGroup = Constants.Render.GROUP_ONE;
 	}
 }

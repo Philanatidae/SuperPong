@@ -7,5 +7,7 @@ namespace SuperPong.Constants
 		public static readonly string TEXTURE_PONG_PADDLE = "textures/pong/paddle";
 		public static readonly string TEXTURE_PONG_EDGE = "textures/pong/border";
 		public static readonly string TEXTURE_PONG_GOAL = "textures/pong/GoalLine";
+
+		public static readonly string FONT_PONG_LIVES = "fonts/Lives";
 	}
 }

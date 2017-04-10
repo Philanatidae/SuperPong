@@ -3,7 +3,7 @@
        <info aa='1' size='100' smooth='1' stretchH='100' bold='0' padding='0,0,0,0' spacing='0,0' charset='' italic='0' unicode='0' face='Anton'/>
        <common scaleW='640' packed='0' pages='1' lineHeight='146' scaleH='640' base='114'/>
        <pages>
-            <page id='0' file='Score_0.png'/>
+            <page id='0' file='Lives_0.png'/>
        </pages>
         <chars count='95'>
             <char xadvance='26' x='254' chnl='0' yoffset='114' y='80' xoffset='0' id='32' page='0' height='0' width='0'/>

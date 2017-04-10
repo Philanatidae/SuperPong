@@ -50,23 +50,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/pong/paddle.png
 
-#begin fonts/Score.fnt
-/importer:BitmapFontImporter
-/processor:BitmapFontProcessor
-/build:fonts/Score.fnt
-
-#begin fonts/Score_0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:fonts/Score_0.png
-
 #begin effects/WarpEffect.xnb
 /copy:effects/WarpEffect.xnb
 
@@ -81,4 +64,21 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/pong/GoalLine.png
+
+#begin fonts/Lives.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:fonts/Lives.fnt
+
+#begin fonts/Lives_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:fonts/Lives_0.png
 
