@@ -52,6 +52,7 @@ namespace SuperPong.Processes
 				OnInitialize();
 				_initialUpdate = true;
 			}
+			OnUpdate(gameTime);
 		}
 		protected abstract void OnUpdate(GameTime gameTime);
 
