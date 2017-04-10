@@ -14,8 +14,7 @@ namespace SuperPong.Components
 			Normal = normal;
 		}
 
-		public float Width = Constants.Pong.PADDLE_WIDTH;
-		public float Height = Constants.Pong.PADDLE_HEIGHT;
+		public Vector2 Bounds = new Vector2(Constants.Pong.PADDLE_WIDTH, Constants.Pong.PADDLE_HEIGHT);
 		public Vector2 Normal;
 		public bool IgnoreCollisions;
 	}

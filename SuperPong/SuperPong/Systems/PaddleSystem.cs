@@ -31,13 +31,13 @@ namespace SuperPong.Systems
 					transformComp.Position.Y -= Constants.Pong.PADDLE_SPEED * dt;
 				}
 
-				if (transformComp.Position.Y + paddleComp.Height / 2 > Constants.Pong.PLAYFIELD_HEIGHT / 2)
+				if (transformComp.Position.Y + paddleComp.Bounds.Y / 2 > Constants.Pong.PLAYFIELD_HEIGHT / 2)
 				{
-					transformComp.Position.Y = Constants.Pong.PLAYFIELD_HEIGHT / 2 - paddleComp.Height / 2;
+					transformComp.Position.Y = Constants.Pong.PLAYFIELD_HEIGHT / 2 - paddleComp.Bounds.Y / 2;
 				}
-				if (transformComp.Position.Y - paddleComp.Height / 2 < -Constants.Pong.PLAYFIELD_HEIGHT / 2)
+				if (transformComp.Position.Y - paddleComp.Bounds.Y / 2 < -Constants.Pong.PLAYFIELD_HEIGHT / 2)
 				{
-					transformComp.Position.Y = -Constants.Pong.PLAYFIELD_HEIGHT / 2 + paddleComp.Height / 2;
+					transformComp.Position.Y = -Constants.Pong.PLAYFIELD_HEIGHT / 2 + paddleComp.Bounds.Y / 2;
 				}
 			}
 		}

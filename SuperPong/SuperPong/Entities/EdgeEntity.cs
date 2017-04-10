@@ -5,7 +5,7 @@ using SuperPong.Components;
 
 namespace SuperPong.Entities
 {
-	public class EdgeEntity
+	public static class EdgeEntity
 	{
 		public static Entity Create(Engine engine, Texture2D texture, Vector2 position, Vector2 normal)
 		{

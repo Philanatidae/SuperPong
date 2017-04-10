@@ -10,8 +10,7 @@ namespace SuperPong.Components
 			Direction = MathHelper.ToRadians(direction);
 		}
 
-		public float Width = Constants.Pong.BALL_WIDTH;
-		public float Height = Constants.Pong.BALL_HEIGHT;
+		public Vector2 Bounds = new Vector2(Constants.Pong.BALL_WIDTH, Constants.Pong.BALL_HEIGHT);
 
 		public float Direction;
 		public float Velocity = Constants.Pong.BALL_STARTING_VELOCITY;

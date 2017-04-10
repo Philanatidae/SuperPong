@@ -36,10 +36,8 @@ namespace SuperPong.Systems
 					TransformComponent ballTransformComp = ballEntity.GetComponent<TransformComponent>();
 					BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
 
-					BoundingRect ballAABB = new BoundingRect(ballTransformComp.Position.X - ballComp.Width / 2,
-															ballTransformComp.Position.Y - ballComp.Height / 2,
-															ballComp.Width,
-													 		ballComp.Height);
+					BoundingRect ballAABB = new BoundingRect(ballTransformComp.Position - ballComp.Bounds / 2,
+															ballTransformComp.Position + ballComp.Bounds / 2);
 
 					if (ballAABB.Intersects(goalAABB))
 					{
@@ -47,7 +45,7 @@ namespace SuperPong.Systems
 						goalNormal.Normalize();
 
 						Vector2 ballEdge = ballTransformComp.Position
-															+ new Vector2(ballComp.Width, ballComp.Height) * -goalNormal;
+						                                    + ballComp.Bounds * -goalNormal;
 						Vector2 goalEdge = goalTransformComp.Position
 															+ new Vector2(Constants.Pong.GOAL_WIDTH,
 						                                                  Constants.Pong.GOAL_HEIGHT)

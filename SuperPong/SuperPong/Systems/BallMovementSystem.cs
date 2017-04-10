@@ -51,20 +51,16 @@ namespace SuperPong.Systems
 				ballComp.Direction -= 2 * MathHelper.Pi;
 			}
 
-			BoundingRect ballAABB = new BoundingRect(transformComp.Position.X - ballComp.Width / 2,
-			                                        transformComp.Position.Y - ballComp.Height / 2,
-			                                        ballComp.Width,
-			                                         ballComp.Height);
+			BoundingRect ballAABB = new BoundingRect(transformComp.Position - ballComp.Bounds / 2,
+													 transformComp.Position + ballComp.Bounds / 2);
 			// Paddles
 			foreach (Entity paddleEntity in _paddleEntities)
 			{
 				PaddleComponent paddleComp = paddleEntity.GetComponent<PaddleComponent>();
 				TransformComponent paddleTransformComp = paddleEntity.GetComponent<TransformComponent>();
 
-				BoundingRect paddleAABB = new BoundingRect(paddleTransformComp.Position.X - paddleComp.Width / 2,
-				                                           paddleTransformComp.Position.Y - paddleComp.Height / 2,
-				                                           paddleComp.Width,
-				                                           paddleComp.Height);
+				BoundingRect paddleAABB = new BoundingRect(paddleTransformComp.Position - paddleComp.Bounds / 2,
+														   paddleTransformComp.Position + paddleComp.Bounds / 2);
 
 				if (ballAABB.Intersects(paddleAABB))
 				{
@@ -72,9 +68,9 @@ namespace SuperPong.Systems
 					{
 						{
 							Vector2 ballEdge = transformComp.Position
-							                                + new Vector2(ballComp.Width, ballComp.Height) * -paddleComp.Normal;
+							                                + ballComp.Bounds * -paddleComp.Normal;
 							Vector2 paddleEdge = paddleTransformComp.Position
-							                                        + new Vector2(paddleComp.Width, paddleComp.Height) * paddleComp.Normal;
+							                                        + paddleComp.Bounds * paddleComp.Normal;
 
 							Vector2 bouncePosition = (ballEdge + paddleEdge) / 2;
 							EventManager.Instance.QueueEvent(new BallBounceEvent(ballEntity, paddleEntity, bouncePosition));
@@ -115,7 +111,7 @@ namespace SuperPong.Systems
 				{
 					{
 						Vector2 ballEdge = transformComp.Position
-						                                + new Vector2(ballComp.Width, ballComp.Height) * -edgeComp.Normal;
+						                                + ballComp.Bounds * -edgeComp.Normal;
 						Vector2 edgeEdge = edgeTransformComp.Position
 						                                      + new Vector2(Constants.Pong.EDGE_WIDTH,
 						                                                    Constants.Pong.EDGE_HEIGHT)
