@@ -58,7 +58,10 @@ namespace SuperPong.Directors
 		void HandleGoal(GoalEvent goalEvent)
 		{
 			_owner.Engine.DestroyEntity(goalEvent.Ball);
-			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture));
+
+			Process ballReturnSequence = new WaitProcess(1.0f);
+			_processManager.Attach(ballReturnSequence);
+			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture));
 		}
 	}
 
