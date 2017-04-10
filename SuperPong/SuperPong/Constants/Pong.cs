@@ -6,10 +6,10 @@ namespace SuperPong.Constants
 	{
 		public static readonly byte RENDER_GROUP = Render.GROUP_TWO;
 
-		public static readonly Vector2 BUFFER_RENDER_POSITION = new Vector2(0, -65);
+		public static readonly Vector2 BUFFER_RENDER_POSITION = new Vector2(0, -25);
 
-		public static readonly float PLAYFIELD_WIDTH = 600;
-		public static readonly float PLAYFIELD_HEIGHT = 400;
+		public static readonly float PLAYFIELD_HEIGHT = 450;
+		public static readonly float PLAYFIELD_WIDTH = PLAYFIELD_HEIGHT * 1.5f;
 
 		public static readonly float GOAL_WIDTH = 3f;
 		public static readonly float GOAL_HEIGHT = PLAYFIELD_HEIGHT;
@@ -21,7 +21,7 @@ namespace SuperPong.Constants
 		public static readonly int LIVES_RIGHT_POSITION_X = 215;
 		public static readonly int LIVES_ICON_LEFT_POSITION_X = LIVES_LEFT_POSITION_X + 35;
 		public static readonly int LIVES_ICON_RIGHT_POSITION_X = LIVES_RIGHT_POSITION_X + 35;
-		public static readonly int LIVES_POSITION_Y = 225;
+		public static readonly int LIVES_POSITION_Y = 265;
 		public static readonly int LIVES_COUNT = 3;
 
 		public static readonly float PADDLE_WIDTH = 10;
