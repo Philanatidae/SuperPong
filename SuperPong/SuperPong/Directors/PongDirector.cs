@@ -2,6 +2,7 @@
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SuperPong.Components;
 using SuperPong.Events;
 using SuperPong.Processes;
 using SuperPong.Processes.Pong;
@@ -52,7 +53,8 @@ namespace SuperPong.Directors
 		// HANDLERS!
 		void HandleStart(StartEvent startEvent)
 		{
-			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture));
+			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture,
+			                                      Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES));
 		}
 
 		void HandleGoal(GoalEvent goalEvent)
@@ -61,7 +63,15 @@ namespace SuperPong.Directors
 
 			Process ballReturnSequence = new WaitProcess(1.0f);
 			_processManager.Attach(ballReturnSequence);
-			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture));
+
+			float direction = Constants.Pong.BALL_PLAYER2_STARTING_ROTATION_DEGREES;
+			GoalComponent goalComp = goalEvent.Goal.GetComponent<GoalComponent>();
+			if (goalComp.For.Index == 0)
+			{
+				direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
+			}
+
+			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture, direction));
 		}
 	}
 

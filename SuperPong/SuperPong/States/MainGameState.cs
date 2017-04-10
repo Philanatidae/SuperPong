@@ -125,9 +125,11 @@ namespace SuperPong
 			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
 			                  new Vector2(0, 1)); // Bottom edge points up
 
-			GoalEntity.Create(_engine, _goalTexture,
+			// Player 1 goal
+			GoalEntity.Create(_engine, _player1, _goalTexture,
 			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
-			GoalEntity.Create(_engine, _goalTexture,
+			// Player 2 goal
+			GoalEntity.Create(_engine, _player2, _goalTexture,
 			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
 
 			Entity paddle1 = PaddleEntity.Create(_engine,

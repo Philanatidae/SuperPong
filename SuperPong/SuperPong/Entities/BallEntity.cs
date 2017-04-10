@@ -8,7 +8,7 @@ namespace SuperPong.Entities
 
 	public class BallEntity
 	{
-		public static Entity Create(Engine engine, Texture2D texture, Vector2 position)
+		public static Entity Create(Engine engine, Texture2D texture, Vector2 position, float direction)
 		{
 			Entity entity = engine.CreateEntity();
 
@@ -17,7 +17,7 @@ namespace SuperPong.Entities
 													new Vector2(Constants.Pong.BALL_WIDTH,
 									    Constants.Pong.BALL_HEIGHT)));
 			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
-			entity.AddComponent(new BallComponent());
+			entity.AddComponent(new BallComponent(direction));
 
 			return entity;
 		}

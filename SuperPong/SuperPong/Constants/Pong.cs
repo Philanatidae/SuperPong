@@ -25,7 +25,8 @@ namespace SuperPong.Constants
 
 		public static readonly float BALL_WIDTH = 15;
 		public static readonly float BALL_HEIGHT = 15;
-		public static readonly float BALL_STARTING_ROTATION_DEGREES = 45;
+		public static readonly float BALL_PLAYER1_STARTING_ROTATION_DEGREES = 135;
+		public static readonly float BALL_PLAYER2_STARTING_ROTATION_DEGREES = 45;
 		public static readonly float BALL_STARTING_VELOCITY = 200.0f;
 		public static readonly float BALL_MAX_TRAVEL_ANGLE_DEGREES = 60.0f;
 
