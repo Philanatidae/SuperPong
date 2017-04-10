@@ -58,6 +58,22 @@ namespace SuperPong
 			}
 		}
 
+		public Player Player1
+		{
+			get
+			{
+				return _player1;
+			}
+		}
+
+		public Player Player2
+		{
+			get
+			{
+				return _player2;
+			}
+		}
+
 		public MainGameState(GameManager gameManager,
 		                     Player player1,
 		                     Player player2)

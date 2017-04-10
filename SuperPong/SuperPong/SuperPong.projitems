@@ -59,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\LivesComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\LivesEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\LivesSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\PlayerLostEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

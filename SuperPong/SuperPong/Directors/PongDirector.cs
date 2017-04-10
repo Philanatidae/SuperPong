@@ -19,6 +19,9 @@ namespace SuperPong.Directors
 
 		readonly ImmutableList<Entity> _ballEntities;
 
+		int player1Lives = Constants.Pong.LIVES_COUNT;
+		int player2Lives = Constants.Pong.LIVES_COUNT;
+
 		public PongDirector(IPongDirectorOwner owner)
 		{
 			_owner = owner;
@@ -80,9 +83,29 @@ namespace SuperPong.Directors
 			if (goalComp.For.Index == 0)
 			{
 				direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
+				player1Lives--;
+			}
+			else
+			{
+				player2Lives--;
 			}
 
-			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture, direction));
+			if (player1Lives <= 0 || player2Lives <= 0)
+			{
+				// Lost
+				if (player1Lives <= 0)
+				{
+					EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player1, _owner.Player2));
+				}
+				else
+				{
+					EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player2, _owner.Player1));
+				}
+			}
+			else
+			{
+				ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture, direction));
+			}
 		}
 
 		void HandleBallBounce(BallBounceEvent ballBounceEvent)
@@ -107,6 +130,16 @@ namespace SuperPong.Directors
 		}
 
 		Texture2D BallTexture
+		{
+			get;
+		}
+
+		Player Player1
+		{
+			get;
+		}
+
+		Player Player2
 		{
 			get;
 		}
