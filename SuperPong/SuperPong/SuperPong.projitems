@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Directors\PongDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Pong\CreateBall.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Command.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\StartEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

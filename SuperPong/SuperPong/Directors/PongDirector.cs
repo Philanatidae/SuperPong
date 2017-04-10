@@ -21,6 +21,7 @@ namespace SuperPong.Directors
 
 		public void RegisterEvents()
 		{
+			EventManager.Instance.RegisterListener<StartEvent>(this);
 			EventManager.Instance.RegisterListener<GoalEvent>(this);
 		}
 
@@ -31,6 +32,10 @@ namespace SuperPong.Directors
 
 		public bool Handle(IEvent evt)
 		{
+			if (evt is StartEvent)
+			{
+				HandleStart(evt as StartEvent);
+			}
 			if (evt is GoalEvent)
 			{
 				HandleGoal(evt as GoalEvent);
@@ -45,7 +50,12 @@ namespace SuperPong.Directors
 		}
 
 		// HANDLERS!
-		public void HandleGoal(GoalEvent goalEvent)
+		void HandleStart(StartEvent startEvent)
+		{
+			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture));
+		}
+
+		void HandleGoal(GoalEvent goalEvent)
 		{
 			_owner.Engine.DestroyEntity(goalEvent.Ball);
 			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture));

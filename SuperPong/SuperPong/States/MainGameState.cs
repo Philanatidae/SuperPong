@@ -113,6 +113,7 @@ namespace SuperPong
 		public override void Show()
 		{
 			CreateEntities();
+			EventManager.Instance.TriggerEvent(new StartEvent());
 		}
 
 		void CreateEntities()
@@ -128,8 +129,6 @@ namespace SuperPong
 			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
 			GoalEntity.Create(_engine, _goalTexture,
 			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
-
-			BallEntity.Create(_engine, _ballTexture, Vector2.Zero);
 
 			Entity paddle1 = PaddleEntity.Create(_engine,
 			                                     	_paddleTexture,
