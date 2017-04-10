@@ -22,6 +22,10 @@ namespace SuperPong.Tests
 
 			Assert.DoesNotThrow(() =>
 			{
+				EventManager.Instance.TriggerEvent(new Event1());
+			});
+			Assert.DoesNotThrow(() =>
+			{
 				EventManager.Instance.QueueEvent(new Event1());
 			});
 
@@ -50,27 +54,70 @@ namespace SuperPong.Tests
 
 			EventManager.Instance.RegisterListener<Event1>(listener1);
 
-			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
+			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
 
 			EventManager.Instance.RegisterListener<Event1>(listener2);
-			Assert.True(EventManager.Instance.QueueEvent(new Event1()));
+			Assert.True(EventManager.Instance.TriggerEvent(new Event1()));
 
 			EventManager.Instance.UnregisterListener<Event1>(listener2);
-			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
+			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
 
 			EventManager.Instance.RegisterListener<Event1>(listener2);
 			EventManager.Instance.UnregisterListener(listener2);
-			Assert.False(EventManager.Instance.QueueEvent(new Event1()));
+			Assert.False(EventManager.Instance.TriggerEvent(new Event1()));
 
 			Assert.That(() =>
 			{
 				bool eventPropogated = false;
 
-				EventManager.Instance.RegisterListener<Event1>(new PassListener((bool pass) =>
+				PassListener listener = new PassListener((bool pass) =>
 				{
-					eventPropogated = true;
-				}));
+					eventPropogated = pass;
+				});
+				EventManager.Instance.RegisterListener<Event1>(listener);
+
+				EventManager.Instance.TriggerEvent(new Event1());
+
+				EventManager.Instance.UnregisterListener(listener);
+
+				return eventPropogated;
+			});
+		}
+
+		[Test]
+		public void QueueEvent()
+		{
+			Assert.That(() =>
+			{
+				bool eventPropogated = false;
+
+				PassListener listener = new PassListener((bool pass) =>
+				{
+					eventPropogated = pass;
+				});
+				EventManager.Instance.RegisterListener<Event1>(listener);
+
 				EventManager.Instance.QueueEvent(new Event1());
+
+				EventManager.Instance.UnregisterListener(listener);
+
+				return !eventPropogated;
+			});
+
+			Assert.That(() =>
+			{
+				bool eventPropogated = false;
+
+				PassListener listener = new PassListener((bool pass) =>
+				{
+					eventPropogated = pass;
+				});
+				EventManager.Instance.RegisterListener<Event1>(listener);
+
+				EventManager.Instance.QueueEvent(new Event1());
+				EventManager.Instance.Dispatch();
+
+				EventManager.Instance.UnregisterListener(listener);
 
 				return eventPropogated;
 			});
