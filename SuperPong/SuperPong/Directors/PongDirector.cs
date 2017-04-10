@@ -15,15 +15,22 @@ namespace SuperPong.Directors
 
 		ProcessManager _processManager = new ProcessManager();
 
+		readonly Family _ballFamily = Family.All(typeof(BallComponent), typeof(TransformComponent)).Get();
+
+		readonly ImmutableList<Entity> _ballEntities;
+
 		public PongDirector(IPongDirectorOwner owner)
 		{
 			_owner = owner;
+
+			_ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
 		}
 
 		public void RegisterEvents()
 		{
 			EventManager.Instance.RegisterListener<StartEvent>(this);
 			EventManager.Instance.RegisterListener<GoalEvent>(this);
+			EventManager.Instance.RegisterListener<BallBounceEvent>(this);
 		}
 
 		public void UnregisterEvents()
@@ -40,6 +47,10 @@ namespace SuperPong.Directors
 			if (evt is GoalEvent)
 			{
 				HandleGoal(evt as GoalEvent);
+			}
+			if (evt is BallBounceEvent)
+			{
+				HandleBallBounce(evt as BallBounceEvent);
 			}
 
 			return false;
@@ -72,6 +83,19 @@ namespace SuperPong.Directors
 			}
 
 			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture, direction));
+		}
+
+		void HandleBallBounce(BallBounceEvent ballBounceEvent)
+		{
+			// Only if it is a paddle
+			if (ballBounceEvent.Collider.HasComponent<PaddleComponent>())
+			{
+				foreach (Entity ballEntity in _ballEntities)
+				{
+					BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
+					ballComp.Velocity += Constants.Pong.BALL_SPEED_INCREASE;
+				}
+			}
 		}
 	}
 
