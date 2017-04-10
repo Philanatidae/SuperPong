@@ -17,6 +17,13 @@ namespace SuperPong.Constants
 		public static readonly float EDGE_WIDTH = PLAYFIELD_WIDTH;
 		public static readonly float EDGE_HEIGHT = 3f;
 
+		public static readonly int LIVES_LEFT_POSITION_X = -250;
+		public static readonly int LIVES_RIGHT_POSITION_X = 215;
+		public static readonly int LIVES_ICON_LEFT_POSITION_X = LIVES_LEFT_POSITION_X + 35;
+		public static readonly int LIVES_ICON_RIGHT_POSITION_X = LIVES_RIGHT_POSITION_X + 35;
+		public static readonly int LIVES_POSITION_Y = 225;
+		public static readonly int LIVES_COUNT = 3;
+
 		public static readonly float PADDLE_WIDTH = 10;
 		public static readonly float PADDLE_HEIGHT = 60;
 		public static readonly float PADDLE_SPEED = 240;

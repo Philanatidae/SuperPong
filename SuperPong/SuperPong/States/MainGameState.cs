@@ -154,9 +154,27 @@ namespace SuperPong
 			paddle1.AddComponent(new PlayerComponent(_player1));
 			paddle2.AddComponent(new PlayerComponent(_player2));
 
-			// Lives count
-			LivesEntity.Create(_engine, _livesFont, new Vector2(-250, 225), _player1, 3);
-			LivesEntity.Create(_engine, _livesFont, new Vector2(250, 225), _player2, 3);
+			// Lives
+			LivesEntity.Create(_engine,
+			                   _livesFont,
+			                   new Vector2(Constants.Pong.LIVES_LEFT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
+			                   _player1,
+			                   Constants.Pong.LIVES_COUNT);
+			BallEntity.CreateWithoutBehavior(_engine,
+											 _ballTexture,
+			                                 new Vector2(Constants.Pong.LIVES_ICON_LEFT_POSITION_X,
+			                                             Constants.Pong.LIVES_POSITION_Y),
+											 2);
+			LivesEntity.Create(_engine,
+			                   _livesFont,
+			                   new Vector2(Constants.Pong.LIVES_RIGHT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
+			                   _player2,
+			                   Constants.Pong.LIVES_COUNT);
+			BallEntity.CreateWithoutBehavior(_engine,
+											 _ballTexture,
+			                                 new Vector2(Constants.Pong.LIVES_ICON_RIGHT_POSITION_X,
+														 Constants.Pong.LIVES_POSITION_Y),
+											 2);
 		}
 
 		public override void Update(GameTime gameTime)
