@@ -9,6 +9,22 @@ namespace SuperPong.Processes
 
 		public void Attach(Process process)
 		{
+			// Commands are special, since they can be ran in 0 ticks
+			if (process is Command)
+			{
+				// Doesn't use time, so we can pass null
+				process.Update(null);
+
+				// Attach the next process, if there is one
+				if (process.Next != null)
+				{
+					Attach(process.Next);
+					process.SetNext(null);
+				}
+
+				return;
+			}
+
 			_processList.Add(process);
 			process.SetActive(true);
 		}
