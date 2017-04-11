@@ -1,4 +1,5 @@
-﻿using ECS;
+﻿using System;
+using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,8 +21,12 @@ namespace SuperPong.Directors
 
 		readonly ImmutableList<Entity> _ballEntities;
 
+		readonly Random _random = new Random();
+
 		int player1Lives = Constants.Pong.LIVES_COUNT;
 		int player2Lives = Constants.Pong.LIVES_COUNT;
+
+		readonly Timer _fluctuationTimer = new Timer(0);
 
 		public PongDirector(IPongDirectorOwner owner)
 		{
@@ -35,6 +40,7 @@ namespace SuperPong.Directors
 			EventManager.Instance.RegisterListener<StartEvent>(this);
 			EventManager.Instance.RegisterListener<GoalEvent>(this);
 			EventManager.Instance.RegisterListener<BallBounceEvent>(this);
+			EventManager.Instance.RegisterListener<FluctuationEndEvent>(this);
 		}
 
 		public void UnregisterEvents()
@@ -56,6 +62,10 @@ namespace SuperPong.Directors
 			{
 				HandleBallBounce(evt as BallBounceEvent);
 			}
+			if (evt is FluctuationEndEvent)
+			{
+				HandleFluctuationEnd(evt as FluctuationEndEvent);
+			}
 
 			return false;
 		}
@@ -63,6 +73,35 @@ namespace SuperPong.Directors
 		public void Update(GameTime gameTime)
 		{
 			_processManager.Update(gameTime);
+
+			_fluctuationTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			if (_fluctuationTimer.HasElapsed())
+			{
+				AttachRandomFluctuation();
+			}
+		}
+
+		void ResetFluctuationTimer()
+		{
+			float duration = (float)(_random.NextDouble()
+									* (Constants.Fluctuations.TIMER_MAX - Constants.Fluctuations.TIMER_MIN)
+									+ Constants.Fluctuations.TIMER_MIN);
+			_fluctuationTimer.Reset(duration);
+			_fluctuationTimer.Enabled = true;
+		}
+
+		void AttachRandomFluctuation()
+		{
+			int id = _random.Next(1, Constants.Fluctuations.FLUCTUATIONS_COUNT);
+			switch (id)
+			{
+				case 1:
+					_processManager.Attach(new WarpFluctuation(_owner));
+					break;
+					default:
+					throw new NotImplementedException();
+			}
+			_fluctuationTimer.Enabled = false;
 		}
 
 		// HANDLERS!
@@ -71,7 +110,8 @@ namespace SuperPong.Directors
 			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture,
 			                                      Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES));
 
-			_processManager.Attach(new WarpFluctuation(_owner));
+
+			ResetFluctuationTimer();
 		}
 
 		void HandleGoal(GoalEvent goalEvent)
@@ -122,6 +162,11 @@ namespace SuperPong.Directors
 					ballComp.Velocity += Constants.Pong.BALL_SPEED_INCREASE;
 				}
 			}
+		}
+
+		void HandleFluctuationEnd(FluctuationEndEvent fluctuationEndEvent)
+		{
+			ResetFluctuationTimer();
 		}
 	}
 

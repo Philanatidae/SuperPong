@@ -34,11 +34,14 @@ namespace SuperPong.Fluctuations
 			_warpEffect.Parameters["speed"].SetValue(Constants.Fluctuations.WARP_SPEED);
 
 			_owner.PongRenderEffect = _warpEffect;
+
+			base.OnInitialize();
 		}
 
 		protected override void OnKill()
 		{
 			_owner.PongRenderEffect = null;
+			base.OnKill();
 		}
 
 		protected override void OnTogglePause()
