@@ -3,7 +3,7 @@
 
 /outputDir:bin/$(Platform)
 /intermediateDir:obj/$(Platform)
-/platform:MacOSX
+/platform:DesktopGL
 /config:
 /profile:Reach
 /compress:False
@@ -50,9 +50,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/pong/paddle.png
 
-#begin effects/WarpEffect.xnb
-/copy:effects/WarpEffect.xnb
-
 #begin textures/pong/GoalLine.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -71,5 +68,10 @@
 /build:fonts/Lives.fnt
 
 #begin fonts/Lives_0.png
-/copy:fonts/Lives_0.png
+/importer:
+/processor:
+/build:fonts/Lives_0.png
+
+#begin effects/WarpEffect.xnb
+/copy:effects/WarpEffect.xnb
 

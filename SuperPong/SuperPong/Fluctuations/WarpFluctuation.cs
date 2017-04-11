@@ -77,6 +77,7 @@ namespace SuperPong.Fluctuations
 
 			_warpEffect.Parameters["time"].SetValue((float)(Math.Cos(_effectTime) * 2 * MathHelper.Pi));
 			_warpEffect.Parameters["speed"].SetValue(Constants.Fluctuations.WARP_SPEED);
+            _warpEffect.Parameters["amplitude"].SetValue(Constants.Fluctuations.WARP_AMPLITUDE);
 		}
 	}
 }
