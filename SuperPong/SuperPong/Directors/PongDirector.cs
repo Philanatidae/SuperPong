@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Components;
 using SuperPong.Events;
+using SuperPong.Fluctuations;
 using SuperPong.Processes;
 using SuperPong.Processes.Pong;
 
@@ -69,6 +70,8 @@ namespace SuperPong.Directors
 		{
 			_processManager.Attach(new CreateBall(_owner.Engine, _owner.BallTexture,
 			                                      Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES));
+
+			_processManager.Attach(new WarpFluctuation(_owner));
 		}
 
 		void HandleGoal(GoalEvent goalEvent)
@@ -129,7 +132,18 @@ namespace SuperPong.Directors
 			get;
 		}
 
+		Effect PongRenderEffect
+		{
+			get;
+			set;
+		}
+
 		Texture2D BallTexture
+		{
+			get;
+		}
+
+		Effect WarpEffect
 		{
 			get;
 		}

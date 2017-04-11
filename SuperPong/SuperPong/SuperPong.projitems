@@ -60,6 +60,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\LivesEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\LivesSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\PlayerLostEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\WarpFluctuation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\Fluctuation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Fluctuations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Timer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Easing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MathUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -73,5 +79,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
     <Folder Include="$(MSBuildThisFileDirectory)Processes\Pong\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
   </ItemGroup>
 </Project>

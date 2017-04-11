@@ -50,7 +50,7 @@ namespace SuperPong.Processes
 			if (_initialUpdate)
 			{
 				OnInitialize();
-				_initialUpdate = true;
+				_initialUpdate = false;
 			}
 			OnUpdate(gameTime);
 		}

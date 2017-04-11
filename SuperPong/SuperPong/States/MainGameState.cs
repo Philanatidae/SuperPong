@@ -1,5 +1,4 @@
-﻿using System;
-using ECS;
+﻿using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +8,6 @@ using SuperPong.Components;
 using SuperPong.Directors;
 using SuperPong.Entities;
 using SuperPong.Events;
-using SuperPong.Input;
 using SuperPong.Systems;
 
 namespace SuperPong
@@ -36,6 +34,7 @@ namespace SuperPong
 		Texture2D _edgeTexture;
 		Texture2D _goalTexture;
 		BitmapFont _livesFont;
+		Effect _warpEffect;
 
 		Camera _mainCamera;
 		Camera _pongCamera;
@@ -71,6 +70,20 @@ namespace SuperPong
 			get
 			{
 				return _player2;
+			}
+		}
+
+		public Effect PongRenderEffect
+		{
+			get;
+			set;
+		}
+
+		public Effect WarpEffect
+		{
+			get
+			{
+				return _warpEffect;
 			}
 		}
 
@@ -132,6 +145,8 @@ namespace SuperPong
 			_goalTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
 
 			_livesFont = Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
+
+			_warpEffect = Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
 		}
 
 		public override void Show()
@@ -231,7 +246,7 @@ namespace SuperPong
 			                                SamplerState.PointWrap,
 			                               null,
 			                               null,
-			                               null,
+			                                PongRenderEffect,
 			                                _mainCamera.TransformMatrix);
 			_renderSystem.SpriteBatch.Draw(_pongRenderTarget,
 			                               Constants.Pong.BUFFER_RENDER_POSITION * RenderSystem.FlipY,
