@@ -56,7 +56,7 @@ namespace SuperPong.Fluctuations
 			switch (_state)
 			{
 				case State.In:
-					_amplitude = MathUtils.Clamp(0, 1, Easings.QuinticEaseInOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_IN_TIME));
+					_amplitude = MathUtils.Clamp(0, 1, Easings.QuarticEaseOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_IN_TIME));
 
 					if (_stateTimer.HasElapsed())
 					{
@@ -74,7 +74,7 @@ namespace SuperPong.Fluctuations
 					}
 					break;
 				case State.Out:
-					_amplitude = MathUtils.Clamp(0, 1, 1 - Easings.QuinticEaseInOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_OUT_TIME));
+					_amplitude = MathUtils.Clamp(0, 1, 1 - Easings.QuarticEaseOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_OUT_TIME));
 
 					if (_stateTimer.HasElapsed())
 					{
