@@ -19,6 +19,7 @@ namespace SuperPong.Fluctuations
 		readonly Effect _warpEffect;
 		Timer _stateTimer;
 		float _effectTime;
+		float _amplitude;
 
 		public WarpFluctuation(IPongDirectorOwner _owner):base(_owner)
 		{
@@ -52,6 +53,8 @@ namespace SuperPong.Fluctuations
 			switch (_state)
 			{
 				case State.In:
+					_amplitude = MathUtils.Clamp(0, 1, Easings.QuinticEaseInOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_IN_TIME));
+
 					if (_stateTimer.HasElapsed())
 					{
 						_state = State.Steady;
@@ -68,6 +71,8 @@ namespace SuperPong.Fluctuations
 					}
 					break;
 				case State.Out:
+					_amplitude = MathUtils.Clamp(0, 1, 1 - Easings.QuinticEaseInOut(_stateTimer.Elapsed / Constants.Fluctuations.WARP_OUT_TIME));
+
 					if (_stateTimer.HasElapsed())
 					{
 						Kill();
@@ -77,7 +82,7 @@ namespace SuperPong.Fluctuations
 
 			_warpEffect.Parameters["time"].SetValue((float)(Math.Cos(_effectTime) * 2 * MathHelper.Pi));
 			_warpEffect.Parameters["speed"].SetValue(Constants.Fluctuations.WARP_SPEED);
-            _warpEffect.Parameters["amplitude"].SetValue(Constants.Fluctuations.WARP_AMPLITUDE);
+			_warpEffect.Parameters["amplitude"].SetValue(_amplitude * Constants.Fluctuations.WARP_AMPLITUDE);
 		}
 	}
 }

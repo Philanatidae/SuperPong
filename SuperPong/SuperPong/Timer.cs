@@ -5,6 +5,14 @@
 		float _duration;
 		float _elapsedTime;
 
+		public float Elapsed
+		{
+			get
+			{
+				return _elapsedTime;
+			}
+		}
+
 		public Timer(float duration)
 		{
 			_duration = duration;
