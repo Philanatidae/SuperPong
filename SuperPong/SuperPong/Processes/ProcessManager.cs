@@ -7,6 +7,14 @@ namespace SuperPong.Processes
 	{
 		List<Process> _processList = new List<Process>();
 
+		public Process[] Processes
+		{
+			get
+			{
+				return _processList.ToArray();
+			}
+		}
+
 		public void Attach(Process process)
 		{
 			// Commands are special, since they can be ran in 0 ticks

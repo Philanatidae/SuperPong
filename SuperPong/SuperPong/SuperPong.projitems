@@ -68,6 +68,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\MathUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\FluctuationEndEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\FluctuationBeginEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\DelegateCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

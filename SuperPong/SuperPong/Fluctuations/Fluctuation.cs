@@ -14,6 +14,8 @@ namespace SuperPong.Fluctuations
 			this._owner = _owner;
 		}
 
+		public abstract void SoftEnd();
+
 		protected override void OnInitialize()
 		{
 			EventManager.Instance.QueueEvent(new FluctuationBeginEvent(this));
