@@ -23,7 +23,7 @@ namespace SuperPong.Fluctuations
 
 		public WarpFluctuation(IPongDirectorOwner _owner):base(_owner)
 		{
-			_warpEffect = _owner.WarpEffect;
+			_warpEffect = _owner.Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
 		}
 
 		protected override void OnInitialize()

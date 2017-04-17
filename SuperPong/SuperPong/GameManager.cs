@@ -86,6 +86,7 @@ namespace SuperPong
 			_currentState.Initialize();
 
 			_currentState.LoadContent();
+			_currentState.Content.Locked = true;
 			_currentState.Show();
 		}
 

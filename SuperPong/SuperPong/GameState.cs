@@ -2,6 +2,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using SuperPong.Content;
 
 namespace SuperPong
 {
@@ -12,7 +13,7 @@ namespace SuperPong
 			get;
 			private set;
 		}
-		protected ContentManager Content
+		public LockingContentManager Content
 		{
 			get;
 			private set;
@@ -22,7 +23,7 @@ namespace SuperPong
 		{
 			GameManager = gameManager;
 
-			Content = new ContentManager(gameManager.Services);
+			Content = new LockingContentManager(gameManager.Services);
 			Content.RootDirectory = "Content";
 		}
 

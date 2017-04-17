@@ -1,6 +1,8 @@
-﻿using ECS;
+﻿using System;
+using ECS;
 using Events;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 using SuperPong.Common;
@@ -29,13 +31,6 @@ namespace SuperPong
 
 		PongDirector _director;
 
-		Texture2D _paddleTexture;
-		Texture2D _ballTexture;
-		Texture2D _edgeTexture;
-		Texture2D _goalTexture;
-		BitmapFont _livesFont;
-		Effect _warpEffect;
-
 		Camera _mainCamera;
 		Camera _pongCamera;
 
@@ -46,14 +41,6 @@ namespace SuperPong
 			get
 			{
 				return _engine;
-			}
-		}
-
-		public Texture2D BallTexture
-		{
-			get
-			{
-				return _ballTexture;
 			}
 		}
 
@@ -79,11 +66,11 @@ namespace SuperPong
 			set;
 		}
 
-		public Effect WarpEffect
+		ContentManager IPongDirectorOwner.Content
 		{
 			get
 			{
-				return _warpEffect;
+				return Content;
 			}
 		}
 
@@ -139,14 +126,14 @@ namespace SuperPong
 
 		public override void LoadContent()
 		{
-			_paddleTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
-			_ballTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
-			_edgeTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
-			_goalTexture = Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
+			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
+			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
+			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
+			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
 
-			_livesFont = Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
+			Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 
-			_warpEffect = Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
+			Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
 		}
 
 		public override void Show()
@@ -157,52 +144,52 @@ namespace SuperPong
 
 		void CreateEntities()
 		{
-			EdgeEntity.Create(_engine, _edgeTexture,
+			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
 							  new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2),
 			                  new Vector2(0, -1)); // Top edge points down
-			EdgeEntity.Create(_engine, _edgeTexture,
+			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
 			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
 			                  new Vector2(0, 1)); // Bottom edge points up
 
 			// Player 1 goal
-			GoalEntity.Create(_engine, _player1, _goalTexture,
+			GoalEntity.Create(_engine, _player1, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
 			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
 			// Player 2 goal
-			GoalEntity.Create(_engine, _player2, _goalTexture,
+			GoalEntity.Create(_engine, _player2, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
 			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
 
 			Entity paddle1 = PaddleEntity.Create(_engine,
-			                                     	_paddleTexture,
-			                                         new Vector2(-Constants.Pong.PADDLE_STARTING_X,
-			                                                     Constants.Pong.PADDLE_STARTING_Y),
-			                                         new Vector2(1, 0)); // Left paddle normal points right
+			                                     Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+		                                         new Vector2(-Constants.Pong.PADDLE_STARTING_X,
+		                                                     Constants.Pong.PADDLE_STARTING_Y),
+		                                         new Vector2(1, 0)); // Left paddle normal points right
 			Entity paddle2 = PaddleEntity.Create(_engine,
-                                 _paddleTexture,
-								 new Vector2(Constants.Pong.PADDLE_STARTING_X,
-											 Constants.Pong.PADDLE_STARTING_Y),
-								 new Vector2(-1, 0)); // Right paddle normal points left
+			                                     Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+												 new Vector2(Constants.Pong.PADDLE_STARTING_X,
+															 Constants.Pong.PADDLE_STARTING_Y),
+												 new Vector2(-1, 0)); // Right paddle normal points left
 
 			paddle1.AddComponent(new PlayerComponent(_player1));
 			paddle2.AddComponent(new PlayerComponent(_player2));
 
 			// Lives
 			LivesEntity.Create(_engine,
-			                   _livesFont,
+			                   Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
 			                   new Vector2(Constants.Pong.LIVES_LEFT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
 			                   _player1,
 			                   Constants.Pong.LIVES_COUNT);
 			BallEntity.CreateWithoutBehavior(_engine,
-											 _ballTexture,
+			                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
 			                                 new Vector2(Constants.Pong.LIVES_ICON_LEFT_POSITION_X,
 			                                             Constants.Pong.LIVES_POSITION_Y),
 											 2);
 			LivesEntity.Create(_engine,
-			                   _livesFont,
+			                   Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
 			                   new Vector2(Constants.Pong.LIVES_RIGHT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
 			                   _player2,
 			                   Constants.Pong.LIVES_COUNT);
 			BallEntity.CreateWithoutBehavior(_engine,
-											 _ballTexture,
+			                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
 			                                 new Vector2(Constants.Pong.LIVES_ICON_RIGHT_POSITION_X,
 														 Constants.Pong.LIVES_POSITION_Y),
 											 2);

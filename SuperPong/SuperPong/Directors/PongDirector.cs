@@ -2,6 +2,7 @@
 using ECS;
 using Events;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Components;
 using SuperPong.Events;
@@ -138,7 +139,7 @@ namespace SuperPong.Directors
 
 			_state = DirectorState.InProgress;
 
-			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.BallTexture, direction))
+			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL), direction))
 			                  .SetNext(new DelegateCommand(() =>
 							  {
 								  ResetFluctuationTimer();
@@ -271,12 +272,7 @@ namespace SuperPong.Directors
 			set;
 		}
 
-		Texture2D BallTexture
-		{
-			get;
-		}
-
-		Effect WarpEffect
+		ContentManager Content
 		{
 			get;
 		}
