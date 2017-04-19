@@ -71,6 +71,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Processes\DelegateCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Content\LockingContentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Content\ContentLockedException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitForEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

@@ -33,7 +33,6 @@ namespace SuperPong.Directors
 		readonly Timer _fluctuationTimer = new Timer(0);
 
 		DirectorState _state = DirectorState.WaitingToStart;
-		Process _ballPlayProcess = null;
 
 		int player1Lives = Constants.Pong.LIVES_COUNT;
 		int player2Lives = Constants.Pong.LIVES_COUNT;
@@ -132,7 +131,7 @@ namespace SuperPong.Directors
 			_processManager.Attach(ballReturnSequence);
 
 			float direction = Constants.Pong.BALL_PLAYER2_STARTING_ROTATION_DEGREES;
-			if (playerToServe.Index == 0)
+			if (playerToServe == _owner.Player1)
 			{
 				direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
 			}
@@ -144,6 +143,35 @@ namespace SuperPong.Directors
 							  {
 								  ResetFluctuationTimer();
 							  }));
+		}
+
+		// GETTERS!
+		bool IsFluctuationAttached()
+		{
+			return GetCurrentFluctuation() != null;
+		}
+
+		Fluctuation GetCurrentFluctuation()
+		{
+			foreach (Process process in _processManager.Processes)
+			{
+				Fluctuation fluctuation = process as Fluctuation;
+				if (fluctuation != null)
+				{
+					return fluctuation;
+				}
+			}
+
+			return null;
+		}
+
+		void EndCurrentFluctuation()
+		{
+			Fluctuation runningFluctuation = GetCurrentFluctuation();
+			if (runningFluctuation != null)
+			{
+				runningFluctuation.SoftEnd();
+			}
 		}
 
 		// HANDLERS!
@@ -162,43 +190,24 @@ namespace SuperPong.Directors
 
 			if (goalComp.For.Index == 0)
 			{
-				player1Lives--;
-				if (player1Lives <= 0)
+				if (--player1Lives <= 0)
 				{
 					EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player1, _owner.Player2));
-
-					foreach (Process process in _processManager.Processes)
-					{
-						Fluctuation fluctuation = process as Fluctuation;
-						if (fluctuation != null)
-						{
-							fluctuation.SoftEnd();
-							break;
-						}
-					}
+					EndCurrentFluctuation();
 					return;
 				}
 			}
 			if (goalComp.For.Index == 1)
 			{
-				player2Lives--;
-				if (player2Lives <= 0)
+				if (--player2Lives <= 0)
 				{
 					EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player2, _owner.Player1));
-
-					foreach (Process process in _processManager.Processes)
-					{
-						Fluctuation fluctuation = process as Fluctuation;
-						if (fluctuation != null)
-						{
-							fluctuation.SoftEnd();
-							break;
-						}
-					}
+					EndCurrentFluctuation();
 					return;
 				}
 			}
 
+			// Queue processes for next ball serve
 			Process ballPlayProcess = new DelegateCommand(() =>
 			{
 				if (goalComp.For.Index == 0)
@@ -211,19 +220,19 @@ namespace SuperPong.Directors
 				}
 			});
 
-			foreach (Process process in _processManager.Processes)
+			// If there is a fluctuation, attach the serve to the fluctuation's end
+			if (IsFluctuationAttached())
 			{
-				Fluctuation fluctuation = process as Fluctuation;
-				if (fluctuation != null)
-				{
-					fluctuation.SoftEnd();
-					_state = DirectorState.WaitingForFluctuationEnd;
-					_ballPlayProcess = ballPlayProcess;
+				EndCurrentFluctuation();
+				_state = DirectorState.WaitingForFluctuationEnd;
 
-					return;
-				}
+				WaitForEvent fluctuationEnd = new WaitForEvent(typeof(FluctuationEndEvent));
+				fluctuationEnd.SetNext(ballPlayProcess);
+				_processManager.Attach(fluctuationEnd);
+				return;
 			}
 
+			// Attach the serve
 			_processManager.Attach(ballPlayProcess);
 		}
 
@@ -242,12 +251,7 @@ namespace SuperPong.Directors
 
 		void HandleFluctuationEnd(FluctuationEndEvent fluctuationEndEvent)
 		{
-			if (_state == DirectorState.WaitingForFluctuationEnd)
-			{
-				_processManager.Attach(_ballPlayProcess);
-				_ballPlayProcess = null;
-			}
-			else if(_state == DirectorState.InProgress)
+			if(_state == DirectorState.InProgress)
 			{
 				ResetFluctuationTimer();
 			}

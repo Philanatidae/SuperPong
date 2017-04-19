@@ -13,7 +13,7 @@ namespace Events
 			{
 				return instance;
 			}
-		}
+		}	
 
 		Dictionary<Type, List<IEventListener>> _listeners = new Dictionary<Type, List<IEventListener>>();
 		List<IEvent> _queue = new List<IEvent>();
@@ -83,8 +83,9 @@ namespace Events
 		{
 			EnsureInitiatedListener(evt.GetType());
 
-			foreach (IEventListener listener in _listeners[evt.GetType()])
+			for (int i = _listeners[evt.GetType()].Count - 1; i >= 0; i--)
 			{
+				IEventListener listener = _listeners[evt.GetType()][i];
 				if (listener.Handle(evt))
 				{
 					return true;
