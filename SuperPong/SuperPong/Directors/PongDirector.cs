@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Components;
+using SuperPong.Entities;
 using SuperPong.Events;
 using SuperPong.Fluctuations;
 using SuperPong.Processes;
@@ -31,6 +32,7 @@ namespace SuperPong.Directors
 		readonly ImmutableList<Entity> _ballEntities;
 
 		readonly Timer _fluctuationTimer = new Timer(0);
+		bool _fluctuationTimerEnabled = false;
 
 		DirectorState _state = DirectorState.WaitingToStart;
 
@@ -42,8 +44,6 @@ namespace SuperPong.Directors
 			_owner = owner;
 
 			_ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
-
-			_fluctuationTimer.Enabled = false;
 		}
 
 		public void RegisterEvents()
@@ -93,10 +93,13 @@ namespace SuperPong.Directors
 			switch (_state)
 			{
 				case DirectorState.InProgress:
-					_fluctuationTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-					if (_fluctuationTimer.HasElapsed())
+					if (_fluctuationTimerEnabled)
 					{
-						AttachRandomFluctuation();
+						_fluctuationTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+						if (_fluctuationTimer.HasElapsed())
+						{
+							AttachRandomFluctuation();
+						}
 					}
 					break;
 			}
@@ -108,7 +111,7 @@ namespace SuperPong.Directors
 									* (Constants.Fluctuations.TIMER_MAX - Constants.Fluctuations.TIMER_MIN)
 									+ Constants.Fluctuations.TIMER_MIN);
 			_fluctuationTimer.Reset(duration);
-			_fluctuationTimer.Enabled = true;
+			_fluctuationTimerEnabled = true;
 		}
 
 		void AttachRandomFluctuation()
@@ -122,7 +125,8 @@ namespace SuperPong.Directors
 					default:
 					throw new NotImplementedException();
 			}
-			_fluctuationTimer.Enabled = false;
+
+			_fluctuationTimerEnabled = false;
 		}
 
 		void PlayNewBall(Player playerToServe)
@@ -136,13 +140,15 @@ namespace SuperPong.Directors
 				direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
 			}
 
-			_state = DirectorState.InProgress;
-
-			ballReturnSequence.SetNext(new CreateBall(_owner.Engine, _owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL), direction))
-			                  .SetNext(new DelegateCommand(() =>
-							  {
-								  ResetFluctuationTimer();
-							  }));
+			ballReturnSequence.SetNext(new DelegateCommand(() =>
+			{
+				BallEntity.Create(_owner.Engine,
+				                  _owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
+				                  Vector2.Zero,
+				                  direction);
+				ResetFluctuationTimer();
+				_state = DirectorState.InProgress;
+			}));
 		}
 
 		// GETTERS!
@@ -177,8 +183,6 @@ namespace SuperPong.Directors
 		// HANDLERS!
 		void HandleStart(StartEvent startEvent)
 		{
-			_state = DirectorState.InProgress;
-
 			PlayNewBall(_owner.Player1);
 		}
 

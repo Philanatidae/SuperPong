@@ -4,11 +4,6 @@
 	{
 		float _duration;
 		float _elapsedTime;
-		public bool Enabled
-		{
-			get;
-			set;
-		} = true;
 
 		public float Elapsed
 		{
@@ -25,15 +20,12 @@
 
 		public void Update(float dt)
 		{
-			if (Enabled)
-			{
-				_elapsedTime += dt;
-			}
+			_elapsedTime += dt;
 		}
 
 		public bool HasElapsed()
 		{
-			return _elapsedTime >= _duration && Enabled;
+			return _elapsedTime >= _duration;
 		}
 
 		public void Reset()
