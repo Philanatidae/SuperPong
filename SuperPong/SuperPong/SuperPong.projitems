@@ -53,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\IntervalProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directors\PongDirector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processes\Pong\CreateBall.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Command.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\StartEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\LivesComponent.cs" />
@@ -84,7 +83,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)States\" />
     <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Processes\Pong\" />
     <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
   </ItemGroup>
 </Project>

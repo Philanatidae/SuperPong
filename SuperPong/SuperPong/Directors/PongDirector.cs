@@ -9,7 +9,6 @@ using SuperPong.Entities;
 using SuperPong.Events;
 using SuperPong.Fluctuations;
 using SuperPong.Processes;
-using SuperPong.Processes.Pong;
 
 namespace SuperPong.Directors
 {
