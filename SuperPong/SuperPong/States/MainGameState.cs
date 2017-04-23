@@ -19,8 +19,6 @@ namespace SuperPong
 		Player _player1;
 		Player _player2;
 
-		float _acculmulator;
-
 		Engine _engine;
 		InputSystem _inputSystem;
 		PaddleSystem _paddleSystem;
@@ -197,19 +195,12 @@ namespace SuperPong
 
 		public override void Update(GameTime gameTime)
 		{
-			_acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+			_inputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-			while (_acculmulator >= Constants.Global.TICK_RATE)
-			{
-				_acculmulator -= Constants.Global.TICK_RATE;
-
-				_inputSystem.Update(Constants.Global.TICK_RATE);
-
-				_paddleSystem.Update(Constants.Global.TICK_RATE);
-				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
-				_goalSystem.Update(Constants.Global.TICK_RATE);
-				_livesSystem.Update(Constants.Global.TICK_RATE);
-			}
+			_paddleSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			_ballMovementSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			_goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			_livesSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
 			_director.Update(gameTime);
 		}

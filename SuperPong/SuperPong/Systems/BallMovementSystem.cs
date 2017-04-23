@@ -19,6 +19,8 @@ namespace SuperPong.Systems
 		Family _edgeFamily = Family.All(typeof(EdgeComponent), typeof(TransformComponent)).Get();
 		ImmutableList<Entity> _edgeEntities;
 
+		float _acculmulator;
+
 		public BallMovementSystem(Engine engine) : base(engine)
 		{
 			_ballEntities = engine.GetEntitiesFor(_ballFamily);
@@ -28,11 +30,23 @@ namespace SuperPong.Systems
 
 		public override void Update(float dt)
 		{
+			_acculmulator += dt;
+
+			while (_acculmulator >= Constants.Global.TICK_RATE)
+			{
+				_acculmulator -= Constants.Global.TICK_RATE;
+
+				Tick();
+			}
+		}
+
+		void Tick()
+		{
 			foreach (Entity ballEntity in _ballEntities)
 			{
 				processCollision(ballEntity);
 
-				processMovement(ballEntity, dt);
+				processMovement(ballEntity, Constants.Global.TICK_RATE);
 			}
 		}
 
