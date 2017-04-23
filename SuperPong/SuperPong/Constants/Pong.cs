@@ -26,7 +26,7 @@ namespace SuperPong.Constants
 
 		public static readonly float PADDLE_WIDTH = 10;
 		public static readonly float PADDLE_HEIGHT = 60;
-		public static readonly float PADDLE_SPEED = 240;
+		public static readonly float PADDLE_SPEED = 350;
 		public static readonly float PADDLE_STARTING_X = PLAYFIELD_WIDTH / 2 - 2.5f * PADDLE_WIDTH;
 		public static readonly float PADDLE_STARTING_Y = 0;
 
@@ -34,7 +34,7 @@ namespace SuperPong.Constants
 		public static readonly float BALL_HEIGHT = 15;
 		public static readonly float BALL_PLAYER1_STARTING_ROTATION_DEGREES = 135;
 		public static readonly float BALL_PLAYER2_STARTING_ROTATION_DEGREES = 45;
-		public static readonly float BALL_STARTING_VELOCITY = 200.0f;
+		public static readonly float BALL_STARTING_VELOCITY = 350.0f;
 		public static readonly float BALL_MAX_TRAVEL_ANGLE_DEGREES = 60.0f;
 		public static readonly float BALL_SPEED_INCREASE = 10.0f;
 
