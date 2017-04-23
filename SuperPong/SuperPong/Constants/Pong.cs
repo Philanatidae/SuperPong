@@ -22,7 +22,7 @@ namespace SuperPong.Constants
 		public static readonly int LIVES_ICON_LEFT_POSITION_X = LIVES_LEFT_POSITION_X + 35;
 		public static readonly int LIVES_ICON_RIGHT_POSITION_X = LIVES_RIGHT_POSITION_X + 35;
 		public static readonly int LIVES_POSITION_Y = 265;
-		public static readonly int LIVES_COUNT = 3;
+		public static readonly int LIVES_COUNT = 5;
 
 		public static readonly float PADDLE_WIDTH = 10;
 		public static readonly float PADDLE_HEIGHT = 60;
