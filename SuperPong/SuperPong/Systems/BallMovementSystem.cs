@@ -19,8 +19,6 @@ namespace SuperPong.Systems
 		Family _edgeFamily = Family.All(typeof(EdgeComponent), typeof(TransformComponent)).Get();
 		ImmutableList<Entity> _edgeEntities;
 
-		float _acculmulator;
-
 		public BallMovementSystem(Engine engine) : base(engine)
 		{
 			_ballEntities = engine.GetEntitiesFor(_ballFamily);
@@ -30,23 +28,11 @@ namespace SuperPong.Systems
 
 		public override void Update(float dt)
 		{
-			_acculmulator += dt;
-
-			while (_acculmulator >= Constants.Global.TICK_RATE)
-			{
-				_acculmulator -= Constants.Global.TICK_RATE;
-
-				Tick();
-			}
-		}
-
-		void Tick()
-		{
 			foreach (Entity ballEntity in _ballEntities)
 			{
 				processCollision(ballEntity);
 
-				processMovement(ballEntity, Constants.Global.TICK_RATE);
+				processMovement(ballEntity, dt);
 			}
 		}
 
@@ -154,8 +140,8 @@ namespace SuperPong.Systems
 			TransformComponent transformComp = ballEntity.GetComponent<TransformComponent>();
 			BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
 
-			transformComp.Position.X += (float)Math.Cos(ballComp.Direction) * ballComp.Velocity * dt;
-			transformComp.Position.Y += (float)Math.Sin(ballComp.Direction) * ballComp.Velocity * dt;
+			transformComp.Move((float)Math.Cos(ballComp.Direction) * ballComp.Velocity * dt,
+							   (float)Math.Sin(ballComp.Direction) * ballComp.Velocity * dt);
 		}
 
 		Vector2 getReflectionVector(Vector2 colliding, Vector2 normal)

@@ -1,4 +1,5 @@
-﻿using ECS;
+﻿using System;
+using ECS;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
@@ -35,17 +36,17 @@ namespace SuperPong.Systems
 			_spriteBatch = new SpriteBatch(graphics);
 		}
 
-		public void DrawEntities(GameTime gameTime)
+		public void DrawEntities(GameTime gameTime, float betweenFrameAlpha)
 		{
-			DrawEntities(Constants.Render.GROUP_MASK_ALL, gameTime);
+			DrawEntities(Constants.Render.GROUP_MASK_ALL, gameTime, betweenFrameAlpha);
 		}
 
-		public void DrawEntities(byte groupMask, GameTime gameTime)
+		public void DrawEntities(byte groupMask, GameTime gameTime, float betweenFrameAlpha)
 		{
-			DrawEntities(Matrix.Identity, groupMask, gameTime);
+			DrawEntities(Matrix.Identity, groupMask, gameTime, betweenFrameAlpha);
 		}
 
-		public void DrawEntities(Matrix transformMatrix, byte groupMask, GameTime gameTime)
+		public void DrawEntities(Matrix transformMatrix, byte groupMask, GameTime gameTime, float betweenFrameAlpha)
 		{
 			_spriteBatch.Begin(SpriteSortMode.Deferred,
 							   null,
@@ -64,13 +65,15 @@ namespace SuperPong.Systems
 
 				TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
+				Vector2 offsetPosition = -(transformComp.Position - transformComp.LastPosition) * (1 - betweenFrameAlpha);
+
 				Vector2 scale = new Vector2(spriteComp.Bounds.X / spriteComp.Texture.Width,
 				                            spriteComp.Bounds.Y / spriteComp.Texture.Height);
 				Vector2 origin = new Vector2(spriteComp.Texture.Bounds.Width,
 				                             spriteComp.Texture.Bounds.Height) * HalfHalf;
  
 				_spriteBatch.Draw(spriteComp.Texture,
-								  transformComp.Position * FlipY,
+				                  (transformComp.Position + offsetPosition) * FlipY,
 								  null,
 								  Color.White,
 				                  transformComp.Rotation,

@@ -19,6 +19,8 @@ namespace SuperPong
 		Player _player1;
 		Player _player2;
 
+		float _acculmulator;
+
 		Engine _engine;
 		InputSystem _inputSystem;
 		PaddleSystem _paddleSystem;
@@ -195,28 +197,40 @@ namespace SuperPong
 
 		public override void Update(GameTime gameTime)
 		{
+			// Do not need to be in lock-step
 			_inputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-
-			_paddleSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-			_ballMovementSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-			_goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 			_livesSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			_goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
+			// Deterministic lock-step
+			_acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+			while (_acculmulator >= Constants.Global.TICK_RATE)
+			{
+				_acculmulator -= Constants.Global.TICK_RATE;
+
+				_paddleSystem.Update(Constants.Global.TICK_RATE);
+				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
+			}
+
+			// Lastly update the director
 			_director.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			DrawPong(gameTime);
-			DrawRemainder(gameTime);
+			float betweenFrameAlpha = _acculmulator / Constants.Global.TICK_RATE;
+
+			DrawPong(gameTime, betweenFrameAlpha);
+			DrawRemainder(gameTime, betweenFrameAlpha);
 		}
 
-		void DrawPong(GameTime gameTime)
+		void DrawPong(GameTime gameTime, float betweenFrameAlpha)
 		{
 			GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
 			_renderSystem.DrawEntities(_pongCamera.TransformMatrix,
 							   Constants.Pong.RENDER_GROUP,
-							   gameTime);
+							   gameTime,
+	                           betweenFrameAlpha);
 			GameManager.GraphicsDevice.SetRenderTarget(null);
 
 			_renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
@@ -239,12 +253,13 @@ namespace SuperPong
 			_renderSystem.SpriteBatch.End();
 		}
 
-		void DrawRemainder(GameTime gameTime)
+		void DrawRemainder(GameTime gameTime, float betweenFrameAlpha)
 		{
 			// Render everything else (everything not pong)
 			_renderSystem.DrawEntities(_mainCamera.TransformMatrix,
 							   (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
-							   gameTime);
+							   gameTime,
+	                           betweenFrameAlpha);
 		}
 
 		public override void Dispose()
