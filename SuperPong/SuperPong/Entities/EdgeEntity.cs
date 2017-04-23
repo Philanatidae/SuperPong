@@ -5,19 +5,19 @@ using SuperPong.Components;
 
 namespace SuperPong.Entities
 {
-	public static class EdgeEntity
-	{
-		public static Entity Create(Engine engine, Texture2D texture, Vector2 position, Vector2 normal)
-		{
-			Entity entity = engine.CreateEntity();
+    public static class EdgeEntity
+    {
+        public static Entity Create(Engine engine, Texture2D texture, Vector2 position, Vector2 normal)
+        {
+            Entity entity = engine.CreateEntity();
 
-			entity.AddComponent(new TransformComponent(position));
-			entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.EDGE_WIDTH,
-			                                                             Constants.Pong.EDGE_HEIGHT)));
-			entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
-			entity.AddComponent(new EdgeComponent(normal));
+            entity.AddComponent(new TransformComponent(position));
+            entity.AddComponent(new SpriteComponent(texture, new Vector2(Constants.Pong.EDGE_WIDTH,
+                                                                         Constants.Pong.EDGE_HEIGHT)));
+            entity.GetComponent<SpriteComponent>().RenderGroup = Constants.Pong.RENDER_GROUP;
+            entity.AddComponent(new EdgeComponent(normal));
 
-			return entity;
-		}
-	}
+            return entity;
+        }
+    }
 }

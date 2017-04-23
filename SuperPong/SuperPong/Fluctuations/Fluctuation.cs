@@ -5,25 +5,25 @@ using SuperPong.Processes;
 
 namespace SuperPong.Fluctuations
 {
-	public abstract class Fluctuation : Process
-	{
-		protected readonly IPongDirectorOwner _owner;
+    public abstract class Fluctuation : Process
+    {
+        protected readonly IPongDirectorOwner _owner;
 
-		public Fluctuation(IPongDirectorOwner _owner)
-		{
-			this._owner = _owner;
-		}
+        public Fluctuation(IPongDirectorOwner _owner)
+        {
+            this._owner = _owner;
+        }
 
-		public abstract void SoftEnd();
+        public abstract void SoftEnd();
 
-		protected override void OnInitialize()
-		{
-			EventManager.Instance.QueueEvent(new FluctuationBeginEvent(this));
-		}
+        protected override void OnInitialize()
+        {
+            EventManager.Instance.QueueEvent(new FluctuationBeginEvent(this));
+        }
 
-		protected override void OnKill()
-		{
-			EventManager.Instance.QueueEvent(new FluctuationEndEvent(this));
-		}
-	}
+        protected override void OnKill()
+        {
+            EventManager.Instance.QueueEvent(new FluctuationEndEvent(this));
+        }
+    }
 }

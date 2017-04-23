@@ -20,28 +20,28 @@ namespace SuperPongDesktop
     [Register("AppDelegate")]
     class Program : UIApplicationDelegate
 #else
-	static class Program
+    static class Program
 #endif
-	{
-		private static GameManager game;
+    {
+        private static GameManager game;
 
-		internal static void RunGame()
-		{
-			game = new GameManager();
-			game.Run();
+        internal static void RunGame()
+        {
+            game = new GameManager();
+            game.Run();
 #if !__IOS__ && !__TVOS__
-			game.Dispose();
+            game.Dispose();
 #endif
-		}
+        }
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
 #if !MONOMAC && !__IOS__ && !__TVOS__
-		[STAThread]
+        [STAThread]
 #endif
-		static void Main(string[] args)
-		{
+        static void Main(string[] args)
+        {
 #if MONOMAC
             NSApplication.Init ();
 
@@ -52,9 +52,9 @@ namespace SuperPongDesktop
 #elif __IOS__ || __TVOS__
             UIApplication.Main(args, null, "AppDelegate");
 #else
-			RunGame();
+            RunGame();
 #endif
-		}
+        }
 
 #if __IOS__ || __TVOS__
         public override void FinishedLaunching(UIApplication app)
@@ -62,7 +62,7 @@ namespace SuperPongDesktop
             RunGame();
         }
 #endif
-	}
+    }
 
 #if MONOMAC
     class AppDelegate : NSApplicationDelegate

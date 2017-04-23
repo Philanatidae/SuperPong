@@ -2,10 +2,10 @@
 
 namespace SuperPong.Content
 {
-	public class ContentLockedException : Exception
-	{
-		public ContentLockedException():base("ContentManager is locked.")
-		{
-		}
-	}
+    public class ContentLockedException : Exception
+    {
+        public ContentLockedException() : base("ContentManager is locked.")
+        {
+        }
+    }
 }

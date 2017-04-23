@@ -4,17 +4,17 @@ using SuperPong.Fluctuations;
 
 namespace SuperPong.Events
 {
-	public class FluctuationBeginEvent : IEvent
-	{
-		public Fluctuation Fluctuation
-		{
-			get;
-			private set;
-		}
+    public class FluctuationBeginEvent : IEvent
+    {
+        public Fluctuation Fluctuation
+        {
+            get;
+            private set;
+        }
 
-		public FluctuationBeginEvent(Fluctuation fluctuation)
-		{
-			Fluctuation = fluctuation;
-		}
-	}
+        public FluctuationBeginEvent(Fluctuation fluctuation)
+        {
+            Fluctuation = fluctuation;
+        }
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace SuperPong.Events
 {
-	public class StartEvent : IEvent
-	{
-	}
+    public class StartEvent : IEvent
+    {
+    }
 }

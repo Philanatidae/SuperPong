@@ -1,6 +1,6 @@
 ﻿namespace Events
 {
-	public interface IEvent
-	{
-	}
+    public interface IEvent
+    {
+    }
 }

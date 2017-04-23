@@ -2,7 +2,7 @@
 
 namespace ECS
 {
-	public interface IComponent
-	{
-	}
+    public interface IComponent
+    {
+    }
 }

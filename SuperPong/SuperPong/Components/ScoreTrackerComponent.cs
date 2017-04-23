@@ -2,7 +2,7 @@
 
 namespace SuperPong.Components
 {
-	public class ScoreTrackerComponent : IComponent
-	{
-	}
+    public class ScoreTrackerComponent : IComponent
+    {
+    }
 }

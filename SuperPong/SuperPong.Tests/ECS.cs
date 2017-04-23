@@ -5,124 +5,125 @@ using NUnit.Framework;
 
 namespace SuperPong.Tests
 {
-	[TestFixture]
-	public class ECS
-	{
-		
-		[Test]
-		public void EntityCreation()
-		{
-			Engine engine = new Engine();
+    [TestFixture]
+    public class ECS
+    {
 
-			Entity entity = engine.CreateEntity();
-			Assert.NotNull(entity);
-		}
+        [Test]
+        public void EntityCreation()
+        {
+            Engine engine = new Engine();
 
-		[Test]
-		public void EntityComponents()
-		{
-			Engine engine = new Engine();
-			Entity entity = engine.CreateEntity();
+            Entity entity = engine.CreateEntity();
+            Assert.NotNull(entity);
+        }
 
-			{
-				ECSComponent1 comp = new ECSComponent1();
-				entity.AddComponent(comp);
-				Assert.True(entity.HasComponent<ECSComponent1>());
+        [Test]
+        public void EntityComponents()
+        {
+            Engine engine = new Engine();
+            Entity entity = engine.CreateEntity();
 
-				ECSComponent1 backComp = entity.GetComponent<ECSComponent1>();
-				Assert.NotNull(backComp);
-				Assert.AreSame(comp, backComp);
+            {
+                ECSComponent1 comp = new ECSComponent1();
+                entity.AddComponent(comp);
+                Assert.True(entity.HasComponent<ECSComponent1>());
 
-				entity.RemoveComponent<ECSComponent1>();
-				Assert.False(entity.HasComponent<ECSComponent1>());
-				Assert.NotNull(comp);
-			}
+                ECSComponent1 backComp = entity.GetComponent<ECSComponent1>();
+                Assert.NotNull(backComp);
+                Assert.AreSame(comp, backComp);
 
-			Assert.Catch(typeof(ComponentNotFoundException),
+                entity.RemoveComponent<ECSComponent1>();
+                Assert.False(entity.HasComponent<ECSComponent1>());
+                Assert.NotNull(comp);
+            }
+
+            Assert.Catch(typeof(ComponentNotFoundException),
                         entity.RemoveComponent<ECSComponent1>);
-			
-			{
-				entity.AddComponent(new ECSComponent1());
-				Assert.Catch(typeof(ComponentAlreadyExistsException), () =>
-				{
-					entity.AddComponent(new ECSComponent1());
-				});
-				entity.RemoveComponent<ECSComponent1>();
-			}
 
-			Assert.DoesNotThrow(() => {
-				entity.GetComponent<ECSComponent1>();
-			});
-			Assert.IsNull(entity.GetComponent<ECSComponent1>());
-		}
+            {
+                entity.AddComponent(new ECSComponent1());
+                Assert.Catch(typeof(ComponentAlreadyExistsException), () =>
+                {
+                    entity.AddComponent(new ECSComponent1());
+                });
+                entity.RemoveComponent<ECSComponent1>();
+            }
 
-		[Test]
-		public void Families()
-		{
-			Engine engine = new Engine();
+            Assert.DoesNotThrow(() =>
+            {
+                entity.GetComponent<ECSComponent1>();
+            });
+            Assert.IsNull(entity.GetComponent<ECSComponent1>());
+        }
 
-			Entity entity = engine.CreateEntity();
+        [Test]
+        public void Families()
+        {
+            Engine engine = new Engine();
 
-			entity.AddComponent(new ECSComponent1());
-			Assert.True(Family.All(typeof(ECSComponent1)).Get().Matches(entity));
-			Assert.False(Family.All(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
-			Assert.True(Family.All(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2)).Get().Matches(entity));
-			Assert.True(Family.All(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
-			Assert.True(Family.One(typeof(ECSComponent1)).Get().Matches(entity));
-			Assert.False(Family.Exclude(typeof(ECSComponent1)).Get().Matches(entity));
-			Assert.True(Family.Exclude(typeof(ECSComponent2)).Get().Matches(entity));
+            Entity entity = engine.CreateEntity();
 
-			entity.AddComponent(new ECSComponent2());
-			Assert.True(Family.All(typeof(ECSComponent1)).Get().Matches(entity));
-			Assert.True(Family.All(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
-			Assert.False(Family.All(typeof(ECSComponent1), typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
-			Assert.True(Family.One(typeof(ECSComponent1)).Get().Matches(entity));
-			Assert.True(Family.One(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
-			Assert.True(Family.One(typeof(ECSComponent1), typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
-			Assert.False(Family.One(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2)).Get().Matches(entity));
+            entity.AddComponent(new ECSComponent1());
+            Assert.True(Family.All(typeof(ECSComponent1)).Get().Matches(entity));
+            Assert.False(Family.All(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
+            Assert.True(Family.All(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2)).Get().Matches(entity));
+            Assert.True(Family.All(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
+            Assert.True(Family.One(typeof(ECSComponent1)).Get().Matches(entity));
+            Assert.False(Family.Exclude(typeof(ECSComponent1)).Get().Matches(entity));
+            Assert.True(Family.Exclude(typeof(ECSComponent2)).Get().Matches(entity));
 
-			{
-				Family family1 = Family.All(typeof(ECSComponent1)).One(typeof(ECSComponent2)).Exclude(typeof(ECSComponent3)).Get();
-				Family family2 = Family.All(typeof(ECSComponent1)).One(typeof(ECSComponent2)).Exclude(typeof(ECSComponent3)).Get();
+            entity.AddComponent(new ECSComponent2());
+            Assert.True(Family.All(typeof(ECSComponent1)).Get().Matches(entity));
+            Assert.True(Family.All(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
+            Assert.False(Family.All(typeof(ECSComponent1), typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
+            Assert.True(Family.One(typeof(ECSComponent1)).Get().Matches(entity));
+            Assert.True(Family.One(typeof(ECSComponent1), typeof(ECSComponent2)).Get().Matches(entity));
+            Assert.True(Family.One(typeof(ECSComponent1), typeof(ECSComponent2), typeof(ECSComponent3)).Get().Matches(entity));
+            Assert.False(Family.One(typeof(ECSComponent1)).Exclude(typeof(ECSComponent2)).Get().Matches(entity));
 
-				Assert.AreEqual(family1, family2);
-			}
-		}
+            {
+                Family family1 = Family.All(typeof(ECSComponent1)).One(typeof(ECSComponent2)).Exclude(typeof(ECSComponent3)).Get();
+                Family family2 = Family.All(typeof(ECSComponent1)).One(typeof(ECSComponent2)).Exclude(typeof(ECSComponent3)).Get();
 
-		[Test]
-		public void EngineQueries()
-		{
-			Engine engine = new Engine();
+                Assert.AreEqual(family1, family2);
+            }
+        }
 
-			Entity entity = engine.CreateEntity();
+        [Test]
+        public void EngineQueries()
+        {
+            Engine engine = new Engine();
 
-			ImmutableList<Entity> entities = engine.GetEntities();
-			Assert.NotNull(entities);
-			Assert.AreEqual(entities.Count, 1);
+            Entity entity = engine.CreateEntity();
 
-			{
-				ImmutableList<Entity> entities2 = engine.GetEntities();
-				Assert.AreSame(entities, entities2);
-			}
+            ImmutableList<Entity> entities = engine.GetEntities();
+            Assert.NotNull(entities);
+            Assert.AreEqual(entities.Count, 1);
 
-			ImmutableList<Entity> ecs1Entities = engine.GetEntitiesFor(Family.All(typeof(ECSComponent1)).Get());
-			Assert.NotNull(ecs1Entities);
-			Assert.AreEqual(ecs1Entities.Count, 0);
+            {
+                ImmutableList<Entity> entities2 = engine.GetEntities();
+                Assert.AreSame(entities, entities2);
+            }
 
-			{
-				ImmutableList<Entity> ecs1Entities2 = engine.GetEntitiesFor(Family.All(typeof(ECSComponent1)).Get());
-				Assert.AreSame(ecs1Entities, ecs1Entities2);
-			}
+            ImmutableList<Entity> ecs1Entities = engine.GetEntitiesFor(Family.All(typeof(ECSComponent1)).Get());
+            Assert.NotNull(ecs1Entities);
+            Assert.AreEqual(ecs1Entities.Count, 0);
 
-			entity.AddComponent(new ECSComponent1());
-			Assert.AreEqual(ecs1Entities.Count, 1);
+            {
+                ImmutableList<Entity> ecs1Entities2 = engine.GetEntitiesFor(Family.All(typeof(ECSComponent1)).Get());
+                Assert.AreSame(ecs1Entities, ecs1Entities2);
+            }
 
-			entity.RemoveComponent<ECSComponent1>();
-			Assert.AreEqual(ecs1Entities.Count, 0);
-		}
-	}
+            entity.AddComponent(new ECSComponent1());
+            Assert.AreEqual(ecs1Entities.Count, 1);
 
-	public class ECSComponent1 : IComponent { }
-	public class ECSComponent2 : IComponent { }
-	public class ECSComponent3 : IComponent { }
+            entity.RemoveComponent<ECSComponent1>();
+            Assert.AreEqual(ecs1Entities.Count, 0);
+        }
+    }
+
+    public class ECSComponent1 : IComponent { }
+    public class ECSComponent2 : IComponent { }
+    public class ECSComponent3 : IComponent { }
 }

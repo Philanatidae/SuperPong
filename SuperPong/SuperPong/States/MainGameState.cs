@@ -14,260 +14,260 @@ using SuperPong.Systems;
 
 namespace SuperPong
 {
-	public class MainGameState : GameState, IPongDirectorOwner
-	{
-		Player _player1;
-		Player _player2;
+    public class MainGameState : GameState, IPongDirectorOwner
+    {
+        Player _player1;
+        Player _player2;
 
-		float _acculmulator;
+        float _acculmulator;
 
-		Engine _engine;
-		InputSystem _inputSystem;
-		PaddleSystem _paddleSystem;
-		BallMovementSystem _ballMovementSystem;
-		GoalSystem _goalSystem;
-		LivesSystem _livesSystem;
-		RenderSystem _renderSystem;
+        Engine _engine;
+        InputSystem _inputSystem;
+        PaddleSystem _paddleSystem;
+        BallMovementSystem _ballMovementSystem;
+        GoalSystem _goalSystem;
+        LivesSystem _livesSystem;
+        RenderSystem _renderSystem;
 
-		PongDirector _director;
+        PongDirector _director;
 
-		Camera _mainCamera;
-		Camera _pongCamera;
+        Camera _mainCamera;
+        Camera _pongCamera;
 
-		RenderTarget2D _pongRenderTarget;
+        RenderTarget2D _pongRenderTarget;
 
-		public Engine Engine
-		{
-			get
-			{
-				return _engine;
-			}
-		}
+        public Engine Engine
+        {
+            get
+            {
+                return _engine;
+            }
+        }
 
-		public Player Player1
-		{
-			get
-			{
-				return _player1;
-			}
-		}
+        public Player Player1
+        {
+            get
+            {
+                return _player1;
+            }
+        }
 
-		public Player Player2
-		{
-			get
-			{
-				return _player2;
-			}
-		}
+        public Player Player2
+        {
+            get
+            {
+                return _player2;
+            }
+        }
 
-		public Effect PongRenderEffect
-		{
-			get;
-			set;
-		}
+        public Effect PongRenderEffect
+        {
+            get;
+            set;
+        }
 
-		ContentManager IPongDirectorOwner.Content
-		{
-			get
-			{
-				return Content;
-			}
-		}
+        ContentManager IPongDirectorOwner.Content
+        {
+            get
+            {
+                return Content;
+            }
+        }
 
-		public MainGameState(GameManager gameManager,
-		                     Player player1,
-		                     Player player2)
-			:base(gameManager)
-		{
-			_player1 = player1;
-			_player2 = player2;
-		}
+        public MainGameState(GameManager gameManager,
+                             Player player1,
+                             Player player2)
+            : base(gameManager)
+        {
+            _player1 = player1;
+            _player2 = player2;
+        }
 
-		public override void Initialize()
-		{
-			_mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
-			_pongCamera = new Camera(GameManager.GraphicsDevice.Viewport);
-			// The camera response to size changes
-			EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
+        public override void Initialize()
+        {
+            _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
+            _pongCamera = new Camera(GameManager.GraphicsDevice.Viewport);
+            // The camera response to size changes
+            EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
 
-			PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
-			_pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
-												   pp.BackBufferWidth,
-												   pp.BackBufferHeight,
-												   true,
-			                                       SurfaceFormat.Color,
-			                                       DepthFormat.None);
+            PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
+            _pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
+                                                   pp.BackBufferWidth,
+                                                   pp.BackBufferHeight,
+                                                   true,
+                                                   SurfaceFormat.Color,
+                                                   DepthFormat.None);
 
-			InitSystems();
+            InitSystems();
 
-			_director = new PongDirector(this);
-			_director.RegisterEvents();
-		}
+            _director = new PongDirector(this);
+            _director.RegisterEvents();
+        }
 
-		void InitSystems()
-		{
-			_engine = new Engine();
+        void InitSystems()
+        {
+            _engine = new Engine();
 
-			_inputSystem = new InputSystem(_engine);
-			_paddleSystem = new PaddleSystem(_engine);
-			_ballMovementSystem = new BallMovementSystem(_engine);
-			_goalSystem = new GoalSystem(_engine);
-			_livesSystem = new LivesSystem(_engine);
+            _inputSystem = new InputSystem(_engine);
+            _paddleSystem = new PaddleSystem(_engine);
+            _ballMovementSystem = new BallMovementSystem(_engine);
+            _goalSystem = new GoalSystem(_engine);
+            _livesSystem = new LivesSystem(_engine);
 
-			_renderSystem = new RenderSystem(GameManager.GraphicsDevice, _engine);
+            _renderSystem = new RenderSystem(GameManager.GraphicsDevice, _engine);
 
-			_livesSystem.RegisterEventListeners();
-		}
+            _livesSystem.RegisterEventListeners();
+        }
 
-		public override void Hide()
-		{
-			
-		}
+        public override void Hide()
+        {
 
-		public override void LoadContent()
-		{
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
-			Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
+        }
 
-			Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
+        public override void LoadContent()
+        {
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE);
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
 
-			Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
-		}
+            Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 
-		public override void Show()
-		{
-			CreateEntities();
-			EventManager.Instance.TriggerEvent(new StartEvent());
-		}
+            Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
+        }
 
-		void CreateEntities()
-		{
-			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
-							  new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2),
-			                  new Vector2(0, -1)); // Top edge points down
-			EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
-			                  new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
-			                  new Vector2(0, 1)); // Bottom edge points up
+        public override void Show()
+        {
+            CreateEntities();
+            EventManager.Instance.TriggerEvent(new StartEvent());
+        }
 
-			// Player 1 goal
-			GoalEntity.Create(_engine, _player1, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
-			                  new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
-			// Player 2 goal
-			GoalEntity.Create(_engine, _player2, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
-			                  new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
+        void CreateEntities()
+        {
+            EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
+                              new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2),
+                              new Vector2(0, -1)); // Top edge points down
+            EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
+                              new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
+                              new Vector2(0, 1)); // Bottom edge points up
 
-			Entity paddle1 = PaddleEntity.Create(_engine,
-			                                     Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
-		                                         new Vector2(-Constants.Pong.PADDLE_STARTING_X,
-		                                                     Constants.Pong.PADDLE_STARTING_Y),
-		                                         new Vector2(1, 0)); // Left paddle normal points right
-			Entity paddle2 = PaddleEntity.Create(_engine,
-			                                     Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
-												 new Vector2(Constants.Pong.PADDLE_STARTING_X,
-															 Constants.Pong.PADDLE_STARTING_Y),
-												 new Vector2(-1, 0)); // Right paddle normal points left
+            // Player 1 goal
+            GoalEntity.Create(_engine, _player1, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
+                              new Vector2(-Constants.Pong.PLAYFIELD_WIDTH / 2 + Constants.Pong.GOAL_WIDTH / 2, 0));
+            // Player 2 goal
+            GoalEntity.Create(_engine, _player2, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
+                              new Vector2(Constants.Pong.PLAYFIELD_WIDTH / 2 - Constants.Pong.GOAL_WIDTH / 2, 0));
 
-			paddle1.AddComponent(new PlayerComponent(_player1));
-			paddle2.AddComponent(new PlayerComponent(_player2));
+            Entity paddle1 = PaddleEntity.Create(_engine,
+                                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+                                                 new Vector2(-Constants.Pong.PADDLE_STARTING_X,
+                                                             Constants.Pong.PADDLE_STARTING_Y),
+                                                 new Vector2(1, 0)); // Left paddle normal points right
+            Entity paddle2 = PaddleEntity.Create(_engine,
+                                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_PADDLE),
+                                                 new Vector2(Constants.Pong.PADDLE_STARTING_X,
+                                                             Constants.Pong.PADDLE_STARTING_Y),
+                                                 new Vector2(-1, 0)); // Right paddle normal points left
 
-			// Lives
-			LivesEntity.Create(_engine,
-			                   Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
-			                   new Vector2(Constants.Pong.LIVES_LEFT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
-			                   _player1,
-			                   Constants.Pong.LIVES_COUNT);
-			BallEntity.CreateWithoutBehavior(_engine,
-			                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
-			                                 new Vector2(Constants.Pong.LIVES_ICON_LEFT_POSITION_X,
-			                                             Constants.Pong.LIVES_POSITION_Y),
-											 2);
-			LivesEntity.Create(_engine,
-			                   Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
-			                   new Vector2(Constants.Pong.LIVES_RIGHT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
-			                   _player2,
-			                   Constants.Pong.LIVES_COUNT);
-			BallEntity.CreateWithoutBehavior(_engine,
-			                                 Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
-			                                 new Vector2(Constants.Pong.LIVES_ICON_RIGHT_POSITION_X,
-														 Constants.Pong.LIVES_POSITION_Y),
-											 2);
-		}
+            paddle1.AddComponent(new PlayerComponent(_player1));
+            paddle2.AddComponent(new PlayerComponent(_player2));
 
-		public override void Update(GameTime gameTime)
-		{
-			// Do not need to be in lock-step
-			_inputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-			_livesSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-			_goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            // Lives
+            LivesEntity.Create(_engine,
+                               Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
+                               new Vector2(Constants.Pong.LIVES_LEFT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
+                               _player1,
+                               Constants.Pong.LIVES_COUNT);
+            BallEntity.CreateWithoutBehavior(_engine,
+                                             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
+                                             new Vector2(Constants.Pong.LIVES_ICON_LEFT_POSITION_X,
+                                                         Constants.Pong.LIVES_POSITION_Y),
+                                             2);
+            LivesEntity.Create(_engine,
+                               Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
+                               new Vector2(Constants.Pong.LIVES_RIGHT_POSITION_X, Constants.Pong.LIVES_POSITION_Y),
+                               _player2,
+                               Constants.Pong.LIVES_COUNT);
+            BallEntity.CreateWithoutBehavior(_engine,
+                                             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
+                                             new Vector2(Constants.Pong.LIVES_ICON_RIGHT_POSITION_X,
+                                                         Constants.Pong.LIVES_POSITION_Y),
+                                             2);
+        }
 
-			// Deterministic lock-step
-			_acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
-			while (_acculmulator >= Constants.Global.TICK_RATE)
-			{
-				_acculmulator -= Constants.Global.TICK_RATE;
+        public override void Update(GameTime gameTime)
+        {
+            // Do not need to be in lock-step
+            _inputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _livesSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-				_paddleSystem.Update(Constants.Global.TICK_RATE);
-				_ballMovementSystem.Update(Constants.Global.TICK_RATE);
-			}
+            // Deterministic lock-step
+            _acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            while (_acculmulator >= Constants.Global.TICK_RATE)
+            {
+                _acculmulator -= Constants.Global.TICK_RATE;
 
-			// Lastly update the director
-			_director.Update(gameTime);
-		}
+                _paddleSystem.Update(Constants.Global.TICK_RATE);
+                _ballMovementSystem.Update(Constants.Global.TICK_RATE);
+            }
 
-		public override void Draw(GameTime gameTime)
-		{
-			float betweenFrameAlpha = _acculmulator / Constants.Global.TICK_RATE;
+            // Lastly update the director
+            _director.Update(gameTime);
+        }
 
-			DrawPong(gameTime, betweenFrameAlpha);
-			DrawRemainder(gameTime, betweenFrameAlpha);
-		}
+        public override void Draw(GameTime gameTime)
+        {
+            float betweenFrameAlpha = _acculmulator / Constants.Global.TICK_RATE;
 
-		void DrawPong(GameTime gameTime, float betweenFrameAlpha)
-		{
-			GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
-			_renderSystem.DrawEntities(_pongCamera.TransformMatrix,
-							   Constants.Pong.RENDER_GROUP,
-							   gameTime,
-	                           betweenFrameAlpha);
-			GameManager.GraphicsDevice.SetRenderTarget(null);
+            DrawPong(gameTime, betweenFrameAlpha);
+            DrawRemainder(gameTime, betweenFrameAlpha);
+        }
 
-			_renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
-			                               null,
-			                                SamplerState.PointWrap,
-			                               null,
-			                               null,
-			                                PongRenderEffect,
-			                                _mainCamera.TransformMatrix);
-			_renderSystem.SpriteBatch.Draw(_pongRenderTarget,
-			                               Constants.Pong.BUFFER_RENDER_POSITION * RenderSystem.FlipY,
-										   null,
-										   Color.White,
-										   0,
-			                               new Vector2(_pongRenderTarget.Width / 2,
-			                                           _pongRenderTarget.Height / 2),
-										   Vector2.One,
-										   SpriteEffects.None,
-										   0);
-			_renderSystem.SpriteBatch.End();
-		}
+        void DrawPong(GameTime gameTime, float betweenFrameAlpha)
+        {
+            GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
+            _renderSystem.DrawEntities(_pongCamera.TransformMatrix,
+                               Constants.Pong.RENDER_GROUP,
+                               gameTime,
+                               betweenFrameAlpha);
+            GameManager.GraphicsDevice.SetRenderTarget(null);
 
-		void DrawRemainder(GameTime gameTime, float betweenFrameAlpha)
-		{
-			// Render everything else (everything not pong)
-			_renderSystem.DrawEntities(_mainCamera.TransformMatrix,
-							   (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
-							   gameTime,
-	                           betweenFrameAlpha);
-		}
+            _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
+                                           null,
+                                            SamplerState.PointWrap,
+                                           null,
+                                           null,
+                                            PongRenderEffect,
+                                            _mainCamera.TransformMatrix);
+            _renderSystem.SpriteBatch.Draw(_pongRenderTarget,
+                                           Constants.Pong.BUFFER_RENDER_POSITION * RenderSystem.FlipY,
+                                           null,
+                                           Color.White,
+                                           0,
+                                           new Vector2(_pongRenderTarget.Width / 2,
+                                                       _pongRenderTarget.Height / 2),
+                                           Vector2.One,
+                                           SpriteEffects.None,
+                                           0);
+            _renderSystem.SpriteBatch.End();
+        }
 
-		public override void Dispose()
-		{
-			// Remove listeners
-			EventManager.Instance.UnregisterListener(_mainCamera);
-			_livesSystem.UnregisterEventListeners();
-			_director.UnregisterEvents();
-		}
-	}
+        void DrawRemainder(GameTime gameTime, float betweenFrameAlpha)
+        {
+            // Render everything else (everything not pong)
+            _renderSystem.DrawEntities(_mainCamera.TransformMatrix,
+                               (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
+                               gameTime,
+                               betweenFrameAlpha);
+        }
+
+        public override void Dispose()
+        {
+            // Remove listeners
+            EventManager.Instance.UnregisterListener(_mainCamera);
+            _livesSystem.UnregisterEventListeners();
+            _director.UnregisterEvents();
+        }
+    }
 }

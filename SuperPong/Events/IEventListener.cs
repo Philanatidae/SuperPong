@@ -1,9 +1,9 @@
 ﻿namespace Events
 {
-	public interface IEventListener
-	{
+    public interface IEventListener
+    {
 
-		bool Handle(IEvent evt);
+        bool Handle(IEvent evt);
 
-	}
+    }
 }
