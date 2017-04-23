@@ -36,7 +36,7 @@ namespace SuperPong.Constants
 		public static readonly float BALL_PLAYER2_STARTING_ROTATION_DEGREES = 45;
 		public static readonly float BALL_STARTING_VELOCITY = 350.0f;
 		public static readonly float BALL_MAX_TRAVEL_ANGLE_DEGREES = 60.0f;
-		public static readonly float BALL_SPEED_INCREASE = 10.0f;
+		public static readonly float BALL_SPEED_INCREASE = 5.0f;
 
 	}
 }
