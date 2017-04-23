@@ -4,6 +4,7 @@ using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using SuperPong.Components;
 using SuperPong.Entities;
 using SuperPong.Events;
@@ -25,13 +26,14 @@ namespace SuperPong.Directors
 		readonly IPongDirectorOwner _owner;
 
 		ProcessManager _processManager = new ProcessManager();
-		readonly Random _random = new Random();
+		readonly Random _random;
 
 		readonly Family _ballFamily = Family.All(typeof(BallComponent), typeof(TransformComponent)).Get();
 		readonly ImmutableList<Entity> _ballEntities;
 
 		readonly Timer _fluctuationTimer = new Timer(0);
 		bool _fluctuationTimerEnabled = false;
+		int _fluctuationUnlockedLevel = 1;
 
 		DirectorState _state = DirectorState.WaitingToStart;
 
@@ -41,6 +43,8 @@ namespace SuperPong.Directors
 		public PongDirector(IPongDirectorOwner owner)
 		{
 			_owner = owner;
+
+			_random = new Random();
 
 			_ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
 		}
@@ -106,25 +110,36 @@ namespace SuperPong.Directors
 
 		void ResetFluctuationTimer()
 		{
-			float duration = (float)(_random.NextDouble()
+			float duration = _random.NextSingle()
 									* (Constants.Fluctuations.TIMER_MAX - Constants.Fluctuations.TIMER_MIN)
-									+ Constants.Fluctuations.TIMER_MIN);
+									+ Constants.Fluctuations.TIMER_MIN;
 			_fluctuationTimer.Reset(duration);
 			_fluctuationTimerEnabled = true;
 		}
 
 		void AttachRandomFluctuation()
 		{
-			int id = _random.Next(1, Constants.Fluctuations.FLUCTUATIONS_COUNT);
-			switch (id)
+			int availableFluctuationsCount = 0;
+			for (int i = 0; i < _fluctuationUnlockedLevel; i++)
 			{
-				case 1:
-					_processManager.Attach(new WarpFluctuation(_owner));
-					break;
-					default:
-					throw new NotImplementedException();
+				availableFluctuationsCount += Constants.Fluctuations.FLUCTUATIONS[i].Length;
 			}
 
+			Type[] fluctuations = new Type[availableFluctuationsCount];
+			int k = 0;
+			for (int i = 0; i < _fluctuationUnlockedLevel; i++)
+			{
+				for (int j = 0; j < Constants.Fluctuations.FLUCTUATIONS[i].Length; j++)
+				{
+					fluctuations[k++] = Constants.Fluctuations.FLUCTUATIONS[i][j];
+				}
+			}
+
+			int index = _random.Next(0, fluctuations.Length - 1);
+			Type fluctuationType = fluctuations[index];
+			_processManager.Attach((Fluctuation)Activator.CreateInstance(fluctuationType, _owner));
+
+			_fluctuationUnlockedLevel = MathHelper.Min(++_fluctuationUnlockedLevel, Constants.Fluctuations.FLUCTUATIONS.Length);
 			_fluctuationTimerEnabled = false;
 		}
 
@@ -190,6 +205,7 @@ namespace SuperPong.Directors
 			GoalComponent goalComp = goalEvent.Goal.GetComponent<GoalComponent>();
 
 			_owner.Engine.DestroyEntity(goalEvent.Ball);
+			_fluctuationTimerEnabled = false;
 
 			if (goalComp.For.Index == 0)
 			{
