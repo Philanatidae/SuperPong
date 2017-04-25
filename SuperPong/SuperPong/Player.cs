@@ -11,7 +11,7 @@ namespace SuperPong
             private set;
         }
 
-        string Name
+        public string Name
         {
             get;
             private set;

@@ -13,7 +13,7 @@
             }
         }
 
-        Timer(float duration)
+        public Timer(float duration)
         {
             _duration = duration;
         }
