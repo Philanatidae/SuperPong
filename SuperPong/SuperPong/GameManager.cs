@@ -1,6 +1,7 @@
 ﻿using System;
 using Events;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Events;
 using SuperPong.Input;
 
@@ -64,6 +65,8 @@ namespace SuperPong
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(Color.Black);
+
+            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
             if (_currentState != null)
             {

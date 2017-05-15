@@ -6,7 +6,7 @@ namespace SuperPong.Constants
     {
         public static readonly byte RENDER_GROUP = Render.GROUP_TWO;
 
-        public static readonly Vector2 BUFFER_RENDER_POSITION = new Vector2(0, -25);
+        public static readonly Vector2 BUFFER_RENDER_POSITION = new Vector2(0, 25);
 
         public static readonly float PLAYFIELD_HEIGHT = 450;
         public static readonly float PLAYFIELD_WIDTH = PLAYFIELD_HEIGHT * 1.5f;

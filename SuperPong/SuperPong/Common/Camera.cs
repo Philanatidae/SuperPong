@@ -19,14 +19,14 @@ namespace SuperPong.Common
         {
             get
             {
-                return Matrix.CreateTranslation(new Vector3(Position.X,
-                                                            Position.Y * -1,
-                                                            0))
+                return Matrix.CreateScale(Zoom * _compensationZoom)
                              * Matrix.CreateRotationZ(Rotation)
-                             * Matrix.CreateScale(Zoom * _compensationZoom)
                              * Matrix.CreateTranslation(new Vector3(_bounds.Width * 0.5f,
                                                                     _bounds.Height * 0.5f,
-                                                                   0));
+                                                                   0))
+                             * Matrix.CreateTranslation(new Vector3(Position.X,
+                                                            Position.Y * -1,
+                                                            0));
             }
         }
 

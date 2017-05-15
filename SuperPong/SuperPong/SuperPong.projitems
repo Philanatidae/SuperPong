@@ -72,6 +72,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Content\ContentLockedException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitForEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\MovingWarpFluctuation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graphics\Quad.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PerspectiveCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PongCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\PostProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\PostProcessorEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\AlreadyDrawingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\NotDrawingException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\Effects\VerticalWarp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -85,5 +93,9 @@
     <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
     <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Graphics\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\Effects\" />
   </ItemGroup>
 </Project>

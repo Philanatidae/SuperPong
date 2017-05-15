@@ -10,6 +10,8 @@ using SuperPong.Components;
 using SuperPong.Directors;
 using SuperPong.Entities;
 using SuperPong.Events;
+using SuperPong.Graphics;
+using SuperPong.Graphics.PostProcessor;
 using SuperPong.Systems;
 
 namespace SuperPong
@@ -32,9 +34,12 @@ namespace SuperPong
         PongDirector _director;
 
         Camera _mainCamera;
-        Camera _pongCamera;
+        PongCamera _pongCamera;
 
         RenderTarget2D _pongRenderTarget;
+
+        BasicEffect _quadEffect;
+        Quad _quad;
 
         public Engine Engine
         {
@@ -60,7 +65,7 @@ namespace SuperPong
             }
         }
 
-        public Effect PongRenderEffect
+        public PostProcessor PongPostProcessor
         {
             get;
             set;
@@ -86,17 +91,31 @@ namespace SuperPong
         public override void Initialize()
         {
             _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
-            _pongCamera = new Camera(GameManager.GraphicsDevice.Viewport);
+            _pongCamera = new PongCamera();
             // The camera response to size changes
             EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
+            EventManager.Instance.RegisterListener<ResizeEvent>(_pongCamera);
 
             PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
             _pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
                                                    pp.BackBufferWidth,
                                                    pp.BackBufferHeight,
-                                                   true,
+                                                   false,
                                                    SurfaceFormat.Color,
                                                    DepthFormat.None);
+
+            _quadEffect = new BasicEffect(GameManager.GraphicsDevice);
+            _quadEffect.AmbientLightColor = new Vector3(1, 1, 1);
+            _quadEffect.World = Matrix.Identity;
+            _quadEffect.TextureEnabled = true;
+            _quad = new Quad(new Vector3(-Constants.Global.SCREEN_ASPECT_RATIO, 1, 0),
+                                 new Vector3(Constants.Global.SCREEN_ASPECT_RATIO, 1, 0),
+                                 new Vector3(-Constants.Global.SCREEN_ASPECT_RATIO, -1, 0),
+                                 new Vector3(Constants.Global.SCREEN_ASPECT_RATIO, -1, 0),
+                             Vector3.Forward);
+
+            PongPostProcessor = new PostProcessor(GameManager.GraphicsDevice);
+            EventManager.Instance.RegisterListener<ResizeEvent>(PongPostProcessor);
 
             InitSystems();
 
@@ -212,8 +231,11 @@ namespace SuperPong
                 _ballMovementSystem.Update(Constants.Global.TICK_RATE);
             }
 
-            // Lastly update the director
+            // Update the director
             _director.Update(gameTime);
+
+            // Update post-processing effects
+            PongPostProcessor.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
@@ -227,47 +249,49 @@ namespace SuperPong
         void DrawPong(GameTime gameTime, float betweenFrameAlpha)
         {
             GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
-            _renderSystem.DrawEntities(_pongCamera.TransformMatrix,
-                               Constants.Pong.RENDER_GROUP,
-                               gameTime,
-                               betweenFrameAlpha);
+            _renderSystem.DrawEntities(Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X,
+                                                                GameManager.GraphicsDevice.Viewport.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y,
+                                                               0),
+                                        Constants.Pong.RENDER_GROUP,
+                                        gameTime,
+                                        betweenFrameAlpha);
             GameManager.GraphicsDevice.SetRenderTarget(null);
 
-            _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
-                                           null,
-                                            SamplerState.PointWrap,
-                                           null,
-                                           null,
-                                            PongRenderEffect,
-                                            _mainCamera.TransformMatrix);
-            _renderSystem.SpriteBatch.Draw(_pongRenderTarget,
-                                           Constants.Pong.BUFFER_RENDER_POSITION * RenderSystem.FlipY,
-                                           null,
-                                           Color.White,
-                                           0,
-                                           new Vector2(_pongRenderTarget.Width / 2,
-                                                       _pongRenderTarget.Height / 2),
-                                           Vector2.One,
-                                           SpriteEffects.None,
-                                           0);
-            _renderSystem.SpriteBatch.End();
+            _pongCamera.UpdatePositionFromRadial();
+
+            _quadEffect.View = _pongCamera.TransformMatrix;
+            _quadEffect.Projection = _pongCamera.PerspectiveMatrix;
+            _quadEffect.Texture = _pongRenderTarget;
+
+            PongPostProcessor.Begin();
+            foreach (EffectPass pass in _quadEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                _quad.Draw(GameManager.GraphicsDevice);
+            }
+            PongPostProcessor.End();
         }
 
         void DrawRemainder(GameTime gameTime, float betweenFrameAlpha)
         {
             // Render everything else (everything not pong)
             _renderSystem.DrawEntities(_mainCamera.TransformMatrix,
-                               (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
-                               gameTime,
-                               betweenFrameAlpha);
+                                        (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
+                                        gameTime,
+                                        betweenFrameAlpha);
         }
 
         public override void Dispose()
         {
             // Remove listeners
             EventManager.Instance.UnregisterListener(_mainCamera);
+            EventManager.Instance.UnregisterListener(_pongCamera);
             _livesSystem.UnregisterEventListeners();
             _director.UnregisterEvents();
+
+            EventManager.Instance.UnregisterListener(PongPostProcessor);
+            PongPostProcessor.Dispose();
         }
     }
 }

@@ -9,6 +9,7 @@ using SuperPong.Components;
 using SuperPong.Entities;
 using SuperPong.Events;
 using SuperPong.Fluctuations;
+using SuperPong.Graphics.PostProcessor;
 using SuperPong.Processes;
 
 namespace SuperPong.Directors
@@ -289,7 +290,7 @@ namespace SuperPong.Directors
             get;
         }
 
-        Effect PongRenderEffect
+        PostProcessor PongPostProcessor
         {
             get;
             set;

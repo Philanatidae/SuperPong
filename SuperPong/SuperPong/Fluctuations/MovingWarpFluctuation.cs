@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Common;
 using SuperPong.Directors;
+using SuperPong.Graphics.PostProcessor.Effects;
 
 namespace SuperPong.Fluctuations
 {
@@ -16,31 +16,33 @@ namespace SuperPong.Fluctuations
         }
         State _state = State.In;
 
-        readonly Effect _warpEffect;
+        readonly VerticalWarp _warpEffect;
         Timer _stateTimer;
         float _effectTime;
         float _amplitude;
 
         public MovingWarpFluctuation(IPongDirectorOwner _owner) : base(_owner)
         {
-            _warpEffect = _owner.Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
+            _warpEffect = new VerticalWarp(_owner.PongPostProcessor, _owner.Content);
         }
 
         protected override void OnInitialize()
         {
             _stateTimer = new Timer(Constants.Fluctuations.MOVING_WARP_TRANSITION_TIME);
 
-            _warpEffect.Parameters["time"].SetValue(0.0f);
-            _warpEffect.Parameters["speed"].SetValue(Constants.Fluctuations.MOVING_WARP_SPEED);
+            _warpEffect.Time = 0;
+            _warpEffect.Speed = Constants.Fluctuations.MOVING_WARP_SPEED;
 
-            _owner.PongRenderEffect = _warpEffect;
+            _owner.PongPostProcessor.Effects.Add(_warpEffect);
 
             base.OnInitialize();
         }
 
         protected override void OnKill()
         {
-            _owner.PongRenderEffect = null;
+            _warpEffect.Dispose();
+            _owner.PongPostProcessor.Effects.Remove(_warpEffect);
+
             base.OnKill();
         }
 
@@ -83,9 +85,9 @@ namespace SuperPong.Fluctuations
                     break;
             }
 
-            _warpEffect.Parameters["time"].SetValue((float)(Math.Cos(_effectTime) * 2 * MathHelper.Pi));
-            _warpEffect.Parameters["speed"].SetValue(Constants.Fluctuations.MOVING_WARP_SPEED);
-            _warpEffect.Parameters["amplitude"].SetValue(_amplitude * Constants.Fluctuations.MOVING_WARP_AMPLITUDE);
+            _warpEffect.Time = (float)(Math.Cos(_effectTime) * 2 * MathHelper.Pi);
+            _warpEffect.Speed = Constants.Fluctuations.MOVING_WARP_SPEED;
+            _warpEffect.Amplitude = _amplitude * Constants.Fluctuations.MOVING_WARP_AMPLITUDE;
         }
 
         public override void SoftEnd()
