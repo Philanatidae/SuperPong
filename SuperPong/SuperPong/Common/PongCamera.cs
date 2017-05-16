@@ -19,12 +19,23 @@ namespace SuperPong.Common
 
         public Vector3 RadialDirection = Vector3.Backward;
 
+        public PongCamera()
+        {
+            ResetRadialDirection();
+            UpdatePositionFromRadial();
+        }
+
         public void UpdatePositionFromRadial()
         {
             float radius = (float)(Constants.Global.SCREEN_ASPECT_RATIO / Math.Tan(MathHelper.ToRadians(FieldOfView) / 2));
             radius *= 0.65f;
 
             Position = RadialDirection * radius;
+        }
+
+        public void ResetRadialDirection()
+        {
+            RadialDirection = Vector3.Backward;
         }
 
         public override bool Handle(IEvent evt)

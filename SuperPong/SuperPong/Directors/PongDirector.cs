@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Entities;
 using SuperPong.Events;
@@ -294,6 +295,11 @@ namespace SuperPong.Directors
         {
             get;
             set;
+        }
+
+        PongCamera PongCamera
+        {
+            get;
         }
 
         ContentManager Content

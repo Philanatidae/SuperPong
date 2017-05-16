@@ -71,6 +71,14 @@ namespace SuperPong
             set;
         }
 
+        public PongCamera PongCamera
+        {
+            get
+            {
+                return _pongCamera;
+            }
+        }
+
         ContentManager IPongDirectorOwner.Content
         {
             get
@@ -257,8 +265,6 @@ namespace SuperPong
                                         betweenFrameAlpha);
             GameManager.GraphicsDevice.SetRenderTarget(null);
 
-            _pongCamera.UpdatePositionFromRadial();
-
             _quadEffect.View = _pongCamera.TransformMatrix;
             _quadEffect.Projection = _pongCamera.PerspectiveMatrix;
             _quadEffect.Texture = _pongRenderTarget;
@@ -295,3 +301,4 @@ namespace SuperPong
         }
     }
 }
+

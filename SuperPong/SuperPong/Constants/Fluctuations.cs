@@ -10,12 +10,17 @@ namespace SuperPong.Constants
 
         public static readonly Type[][] FLUCTUATIONS = {
             new Type[] {
+                typeof(CameraWobbleFluctuation),
                 typeof(WarpFluctuation)
             },
             new Type[] {
                 typeof(MovingWarpFluctuation)
             }
         };
+
+        public static readonly float CAMERA_WOBBLE_SPEED = 0.1f;
+        public static readonly float CAMERA_WOBBLE_STEADY_TIME = 2 / CAMERA_WOBBLE_SPEED;
+        public static readonly float CAMERA_WOBBLE_EXIT_TIME = 0.5f;
 
         public static readonly float WARP_TRANSITION_TIME = 1.0f;
         public static readonly float WARP_STEADY_TIME = (float)(4 * Math.PI);

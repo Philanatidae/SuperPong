@@ -20,7 +20,7 @@ namespace SuperPong.Fluctuations
         float _effectTime;
         float _amplitude;
 
-        public WarpFluctuation(IPongDirectorOwner _owner) : base(_owner)
+        public WarpFluctuation(IPongDirectorOwner owner) : base(owner)
         {
             _warpEffect = new VerticalWarp(_owner.PongPostProcessor, _owner.Content);
         }
