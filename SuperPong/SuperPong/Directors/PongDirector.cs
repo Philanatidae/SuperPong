@@ -4,7 +4,6 @@ using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Entities;
@@ -28,7 +27,7 @@ namespace SuperPong.Directors
         readonly IPongDirectorOwner _owner;
 
         ProcessManager _processManager = new ProcessManager();
-        readonly Random _random;
+        readonly MTRandom _random;
 
         readonly Family _ballFamily = Family.All(typeof(BallComponent), typeof(TransformComponent)).Get();
         readonly ImmutableList<Entity> _ballEntities;
@@ -46,7 +45,7 @@ namespace SuperPong.Directors
         {
             _owner = owner;
 
-            _random = new Random();
+            _random = new MTRandom();
 
             _ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
         }
