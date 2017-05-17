@@ -13,7 +13,7 @@ namespace SuperPong.Systems
 
         public abstract void Update(float dt);
 
-        public Engine getEngine()
+        public Engine GetEngine()
         {
             return _engine;
         }

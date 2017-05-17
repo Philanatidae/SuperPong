@@ -111,10 +111,5 @@ namespace SuperPong.Systems
 
             _spriteBatch.End();
         }
-
-        public Engine getEngine()
-        {
-            return _engine;
-        }
     }
 }
