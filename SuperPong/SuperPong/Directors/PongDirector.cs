@@ -155,6 +155,8 @@ namespace SuperPong.Directors
                 direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
             }
 
+            _fluctuationUnlockedLevel = 1;
+
             ballReturnSequence.SetNext(new DelegateCommand(() =>
             {
                 BallEntity.Create(_owner.Engine,
