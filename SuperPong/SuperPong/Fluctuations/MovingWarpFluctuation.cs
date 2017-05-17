@@ -51,9 +51,9 @@ namespace SuperPong.Fluctuations
 
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float dt)
         {
-            _stateTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _stateTimer.Update(dt);
 
             switch (_state)
             {
@@ -67,7 +67,7 @@ namespace SuperPong.Fluctuations
                     }
                     break;
                 case State.Steady:
-                    _effectTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    _effectTime += dt;
 
                     if (_stateTimer.HasElapsed())
                     {

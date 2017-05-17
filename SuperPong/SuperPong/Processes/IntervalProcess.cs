@@ -32,9 +32,9 @@ namespace SuperPong.Processes
         {
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float dt)
         {
-            _acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _acculmulator += dt;
             while (_acculmulator >= _interval)
             {
                 OnTick(_interval);

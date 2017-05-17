@@ -63,7 +63,7 @@ namespace SuperPong.Graphics.PostProcessor.Effects
                                             DepthFormat.None);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float dt)
         {
 
         }

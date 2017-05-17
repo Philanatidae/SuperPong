@@ -54,7 +54,7 @@ namespace SuperPong
         {
             if (_currentState != null)
             {
-                _currentState.Update(gameTime);
+                _currentState.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             EventManager.Instance.Dispatch();
@@ -70,7 +70,7 @@ namespace SuperPong
 
             if (_currentState != null)
             {
-                _currentState.Draw(gameTime);
+                _currentState.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             base.Draw(gameTime);

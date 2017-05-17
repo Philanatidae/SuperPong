@@ -41,9 +41,9 @@ namespace SuperPong.Processes
         {
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float dt)
         {
-            _time -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _time -= dt;
 
             if (_time <= 0)
             {

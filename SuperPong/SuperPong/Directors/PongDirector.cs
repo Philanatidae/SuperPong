@@ -90,16 +90,16 @@ namespace SuperPong.Directors
             return false;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float dt)
         {
-            _processManager.Update(gameTime);
+            _processManager.Update(dt);
 
             switch (_state)
             {
                 case DirectorState.InProgress:
                     if (_fluctuationTimerEnabled)
                     {
-                        _fluctuationTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                        _fluctuationTimer.Update(dt);
                         if (_fluctuationTimer.HasElapsed())
                         {
                             AttachRandomFluctuation();

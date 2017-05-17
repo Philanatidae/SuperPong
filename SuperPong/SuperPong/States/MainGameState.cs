@@ -222,15 +222,15 @@ namespace SuperPong
                                              2);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float dt)
         {
             // Do not need to be in lock-step
-            _inputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            _livesSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            _goalSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _inputSystem.Update(dt);
+            _livesSystem.Update(dt);
+            _goalSystem.Update(dt);
 
             // Deterministic lock-step
-            _acculmulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _acculmulator += dt;
             while (_acculmulator >= Constants.Global.TICK_RATE)
             {
                 _acculmulator -= Constants.Global.TICK_RATE;
@@ -240,28 +240,28 @@ namespace SuperPong
             }
 
             // Update the director
-            _director.Update(gameTime);
+            _director.Update(dt);
 
             // Update post-processing effects
-            PongPostProcessor.Update(gameTime);
+            PongPostProcessor.Update(dt);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(float dt)
         {
             float betweenFrameAlpha = _acculmulator / Constants.Global.TICK_RATE;
 
-            DrawPong(gameTime, betweenFrameAlpha);
-            DrawRemainder(gameTime, betweenFrameAlpha);
+            DrawPong(dt, betweenFrameAlpha);
+            DrawRemainder(dt, betweenFrameAlpha);
         }
 
-        void DrawPong(GameTime gameTime, float betweenFrameAlpha)
+        void DrawPong(float dt, float betweenFrameAlpha)
         {
             GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
             _renderSystem.DrawEntities(Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X,
                                                                 GameManager.GraphicsDevice.Viewport.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y,
                                                                0),
                                         Constants.Pong.RENDER_GROUP,
-                                        gameTime,
+                                        dt,
                                         betweenFrameAlpha);
             GameManager.GraphicsDevice.SetRenderTarget(null);
 
@@ -279,12 +279,12 @@ namespace SuperPong
             PongPostProcessor.End();
         }
 
-        void DrawRemainder(GameTime gameTime, float betweenFrameAlpha)
+        void DrawRemainder(float dt, float betweenFrameAlpha)
         {
             // Render everything else (everything not pong)
             _renderSystem.DrawEntities(_mainCamera.TransformMatrix,
                                         (byte)(Constants.Render.GROUP_MASK_ALL & ~Constants.Pong.RENDER_GROUP),
-                                        gameTime,
+                                        dt,
                                         betweenFrameAlpha);
         }
 

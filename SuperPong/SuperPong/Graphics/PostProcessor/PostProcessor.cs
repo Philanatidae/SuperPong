@@ -66,11 +66,11 @@ namespace SuperPong.Graphics.PostProcessor
             GraphicsDevice.SetRenderTarget(_renderTarget);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float dt)
         {
             for (int i = 0; i < Effects.Count; i++)
             {
-                Effects[i].Update(gameTime);
+                Effects[i].Update(dt);
             }
         }
 

@@ -20,8 +20,8 @@ namespace SuperPong.Processes
             // Commands are special, since they can be ran in 0 ticks
             if (process is Command)
             {
-                // Doesn't use time, so we can pass null
-                process.Update(null);
+                // Doesn't use time, doesn't matter what we enter
+                process.Update(0);
 
                 // Attach the next process, if there is one
                 if (process.Next != null)
@@ -47,7 +47,7 @@ namespace SuperPong.Processes
             return _processList.Count > 0;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float dt)
         {
             for (int i = 0; i < _processList.Count; i++)
             {
@@ -66,7 +66,7 @@ namespace SuperPong.Processes
                 }
                 if (curr.IsActive() && !curr.IsPaused())
                 {
-                    curr.Update(gameTime);
+                    curr.Update(dt);
                 }
             }
         }

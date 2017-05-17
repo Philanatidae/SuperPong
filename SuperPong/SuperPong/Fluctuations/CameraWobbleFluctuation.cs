@@ -36,12 +36,12 @@ namespace SuperPong.Fluctuations
 
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float dt)
         {
             switch (_state)
             {
                 case State.Wobbling:
-                    _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    _elapsedTime += dt;
 
                     _camera.RadialDirection.X = (float)Math.Sin(_elapsedTime
                                                                 * Constants.Fluctuations.CAMERA_WOBBLE_SPEED
@@ -52,7 +52,7 @@ namespace SuperPong.Fluctuations
                     _camera.UpdatePositionFromRadial();
                     break;
                 case State.Ending:
-                    _exitTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    _exitTime += dt;
 
                     float x = (float)Math.Sin(_elapsedTime
                                                 * Constants.Fluctuations.CAMERA_WOBBLE_SPEED

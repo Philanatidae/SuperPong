@@ -45,16 +45,16 @@ namespace SuperPong.Processes
             return Next;
         }
 
-        internal void Update(GameTime gameTime)
+        internal void Update(float dt)
         {
             if (_initialUpdate)
             {
                 OnInitialize();
                 _initialUpdate = false;
             }
-            OnUpdate(gameTime);
+            OnUpdate(dt);
         }
-        protected abstract void OnUpdate(GameTime gameTime);
+        protected abstract void OnUpdate(float dt);
 
         protected abstract void OnInitialize();
 

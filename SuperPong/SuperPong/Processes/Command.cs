@@ -21,7 +21,7 @@ namespace SuperPong.Processes
         {
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float dt)
         {
         }
     }

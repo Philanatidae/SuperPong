@@ -37,17 +37,17 @@ namespace SuperPong.Systems
             _spriteBatch = new SpriteBatch(graphics);
         }
 
-        public void DrawEntities(GameTime gameTime, float betweenFrameAlpha)
+        public void DrawEntities(float dt, float betweenFrameAlpha)
         {
-            DrawEntities(Constants.Render.GROUP_MASK_ALL, gameTime, betweenFrameAlpha);
+            DrawEntities(Constants.Render.GROUP_MASK_ALL, dt, betweenFrameAlpha);
         }
 
-        public void DrawEntities(byte groupMask, GameTime gameTime, float betweenFrameAlpha)
+        public void DrawEntities(byte groupMask, float dt, float betweenFrameAlpha)
         {
-            DrawEntities(Matrix.Identity, groupMask, gameTime, betweenFrameAlpha);
+            DrawEntities(Matrix.Identity, groupMask, dt, betweenFrameAlpha);
         }
 
-        public void DrawEntities(Matrix transformMatrix, byte groupMask, GameTime gameTime, float betweenFrameAlpha)
+        public void DrawEntities(Matrix transformMatrix, byte groupMask, float dt, float betweenFrameAlpha)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred,
                                null,

@@ -15,7 +15,7 @@ namespace SuperPong.Graphics.PostProcessor
 
         public abstract void Resize(int width, int height);
 
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update(float dt);
 
         public abstract void Process(RenderTarget2D inTarget, out RenderTarget2D outTarget);
 
