@@ -67,7 +67,8 @@ namespace SuperPong.Systems
 
                 TransformComponent transformComp = entity.GetComponent<TransformComponent>();
 
-                Vector2 offsetPosition = -(transformComp.Position - transformComp.LastPosition) * (1 - betweenFrameAlpha);
+                Vector2 offsetPosition = (transformComp.Position - transformComp.LastPosition) * (1 - betweenFrameAlpha);
+                offsetPosition *= -1;
 
                 Vector2 scale = new Vector2(spriteComp.Bounds.X / spriteComp.Texture.Width,
                                             spriteComp.Bounds.Y / spriteComp.Texture.Height);
