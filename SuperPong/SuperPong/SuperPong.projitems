@@ -83,6 +83,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraWobbleFluctuation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MTRandom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRotateFluctuation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\ControllerInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Input.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
