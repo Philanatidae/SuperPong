@@ -8,14 +8,14 @@ namespace SuperPong.Input
         {
             KeyboardState currentState = Keyboard.GetState();
 
-            _snapshot._buttons = 0;
+            _snapshot._axis = 0;
             if (currentState.IsKeyDown(Keys.W))
             {
-                _snapshot._buttons |= (byte)Buttons.Up;
+                _snapshot._axis += 1;
             }
             if (currentState.IsKeyDown(Keys.S))
             {
-                _snapshot._buttons |= (byte)Buttons.Down;
+                _snapshot._axis -= 1;
             }
         }
     }

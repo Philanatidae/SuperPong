@@ -2,33 +2,22 @@
 
 namespace SuperPong.Input
 {
-    public enum Buttons
-    {
-        Up = 0x1,
-        Down = 0x2
-    };
-
     public class InputSnapshot
     {
-        internal byte _buttons;
+        internal float _axis;
 
         public InputSnapshot() : this(0)
         {
         }
 
-        public InputSnapshot(byte buttons)
+        public InputSnapshot(float axis)
         {
-            _buttons = buttons;
+            _axis = axis;
         }
 
-        public bool IsButtonDown(Buttons button)
+        public float GetAxis()
         {
-            return (_buttons & (byte)button) != 0;
-        }
-
-        public bool IsButtonUp(Buttons button)
-        {
-            return !IsButtonDown(button);
+            return _axis;
         }
     }
 }

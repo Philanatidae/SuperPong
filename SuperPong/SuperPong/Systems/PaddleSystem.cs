@@ -25,14 +25,7 @@ namespace SuperPong.Systems
 
                 Vector2 delta = Vector2.Zero;
 
-                if (playerComp.Input.IsButtonDown(Input.Buttons.Up))
-                {
-                    delta.Y += Constants.Pong.PADDLE_SPEED * dt;
-                }
-                if (playerComp.Input.IsButtonDown(Input.Buttons.Down))
-                {
-                    delta.Y -= Constants.Pong.PADDLE_SPEED * dt;
-                }
+                delta.Y += Constants.Pong.PADDLE_SPEED * playerComp.Input.GetAxis() * dt;
 
                 transformComp.Move(delta);
 
