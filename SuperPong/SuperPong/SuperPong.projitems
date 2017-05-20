@@ -82,6 +82,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\Effects\VerticalWarp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraWobbleFluctuation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MTRandom.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRotateFluctuation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
