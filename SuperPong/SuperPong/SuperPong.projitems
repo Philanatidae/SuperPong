@@ -85,6 +85,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRotateFluctuation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\ControllerInputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Input.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\AIInputMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AIPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\AIComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\AIThinkSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\AI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

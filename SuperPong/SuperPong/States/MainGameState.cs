@@ -24,6 +24,7 @@ namespace SuperPong
         float _acculmulator;
 
         Engine _engine;
+        AIThinkSystem _aiSystem;
         InputSystem _inputSystem;
         PaddleSystem _paddleSystem;
         BallMovementSystem _ballMovementSystem;
@@ -135,6 +136,7 @@ namespace SuperPong
         {
             _engine = new Engine();
 
+            _aiSystem = new AIThinkSystem(_engine);
             _inputSystem = new InputSystem(_engine);
             _paddleSystem = new PaddleSystem(_engine);
             _ballMovementSystem = new BallMovementSystem(_engine);
@@ -199,6 +201,15 @@ namespace SuperPong
             paddle1.AddComponent(new PlayerComponent(_player1));
             paddle2.AddComponent(new PlayerComponent(_player2));
 
+            if (Player1 is AIPlayer)
+            {
+                paddle1.AddComponent(new AIComponent(Player1 as AIPlayer));
+            }
+            if (Player2 is AIPlayer)
+            {
+                paddle2.AddComponent(new AIComponent(Player2 as AIPlayer));
+            }
+
             // Lives
             LivesEntity.Create(_engine,
                                Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES),
@@ -225,6 +236,7 @@ namespace SuperPong
         public override void Update(float dt)
         {
             // Do not need to be in lock-step
+            _aiSystem.Update(dt);
             _inputSystem.Update(dt);
             _livesSystem.Update(dt);
             _goalSystem.Update(dt);
