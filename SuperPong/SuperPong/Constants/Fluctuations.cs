@@ -20,7 +20,7 @@ namespace SuperPong.Constants
         };
 
         public static readonly float CAMERA_WOBBLE_SPEED = 0.1f;
-        public static readonly float CAMERA_WOBBLE_STEADY_TIME = 2 / CAMERA_ROTATE_SPEED;
+        public static readonly float CAMERA_WOBBLE_STEADY_TIME = 2 / CAMERA_WOBBLE_SPEED;
         public static readonly float CAMERA_WOBBLE_EXIT_TIME = 0.5f;
 
         public static readonly float CAMERA_ROTATE_SPEED = 0.1f;
