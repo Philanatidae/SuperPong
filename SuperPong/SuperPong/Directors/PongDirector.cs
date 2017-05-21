@@ -35,6 +35,7 @@ namespace SuperPong.Directors
         readonly Timer _fluctuationTimer = new Timer(0);
         bool _fluctuationTimerEnabled = false;
         int _fluctuationUnlockedLevel = 1;
+        Type _lastFluctuation = null;
 
         DirectorState _state = DirectorState.WaitingToStart;
 
@@ -136,9 +137,15 @@ namespace SuperPong.Directors
                 }
             }
 
-            int index = _random.Next(0, fluctuations.Length - 1);
-            Type fluctuationType = fluctuations[index];
+            Type fluctuationType = null;
+            do
+            {
+                int index = _random.Next(0, fluctuations.Length - 1);
+                fluctuationType = fluctuations[index];
+            } while (fluctuationType == _lastFluctuation);
+
             _processManager.Attach((Fluctuation)Activator.CreateInstance(fluctuationType, _owner));
+            _lastFluctuation = fluctuationType;
 
             _fluctuationUnlockedLevel = MathHelper.Min(++_fluctuationUnlockedLevel, Constants.Fluctuations.FLUCTUATIONS.Length);
             _fluctuationTimerEnabled = false;
