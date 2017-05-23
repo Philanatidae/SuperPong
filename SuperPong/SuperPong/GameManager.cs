@@ -46,7 +46,7 @@ namespace SuperPong
 
             // Load first game state
             Player player1 = new Player(0, "Player 1", new PrimaryKeyboardInputMethod());
-            Player player2 = new Player(1, "Player 2", new SecondaryKeyboardInputMethod());
+            Player player2 = new AIPlayer(1, "Computer");
             ChangeState(new MainGameState(this, player1, player2));
         }
 
