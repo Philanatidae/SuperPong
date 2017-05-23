@@ -90,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\AIComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\AIThinkSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRollFluctuation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

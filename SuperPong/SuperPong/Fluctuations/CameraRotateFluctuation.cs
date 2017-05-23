@@ -75,9 +75,6 @@ namespace SuperPong.Fluctuations
 
                     _camera.RadialDirection.X = (float)Math.Sin(nrad);
                     _camera.RadialDirection.Z = (float)Math.Cos(nrad);
-
-                    //_camera.RadialDirection.X = x * MathUtils.Clamp(0, 1, 1 - Easings.QuinticEaseInOut(_exitTime / Constants.Fluctuations.CAMERA_ROTATE_EXIT_TIME));
-                    //_camera.RadialDirection.Z = z * MathUtils.Clamp(0, 1, 1 - Easings.QuinticEaseInOut(_exitTime / Constants.Fluctuations.CAMERA_ROTATE_EXIT_TIME));
                     _camera.UpdatePositionFromRadial();
                     break;
             }
