@@ -82,3 +82,6 @@
 #begin effects/WarpEffect.xnb
 /copy:effects/WarpEffect.xnb
 
+#begin effects/BlurEffect.xnb
+/copy:effects/BlurEffect.xnb
+

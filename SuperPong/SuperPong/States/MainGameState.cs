@@ -13,6 +13,7 @@ using SuperPong.Events;
 using SuperPong.Graphics;
 using SuperPong.Graphics.PostProcessor;
 using SuperPong.Systems;
+using SuperPong.Graphics.PostProcessor.Effects;
 
 namespace SuperPong
 {
@@ -163,12 +164,15 @@ namespace SuperPong
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 
             Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
+            Content.Load<Effect>(Constants.Resources.EFFECT_BLUR);
         }
 
         public override void Show()
         {
             CreateEntities();
             EventManager.Instance.TriggerEvent(new StartEvent());
+
+            PongPostProcessor.Effects.Add(new Blur(PongPostProcessor, Content));
         }
 
         void CreateEntities()

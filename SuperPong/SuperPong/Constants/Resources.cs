@@ -11,5 +11,6 @@ namespace SuperPong.Constants
         public static readonly string FONT_PONG_LIVES = "fonts/Lives";
 
         public static readonly string EFFECT_WARP = "effects/WarpEffect";
+        public static readonly string EFFECT_BLUR = "effects/BlurEffect";
     }
 }

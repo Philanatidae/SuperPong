@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -14,7 +14,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\Effects\Blur.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\AIThinkSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\InputSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\TransformComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\BallComponent.cs" />
@@ -88,13 +90,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\AIInputMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AIPlayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\AIComponent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Systems\AIThinkSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRollFluctuation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Systems\" />
     <Folder Include="$(MSBuildThisFileDirectory)Components\" />
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
     <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
@@ -104,9 +104,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Processes\" />
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
     <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Graphics\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\" />
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Graphics\PostProcessor\Effects\" />
   </ItemGroup>
 </Project>
