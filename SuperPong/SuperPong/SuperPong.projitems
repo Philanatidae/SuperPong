@@ -92,6 +92,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Components\AIComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRollFluctuation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\FieldBackgroundEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

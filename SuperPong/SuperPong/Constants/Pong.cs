@@ -17,6 +17,10 @@ namespace SuperPong.Constants
         public static readonly float EDGE_WIDTH = PLAYFIELD_WIDTH;
         public static readonly float EDGE_HEIGHT = 3f;
 
+        public static readonly float FIELD_BACKGROUND_TEXTURE_ASPECT_RATIO = 0.374376039933f;
+        public static readonly float FIELD_BACKGROUND_HEIGHT = PLAYFIELD_HEIGHT;
+        public static readonly float FIELD_BACKGROUND_WIDTH = FIELD_BACKGROUND_HEIGHT * FIELD_BACKGROUND_TEXTURE_ASPECT_RATIO;
+
         public static readonly int LIVES_LEFT_POSITION_X = -250;
         public static readonly int LIVES_RIGHT_POSITION_X = 215;
         public static readonly int LIVES_ICON_LEFT_POSITION_X = LIVES_LEFT_POSITION_X + 35;

@@ -160,6 +160,7 @@ namespace SuperPong
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_FIELD_BACKGROUND);
 
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 
@@ -181,6 +182,9 @@ namespace SuperPong
             EdgeEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
                               new Vector2(0, -Constants.Pong.PLAYFIELD_HEIGHT / 2),
                               new Vector2(0, 1)); // Bottom edge points up
+
+            // Field background
+            FieldBackgroundEntity.Create(_engine, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_FIELD_BACKGROUND));
 
             // Player 1 goal
             GoalEntity.Create(_engine, _player1, Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL),
