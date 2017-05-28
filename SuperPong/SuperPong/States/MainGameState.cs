@@ -171,8 +171,6 @@ namespace SuperPong
         {
             CreateEntities();
             EventManager.Instance.TriggerEvent(new StartEvent());
-
-            PongPostProcessor.Effects.Add(new Blur(PongPostProcessor, Content));
         }
 
         void CreateEntities()
