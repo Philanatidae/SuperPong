@@ -105,7 +105,14 @@ namespace SuperPong.Common
 
         public float NextSingle()
         {
-            return Next() / int.MaxValue;
+            int n = Next();
+            return (float)n / int.MaxValue;
+        }
+
+        public float NextSingle(float min, float max)
+        {
+            float n = NextSingle();
+            return (max - min) * n + min;
         }
     }
 }

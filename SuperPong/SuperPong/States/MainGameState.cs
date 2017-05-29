@@ -14,11 +14,14 @@ using SuperPong.Graphics;
 using SuperPong.Graphics.PostProcessor;
 using SuperPong.Systems;
 using SuperPong.Graphics.PostProcessor.Effects;
+using SuperPong.Particles;
 
 namespace SuperPong
 {
     public class MainGameState : GameState, IPongDirectorOwner
     {
+        MTRandom _random = new MTRandom();
+
         Player _player1;
         Player _player2;
 
@@ -70,7 +73,13 @@ namespace SuperPong
         public PostProcessor PongPostProcessor
         {
             get;
-            set;
+            private set;
+        }
+
+        public ParticleManager<VelocityParticleInfo> VelocityParticleManager
+        {
+            get;
+            private set;
         }
 
         public PongCamera PongCamera
@@ -113,6 +122,8 @@ namespace SuperPong
                                                    false,
                                                    SurfaceFormat.Color,
                                                    DepthFormat.None);
+
+            VelocityParticleManager = new ParticleManager<VelocityParticleInfo>(1024 * 20, VelocityParticleInfo.UpdateParticle);
 
             _quadEffect = new BasicEffect(GameManager.GraphicsDevice);
             _quadEffect.AmbientLightColor = new Vector3(1, 1, 1);
@@ -161,6 +172,8 @@ namespace SuperPong
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE);
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_GOAL);
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_FIELD_BACKGROUND);
+
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PARTICLE_VELOCITY);
 
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
 
@@ -260,6 +273,9 @@ namespace SuperPong
             // Update the director
             _director.Update(dt);
 
+            // Update particles
+            VelocityParticleManager.Update(dt);
+
             // Update post-processing effects
             PongPostProcessor.Update(dt);
         }
@@ -281,6 +297,17 @@ namespace SuperPong
                                         Constants.Pong.RENDER_GROUP,
                                         dt,
                                         betweenFrameAlpha);
+            _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                           Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X,
+                                                                GameManager.GraphicsDevice.Viewport.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y,
+                                                               0));
+            VelocityParticleManager.Draw(_renderSystem.SpriteBatch);
+            _renderSystem.SpriteBatch.End();
             GameManager.GraphicsDevice.SetRenderTarget(null);
 
             _quadEffect.View = _pongCamera.TransformMatrix;
@@ -294,6 +321,7 @@ namespace SuperPong
 
                 _quad.Draw(GameManager.GraphicsDevice);
             }
+
             PongPostProcessor.End();
         }
 

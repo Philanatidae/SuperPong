@@ -93,6 +93,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fluctuations\CameraRollFluctuation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\FieldBackgroundEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticleManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\VelocityParticleInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -106,5 +108,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Directors\" />
     <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Particles\" />
   </ItemGroup>
 </Project>

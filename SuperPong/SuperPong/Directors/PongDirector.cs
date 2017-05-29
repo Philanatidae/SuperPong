@@ -10,6 +10,7 @@ using SuperPong.Entities;
 using SuperPong.Events;
 using SuperPong.Fluctuations;
 using SuperPong.Graphics.PostProcessor;
+using SuperPong.Particles;
 using SuperPong.Processes;
 
 namespace SuperPong.Directors
@@ -32,6 +33,9 @@ namespace SuperPong.Directors
         readonly Family _ballFamily = Family.All(typeof(BallComponent), typeof(TransformComponent)).Get();
         readonly ImmutableList<Entity> _ballEntities;
 
+        readonly Family _edgeFamily = Family.All(typeof(EdgeComponent), typeof(TransformComponent)).Get();
+        readonly ImmutableList<Entity> _edgeEntities;
+
         readonly Timer _fluctuationTimer = new Timer(0);
         bool _fluctuationTimerEnabled = false;
         int _fluctuationUnlockedLevel = 1;
@@ -49,6 +53,7 @@ namespace SuperPong.Directors
             _random = new MTRandom();
 
             _ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
+            _edgeEntities = _owner.Engine.GetEntitiesFor(_edgeFamily);
         }
 
         public void RegisterEvents()
@@ -107,6 +112,28 @@ namespace SuperPong.Directors
                         }
                     }
                     break;
+            }
+        }
+
+        void CreateExplosion(Vector2 position)
+        {
+            for (int i = 0; i < 150; i++)
+            {
+                float speed = 2000 * (1f - 1 / _random.NextSingle(1, 10));
+                float dir = _random.NextSingle(0, MathHelper.TwoPi);
+                VelocityParticleInfo info = new VelocityParticleInfo()
+                {
+                    Velocity = new Vector2((float)(speed * Math.Cos(dir)), (float)(speed * Math.Sin(dir))),
+                    LengthMultiplier = 1f,
+                    EdgeEntities = _edgeEntities
+                };
+
+                _owner.VelocityParticleManager.CreateParticle(_owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PARTICLE_VELOCITY),
+                                                        position,
+                                                        Color.White,
+                                                        150,
+                                                        Vector2.One,
+                                                        info);
             }
         }
 
@@ -212,6 +239,9 @@ namespace SuperPong.Directors
 
         void HandleGoal(GoalEvent goalEvent)
         {
+            // Create an explosion
+            CreateExplosion(goalEvent.Position);
+
             GoalComponent goalComp = goalEvent.Goal.GetComponent<GoalComponent>();
 
             _owner.Engine.DestroyEntity(goalEvent.Ball);
@@ -302,7 +332,11 @@ namespace SuperPong.Directors
         PostProcessor PongPostProcessor
         {
             get;
-            set;
+        }
+
+        ParticleManager<VelocityParticleInfo> VelocityParticleManager
+        {
+            get;
         }
 
         PongCamera PongCamera
