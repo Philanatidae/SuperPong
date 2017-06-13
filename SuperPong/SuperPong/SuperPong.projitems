@@ -94,6 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\FieldBackgroundEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticleManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\VelocityParticleInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)States\MenuGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Widget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Root.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Button.cs" />
