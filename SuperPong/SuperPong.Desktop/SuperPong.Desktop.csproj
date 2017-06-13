@@ -48,6 +48,9 @@
     <Reference Include="MonoGame.Extended.Graphics">
       <HintPath>..\packages\MonoGame.Extended.Graphics.0.6.377\lib\MonoGame.Extended.Graphics.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Extended.Input">
+      <HintPath>..\packages\MonoGame.Extended.Input.0.6.377\lib\MonoGame.Extended.Input.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

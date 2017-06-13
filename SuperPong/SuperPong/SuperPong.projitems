@@ -38,7 +38,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\BallEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\EdgeEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Camera.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Events\ResizeEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)States\MainGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\FontComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\ScoreTrackerComponent.cs" />
@@ -95,6 +94,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\FieldBackgroundEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticleManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\VelocityParticleInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Root.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Image.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Panel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\MouseButtonEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\MouseMoveEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\ResizeEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Label.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
@@ -109,5 +117,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Fluctuations\" />
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Particles\" />
+    <Folder Include="$(MSBuildThisFileDirectory)UI\" />
+    <Folder Include="$(MSBuildThisFileDirectory)UI\Widgets\" />
   </ItemGroup>
 </Project>
