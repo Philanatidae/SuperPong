@@ -33,7 +33,6 @@ namespace SuperPong
 
             Graphics.PreferredBackBufferWidth = (int)Constants.Global.SCREEN_WIDTH;
             Graphics.PreferredBackBufferHeight = (int)Constants.Global.SCREEN_HEIGHT;
-            Graphics.PreferMultiSampling = true;
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
