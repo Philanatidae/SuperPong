@@ -37,9 +37,11 @@ namespace SuperPong.UI.Widgets
                       float pOffsetX,
                       float percentY,
                       float pOffsetY,
-                      float percentHeight)
+                      float percentAspect,
+                      float pOffsetAspect,
+                      AspectRatioType aspectRatioType)
             : base(origin, percentX, pOffsetX, percentY, pOffsetY,
-                   percentHeight, 0, 0, AspectRatioType.HeightMaster)
+                   percentAspect, pOffsetAspect, 0, aspectRatioType)
         {
             _font = font;
         }

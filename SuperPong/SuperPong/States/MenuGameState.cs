@@ -81,7 +81,9 @@ namespace SuperPong.States
                                         0,
                                         0,
                                         0,
-                                        0.4f);
+                                        0.4f,
+                                       0,
+                                        AspectRatioType.HeightMaster);
             playLabel.Content = "Play";
             _playButton.SubPanel.Add(playLabel);
             _root.Add(_playButton);
@@ -104,7 +106,9 @@ namespace SuperPong.States
                                            0,
                                            0,
                                            0,
-                                           0.4f);
+                                           0.4f,
+                                          0,
+                                           AspectRatioType.HeightMaster);
             optionsLabel.Content = "Options";
             _optionsButton.SubPanel.Add(optionsLabel);
             _root.Add(_optionsButton);
@@ -131,7 +135,9 @@ namespace SuperPong.States
                                         0,
                                         0,
                                         0,
-                                        0.4f);
+                                        0.4f,
+                                       0,
+                                        AspectRatioType.HeightMaster);
             exitLabel.Content = "Exit";
             _exitButton.SubPanel.Add(exitLabel);
             _root.Add(_exitButton);
