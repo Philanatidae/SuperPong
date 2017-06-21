@@ -40,8 +40,6 @@ namespace SuperPong.States
 
         public override void LoadContent()
         {
-            Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL);
-
             Content.Load<BitmapFont>(Constants.Resources.FONT_MENU_BUTTON);
 
             _buttonReleased = new NinePatchRegion2D(new TextureRegion2D(Content.Load<Texture2D>(Constants.Resources.TEXTURE_BUTTON_RELEASED)),
