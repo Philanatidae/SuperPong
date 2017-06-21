@@ -104,6 +104,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\MouseMoveEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ResizeEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\Label.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\GamePadConnectedEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\GamePadDisconnectedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings.cs" />
   </ItemGroup>
   <ItemGroup>

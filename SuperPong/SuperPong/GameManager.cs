@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Input.InputListeners;
 using SuperPong.Events;
+using SuperPong.Input;
 using SuperPong.States;
 
 namespace SuperPong
@@ -15,6 +16,7 @@ namespace SuperPong
 
         InputListenerComponent _inputListenerManager;
         MouseListener _mouseListener;
+        GamePadListener _gamePadListener;
 
         GameState _currentState;
 
@@ -56,6 +58,12 @@ namespace SuperPong
             _mouseListener.MouseMoved += Mouse_MouseMoved;
             _mouseListener.MouseDown += Mouse_MouseDownOrUp;
             _mouseListener.MouseUp += Mouse_MouseDownOrUp;
+
+            _gamePadListener = new GamePadListener();
+            _inputListenerManager.Listeners.Add(_gamePadListener);
+
+            GamePadListener.CheckControllerConnections = true;
+            GamePadListener.ControllerConnectionChanged += GamePad_ControllerConnectionChanged;
 
             base.Initialize();
         }
@@ -131,6 +139,26 @@ namespace SuperPong
                 EventManager.Instance.QueueEvent(new MouseButtonEvent(e.CurrentState.LeftButton,
                                                                       new Vector2(e.Position.X,
                                                                                   e.Position.Y)));
+            }
+        }
+
+        void GamePad_ControllerConnectionChanged(object sender, GamePadEventArgs e)
+        {
+            // More than 4 controllers not supported
+            if ((int)e.PlayerIndex < 4)
+            {
+                if (!e.PreviousState.IsConnected
+                   && e.CurrentState.IsConnected)
+                {
+                    // Controller connected
+                    EventManager.Instance.QueueEvent(new GamePadConnectedEvent(e.PlayerIndex));
+                }
+                if (e.PreviousState.IsConnected
+                   && !e.CurrentState.IsConnected)
+                {
+                    // Controller disconnected
+                    EventManager.Instance.QueueEvent(new GamePadDisconnectedEvent(e.PlayerIndex));
+                }
             }
         }
     }
