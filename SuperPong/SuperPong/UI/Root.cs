@@ -41,16 +41,19 @@ namespace SuperPong.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < _widgets.Count; i++)
+            if (!Hidden)
             {
-                _widgets[i].Draw(spriteBatch);
+                for (int i = 0; i < _widgets.Count; i++)
+                {
+                    _widgets[i].Draw(spriteBatch);
+                }
             }
         }
 
         void OnResize(float width, float height)
         {
-            _pOffsetWidth = width;
-            _pOffsetHeight = height;
+            POffsetWidth = width;
+            POffsetHeight = height;
 
             ComputeProperties();
         }

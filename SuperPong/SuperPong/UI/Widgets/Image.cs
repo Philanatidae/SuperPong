@@ -45,16 +45,19 @@ namespace SuperPong.UI.Widgets
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 scale = (BottomRight - TopLeft) / _bounds;
-            spriteBatch.Draw(_texture,
-                             TopLeft,
-                             null,
-                             Color.White,
-                             0,
-                             Vector2.Zero,
-                             scale,
-                             SpriteEffects.None,
-                             0);
+            if (!Hidden)
+            {
+                Vector2 scale = (BottomRight - TopLeft) / _bounds;
+                spriteBatch.Draw(_texture,
+                                 TopLeft,
+                                 null,
+                                 Color.White,
+                                 0,
+                                 Vector2.Zero,
+                                 scale,
+                                 SpriteEffects.None,
+                                 0);
+            }
         }
 
         public override bool Handle(IEvent evt)

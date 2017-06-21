@@ -49,9 +49,12 @@ namespace SuperPong.UI.Widgets
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < _widgets.Count; i++)
+            if (!Hidden)
             {
-                _widgets[i].Draw(spriteBatch);
+                for (int i = 0; i < _widgets.Count; i++)
+                {
+                    _widgets[i].Draw(spriteBatch);
+                }
             }
         }
 

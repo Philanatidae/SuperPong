@@ -26,6 +26,8 @@ namespace SuperPong.UI
             protected set;
         }
 
+        public bool Hidden = false;
+
         public Vector2 TopLeft
         {
             get;
@@ -63,15 +65,47 @@ namespace SuperPong.UI
             private set;
         }
 
-        protected float _percentX;
-        protected float _percentY;
-        protected float _pOffsetX;
-        protected float _pOffsetY;
+        public float PercentX
+        {
+            get;
+            set;
+        }
+        public float PercentY
+        {
+            get;
+            set;
+        }
+        public float POffsetX
+        {
+            get;
+            set;
+        }
+        public float POffsetY
+        {
+            get;
+            set;
+        }
 
-        protected float _percentWidth;
-        protected float _pOffsetWidth;
-        protected float _percentHeight;
-        protected float _pOffsetHeight;
+        public float PercentWidth
+        {
+            get;
+            set;
+        }
+        public float POffsetWidth
+        {
+            get;
+            set;
+        }
+        public float PercentHeight
+        {
+            get;
+            set;
+        }
+        public float POffsetHeight
+        {
+            get;
+            set;
+        }
 
         public Widget(Origin origin,
                       float percentX,
@@ -84,14 +118,14 @@ namespace SuperPong.UI
                       float pOffsetHeight)
         {
             Origin = origin;
-            _percentX = percentX;
-            _percentY = percentY;
-            _pOffsetX = pOffsetX;
-            _pOffsetY = pOffsetY;
-            _percentWidth = percentWidth;
-            _pOffsetWidth = pOffsetWidth;
-            _percentHeight = percentHeight;
-            _pOffsetHeight = pOffsetHeight;
+            PercentX = percentX;
+            PercentY = percentY;
+            POffsetX = pOffsetX;
+            POffsetY = pOffsetY;
+            PercentWidth = percentWidth;
+            POffsetWidth = pOffsetWidth;
+            PercentHeight = percentHeight;
+            POffsetHeight = pOffsetHeight;
 
             AspectRatioType = AspectRatioType.None;
         }
@@ -107,15 +141,15 @@ namespace SuperPong.UI
                       AspectRatioType aspectRatioType)
         {
             Origin = origin;
-            _percentX = percentX;
-            _percentY = percentY;
-            _pOffsetX = pOffsetX;
-            _pOffsetY = pOffsetY;
+            PercentX = percentX;
+            PercentY = percentY;
+            POffsetX = pOffsetX;
+            POffsetY = pOffsetY;
 
-            _percentWidth = percentAspect;
-            _pOffsetWidth = pOffsetAspect;
-            _percentHeight = percentAspect;
-            _pOffsetHeight = pOffsetAspect;
+            PercentWidth = percentAspect;
+            POffsetWidth = pOffsetAspect;
+            PercentHeight = percentAspect;
+            POffsetHeight = pOffsetAspect;
 
             AspectRatio = aspectRatio;
 
@@ -130,43 +164,43 @@ namespace SuperPong.UI
             {
                 // Root; only sets based on offset width and height
                 TopLeft = Vector2.Zero;
-                BottomRight = new Vector2(_pOffsetWidth, _pOffsetHeight);
+                BottomRight = new Vector2(POffsetWidth, POffsetHeight);
             }
             else
             {
                 float x = Parent.TopLeft.X;
-                x += _percentX * Parent.Width;
-                x += _pOffsetX;
+                x += PercentX * Parent.Width;
+                x += POffsetX;
 
                 float y = Parent.TopLeft.Y;
-                y += _percentY * Parent.Height;
-                y += _pOffsetY;
+                y += PercentY * Parent.Height;
+                y += POffsetY;
 
                 float w, h;
                 switch (AspectRatioType)
                 {
                     case AspectRatioType.WidthMaster:
                         w = Parent.Width;
-                        w *= _percentWidth;
-                        w += _pOffsetWidth;
+                        w *= PercentWidth;
+                        w += POffsetWidth;
 
                         h = w / AspectRatio;
                         break;
                     case AspectRatioType.HeightMaster:
                         h = Parent.Height;
-                        h *= _percentHeight;
-                        h += _pOffsetHeight;
+                        h *= PercentHeight;
+                        h += POffsetHeight;
 
                         w = h * AspectRatio;
                         break;
                     case AspectRatioType.None:
                     default:
                         w = Parent.Width;
-                        w *= _percentWidth;
-                        w += _pOffsetWidth;
+                        w *= PercentWidth;
+                        w += POffsetWidth;
                         h = Parent.Height;
-                        h *= _percentHeight;
-                        h += _pOffsetHeight;
+                        h *= PercentHeight;
+                        h += POffsetHeight;
 
                         AspectRatio = w / h;
                         break;

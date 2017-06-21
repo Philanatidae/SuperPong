@@ -98,23 +98,26 @@ namespace SuperPong.UI.Widgets
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            NinePatchRegion2D ninePatch = _releasedTexture;
-            if (ButtonState == ButtonState.Hover)
+            if (!Hidden)
             {
-                ninePatch = _hoverTexture;
-            }
-            if (ButtonState == ButtonState.Pressed)
-            {
-                ninePatch = _pressedTexture;
-            }
+                NinePatchRegion2D ninePatch = _releasedTexture;
+                if (ButtonState == ButtonState.Hover)
+                {
+                    ninePatch = _hoverTexture;
+                }
+                if (ButtonState == ButtonState.Pressed)
+                {
+                    ninePatch = _pressedTexture;
+                }
 
-            spriteBatch.Draw(ninePatch,
-                             new Rectangle((int)TopLeft.X,
-                                           (int)TopLeft.Y,
-                                           (int)Width,
-                                           (int)Height),
-                             Color.White);
-            SubPanel.Draw(spriteBatch);
+                spriteBatch.Draw(ninePatch,
+                                 new Rectangle((int)TopLeft.X,
+                                               (int)TopLeft.Y,
+                                               (int)Width,
+                                               (int)Height),
+                                 Color.White);
+                SubPanel.Draw(spriteBatch);
+            }
         }
 
         public override bool Handle(IEvent evt)
