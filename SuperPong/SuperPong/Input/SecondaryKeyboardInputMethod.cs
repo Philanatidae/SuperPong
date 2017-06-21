@@ -9,11 +9,11 @@ namespace SuperPong.Input
             KeyboardState currentState = Keyboard.GetState();
 
             _snapshot._axis = 0;
-            if (currentState.IsKeyDown(Keys.Up))
+            if (currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey1))
             {
                 _snapshot._axis += 1;
             }
-            if (currentState.IsKeyDown(Keys.Down))
+            if (currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey2))
             {
                 _snapshot._axis -= 1;
             }

@@ -40,6 +40,9 @@ namespace SuperPong
 
         protected override void Initialize()
         {
+            // Settings
+            Settings.Instance.Load();
+
             Mouse.WindowHandle = Window.Handle;
 
             IsMouseVisible = true;
