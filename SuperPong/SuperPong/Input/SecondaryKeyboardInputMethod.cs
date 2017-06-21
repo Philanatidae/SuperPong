@@ -17,6 +17,10 @@ namespace SuperPong.Input
             {
                 _snapshot._axis -= 1;
             }
+
+            // Update join/leave
+            JoinKeyPressed = currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey1)
+                                         || currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey2);
         }
     }
 }

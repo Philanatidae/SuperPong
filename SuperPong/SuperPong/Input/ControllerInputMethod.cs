@@ -31,6 +31,11 @@ namespace SuperPong.Input
                 }
 
                 _snapshot._axis = axis;
+
+                // Update join/leave/start
+                JoinKeyPressed = currentState.IsButtonDown(Buttons.A);
+                LeaveKeyPressed = currentState.IsButtonDown(Buttons.B);
+                StartKeyPressed = currentState.IsButtonDown(Buttons.Start);
             }
         }
     }

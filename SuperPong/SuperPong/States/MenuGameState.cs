@@ -71,9 +71,7 @@ namespace SuperPong.States
                                      AspectRatioType.HeightMaster);
             _playButton.Action = () =>
             {
-                GameManager.ChangeState(new MainGameState(GameManager,
-                                                          new AIPlayer(0, "Computer 1"),
-                                                          new AIPlayer(1, "Computer 2")));
+                GameManager.ChangeState(new LobbyGameState(GameManager));
             };
             Label playLabel = new Label(Content.Load<BitmapFont>(Constants.Resources.FONT_MENU_BUTTON),
                                         Origin.Center,
