@@ -107,6 +107,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\GamePadConnectedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\GamePadDisconnectedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Widgets\NinePatchImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />
