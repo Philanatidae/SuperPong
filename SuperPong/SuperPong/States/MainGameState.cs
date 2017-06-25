@@ -258,6 +258,7 @@ namespace SuperPong
 
         void BeginIntroSequence()
         {
+            WaitProcess wait1 = new WaitProcess(Constants.Animations.INTRO_WAIT_DURATION);
             ReadyIntroTextAnimation readyIntroAnimation = new ReadyIntroTextAnimation(_engine,
                                                                                       FontEntity.Create(_engine,
                                                                                                         Vector2.Zero,
@@ -265,6 +266,7 @@ namespace SuperPong
                                                                                                         Constants.Pong.INTRO_READY_CONTENT),
                                                                                       _mainCamera,
                                                                                       GameManager.GraphicsDevice.Viewport);
+            wait1.SetNext(readyIntroAnimation);
 
             GoIntroTextAnimation goIntroAnimation = new GoIntroTextAnimation(_engine,
                                                                              FontEntity.Create(_engine,
@@ -280,7 +282,7 @@ namespace SuperPong
                 EventManager.Instance.TriggerEvent(new StartEvent());
             }));
 
-            _processManager.Attach(readyIntroAnimation);
+            _processManager.Attach(wait1);
         }
 
         public override void Update(float dt)
