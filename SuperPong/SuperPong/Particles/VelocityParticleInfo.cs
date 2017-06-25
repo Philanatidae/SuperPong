@@ -24,16 +24,20 @@ namespace SuperPong.Particles
                 TransformComponent transformComp = entity.GetComponent<TransformComponent>();
                 EdgeComponent edgeComp = entity.GetComponent<EdgeComponent>();
 
-                // If top edge
-                if (edgeComp.Normal.Y < 0
-                    && particle.Position.Y >= transformComp.Position.Y)
+                // If withing the bounds of the edge
+                if (Math.Abs(particle.Position.X) <= Constants.Pong.EDGE_WIDTH / 2)
                 {
-                    velocity.Y = -Math.Abs(velocity.Y);
-                }
-                else if (edgeComp.Normal.Y > 0
-                  && particle.Position.Y <= transformComp.Position.Y)
-                {
-                    velocity.Y = Math.Abs(velocity.Y);
+                    // If top edge
+                    if (edgeComp.Normal.Y < 0
+                        && particle.Position.Y >= transformComp.Position.Y)
+                    {
+                        velocity.Y = -Math.Abs(velocity.Y);
+                    }
+                    else if (edgeComp.Normal.Y > 0
+                      && particle.Position.Y <= transformComp.Position.Y)
+                    {
+                        velocity.Y = Math.Abs(velocity.Y);
+                    }
                 }
             }
 
