@@ -89,7 +89,7 @@ namespace SuperPong.Processes.Animations
             if (masterAlpha < 0.5f)
             {
                 float alpha = masterAlpha * 2;
-                float beta = Easings.QuarticEaseOut(alpha);
+                float beta = Easings.CubicEaseOut(alpha);
 
                 float valX = MathHelper.Lerp(startX, midX, beta);
                 _transformComp.SetPosition(valX, 0);
@@ -97,7 +97,7 @@ namespace SuperPong.Processes.Animations
             else
             {
                 float alpha = (masterAlpha - 0.5f) * 2;
-                float beta = Easings.QuarticEaseIn(alpha);
+                float beta = Easings.CubicEaseIn(alpha);
 
                 float valX = MathHelper.Lerp(midX, endX, beta);
                 _transformComp.SetPosition(valX, 0);
