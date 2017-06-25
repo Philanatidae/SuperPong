@@ -20,5 +20,7 @@ namespace SuperPong.Components
         public Vector2 Bounds;
 
         public byte RenderGroup = 0x1;
+
+        public bool Hidden;
     }
 }

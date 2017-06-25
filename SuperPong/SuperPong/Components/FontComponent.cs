@@ -21,5 +21,7 @@ namespace SuperPong.Components
         public Color Color = Color.White;
 
         public byte RenderGroup = Constants.Render.GROUP_ONE;
+
+        public bool Hidden;
     }
 }

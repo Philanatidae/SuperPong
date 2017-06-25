@@ -1,5 +1,4 @@
-﻿using System;
-using ECS;
+﻿using ECS;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
@@ -60,7 +59,8 @@ namespace SuperPong.Systems
             foreach (Entity entity in _spriteEntities)
             {
                 SpriteComponent spriteComp = entity.GetComponent<SpriteComponent>();
-                if ((spriteComp.RenderGroup & groupMask) == 0)
+                if (spriteComp.Hidden
+                    || (spriteComp.RenderGroup & groupMask) == 0)
                 {
                     continue;
                 }
@@ -89,7 +89,8 @@ namespace SuperPong.Systems
             foreach (Entity entity in _fontEntities)
             {
                 FontComponent fontComp = entity.GetComponent<FontComponent>();
-                if ((fontComp.RenderGroup & groupMask) == 0)
+                if (fontComp.Hidden
+                    || (fontComp.RenderGroup & groupMask) == 0)
                 {
                     continue;
                 }
