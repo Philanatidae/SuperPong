@@ -403,7 +403,9 @@ namespace SuperPong
                             .SetNext(new WaitProcess(Constants.Animations.GAME_OVER_POST_WAIT))
                             .SetNext(new DelegateCommand(() =>
                             {
-                                GameManager.ChangeState(new LobbyGameState(GameManager));
+                                GameManager.ChangeState(new LobbyGameState(GameManager,
+                                                                           _player1.InputMethod,
+                                                                           (_player2 is AIPlayer) ? null : _player2.InputMethod));
                             }));
 
                 _processManager.Attach(processChain);

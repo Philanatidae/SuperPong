@@ -82,6 +82,15 @@ namespace SuperPong.States
                              gameManager.GraphicsDevice.Viewport.Height);
         }
 
+        public LobbyGameState(GameManager gameManager,
+                              InputMethod player1InputMethod,
+                              InputMethod player2InputMethod)
+            : this(gameManager)
+        {
+            _player1InputMethod = player1InputMethod;
+            _player2InputMethod = player2InputMethod;
+        }
+
         public override void Initialize()
         {
             // Add the two keyboard input methods
