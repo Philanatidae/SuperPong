@@ -330,10 +330,11 @@ namespace SuperPong
         void DrawPong(float dt, float betweenFrameAlpha)
         {
             GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
-            _renderSystem.DrawEntities(Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X,
-                                                                GameManager.GraphicsDevice.Viewport.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y,
-                                                               0),
-                                        Constants.Pong.RENDER_GROUP,
+            Matrix center = Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2,
+                                                                GameManager.GraphicsDevice.Viewport.Height / 2,
+                                                     0);
+            _renderSystem.DrawEntities(center,
+                                       Constants.Pong.RENDER_GROUP,
                                         dt,
                                         betweenFrameAlpha);
             _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
@@ -342,9 +343,7 @@ namespace SuperPong
                                             null,
                                             null,
                                             null,
-                                           Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X,
-                                                                GameManager.GraphicsDevice.Viewport.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y,
-                                                               0));
+                                            center);
             VelocityParticleManager.Draw(_renderSystem.SpriteBatch);
             _renderSystem.SpriteBatch.End();
             GameManager.GraphicsDevice.SetRenderTarget(null);
@@ -361,7 +360,18 @@ namespace SuperPong
                 _quad.Draw(GameManager.GraphicsDevice);
             }
 
-            PongPostProcessor.End();
+            RenderTarget2D processedPongRender = PongPostProcessor.End(false);
+            _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
+                                           null,
+                                           null,
+                                           null,
+                                           null,
+                                           null,
+                                           Matrix.CreateTranslation(Constants.Pong.BUFFER_RENDER_POSITION.X,
+                                                                Constants.Pong.BUFFER_RENDER_POSITION.Y,
+                                                               0));
+            _renderSystem.SpriteBatch.Draw(processedPongRender, processedPongRender.Bounds, Color.White);
+            _renderSystem.SpriteBatch.End();
         }
 
         void DrawRemainder(float dt, float betweenFrameAlpha)

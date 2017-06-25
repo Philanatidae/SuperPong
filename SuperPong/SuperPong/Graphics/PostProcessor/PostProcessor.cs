@@ -74,7 +74,12 @@ namespace SuperPong.Graphics.PostProcessor
             }
         }
 
-        public void End()
+        public RenderTarget2D End()
+        {
+            return End(true);
+        }
+
+        public RenderTarget2D End(bool draw)
         {
             if (!Drawing)
             {
@@ -92,9 +97,13 @@ namespace SuperPong.Graphics.PostProcessor
             }
 
             // Render as a fullscreen quad
-            SpriteBatch.Begin();
-            SpriteBatch.Draw(finalTarget, Bounds, Color.White);
-            SpriteBatch.End();
+            if (draw)
+            {
+                SpriteBatch.Begin();
+                SpriteBatch.Draw(finalTarget, Bounds, Color.White);
+                SpriteBatch.End();
+            }
+            return finalTarget;
         }
 
         public bool Handle(IEvent evt)
