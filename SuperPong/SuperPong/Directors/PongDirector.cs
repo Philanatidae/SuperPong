@@ -178,9 +178,9 @@ namespace SuperPong.Directors
             _fluctuationTimerEnabled = false;
         }
 
-        void PlayNewBall(Player playerToServe)
+        void PlayNewBall(Player playerToServe, bool wait)
         {
-            Process ballReturnSequence = new WaitProcess(1.0f);
+            Process ballReturnSequence = new WaitProcess(wait ? 1.0f : 0.0f);
             _processManager.Attach(ballReturnSequence);
 
             float direction = Constants.Pong.BALL_PLAYER2_STARTING_ROTATION_DEGREES;
@@ -234,7 +234,7 @@ namespace SuperPong.Directors
         // HANDLERS!
         void HandleStart(StartEvent startEvent)
         {
-            PlayNewBall(_owner.Player1);
+            PlayNewBall(_owner.Player1, false);
         }
 
         void HandleGoal(GoalEvent goalEvent)
@@ -271,11 +271,11 @@ namespace SuperPong.Directors
             {
                 if (goalComp.For.Index == 0)
                 {
-                    PlayNewBall(_owner.Player1);
+                    PlayNewBall(_owner.Player1, true);
                 }
                 if (goalComp.For.Index == 1)
                 {
-                    PlayNewBall(_owner.Player2);
+                    PlayNewBall(_owner.Player2, true);
                 }
             });
 
