@@ -15,10 +15,12 @@ using SuperPong.Systems;
 using SuperPong.Particles;
 using SuperPong.Processes;
 using SuperPong.Processes.Animations;
+using System;
+using SuperPong.States;
 
 namespace SuperPong
 {
-    public class MainGameState : GameState, IPongDirectorOwner
+    public class MainGameState : GameState, IPongDirectorOwner, IEventListener
     {
         Player _player1;
         Player _player2;
@@ -109,6 +111,8 @@ namespace SuperPong
 
         public override void Initialize()
         {
+            EventManager.Instance.RegisterListener<PlayerLostEvent>(this);
+
             _processManager = new ProcessManager();
 
             _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
@@ -372,6 +376,7 @@ namespace SuperPong
         public override void Dispose()
         {
             // Remove listeners
+            EventManager.Instance.UnregisterListener(this);
             EventManager.Instance.UnregisterListener(_mainCamera);
             EventManager.Instance.UnregisterListener(_pongCamera);
             _livesSystem.UnregisterEventListeners();
@@ -379,6 +384,34 @@ namespace SuperPong
 
             EventManager.Instance.UnregisterListener(PongPostProcessor);
             PongPostProcessor.Dispose();
+        }
+
+        public bool Handle(IEvent evt)
+        {
+            PlayerLostEvent playerLostEvent = evt as PlayerLostEvent;
+            if (playerLostEvent != null)
+            {
+                WaitProcess processChain = new WaitProcess(Constants.Animations.GAME_OVER_WAIT);
+                string gameOverContent = playerLostEvent.WinPlayer.Name + Constants.Pong.GAME_OVER_CONTENT_SUFFIX;
+                processChain.SetNext(new GameOverTextAnimation(_engine,
+                                                       FontEntity.Create(_engine,
+                                                                         Vector2.Zero,
+                                                                        Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
+                                                                         gameOverContent),
+                                                       _mainCamera,
+                                                       GameManager.GraphicsDevice.Viewport))
+                            .SetNext(new WaitProcess(Constants.Animations.GAME_OVER_POST_WAIT))
+                            .SetNext(new DelegateCommand(() =>
+                            {
+                                GameManager.ChangeState(new LobbyGameState(GameManager));
+                            }));
+
+                _processManager.Attach(processChain);
+
+                return false;
+            }
+
+            return false;
         }
     }
 }

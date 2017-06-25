@@ -10,7 +10,15 @@ namespace SuperPong.Events
             WinPlayer = winPlayer;
         }
 
-        Player LosePlayer;
-        Player WinPlayer;
+        public Player LosePlayer
+        {
+            get;
+            private set;
+        }
+        public Player WinPlayer
+        {
+            get;
+            private set;
+        }
     }
 }

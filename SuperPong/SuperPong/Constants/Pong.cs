@@ -45,5 +45,7 @@ namespace SuperPong.Constants
         public static readonly string INTRO_READY_CONTENT = "Ready?";
         public static readonly string INTRO_GO_CONTENT = "Go!";
 
+        public static readonly string GAME_OVER_CONTENT_SUFFIX = " Wins!";
+
     }
 }
