@@ -1,5 +1,4 @@
-﻿using System;
-using ECS;
+﻿using ECS;
 using Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,17 +12,18 @@ using SuperPong.Events;
 using SuperPong.Graphics;
 using SuperPong.Graphics.PostProcessor;
 using SuperPong.Systems;
-using SuperPong.Graphics.PostProcessor.Effects;
 using SuperPong.Particles;
+using SuperPong.Processes;
+using SuperPong.Processes.Animations;
 
 namespace SuperPong
 {
     public class MainGameState : GameState, IPongDirectorOwner
     {
-        MTRandom _random = new MTRandom();
-
         Player _player1;
         Player _player2;
+
+        ProcessManager _processManager;
 
         float _acculmulator;
 
@@ -109,6 +109,8 @@ namespace SuperPong
 
         public override void Initialize()
         {
+            _processManager = new ProcessManager();
+
             _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
             _pongCamera = new PongCamera();
             // The camera response to size changes
@@ -176,6 +178,7 @@ namespace SuperPong
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PARTICLE_VELOCITY);
 
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
+            Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO);
 
             Content.Load<Effect>(Constants.Resources.EFFECT_WARP);
             Content.Load<Effect>(Constants.Resources.EFFECT_BLUR);
@@ -184,7 +187,8 @@ namespace SuperPong
         public override void Show()
         {
             CreateEntities();
-            EventManager.Instance.TriggerEvent(new StartEvent());
+
+            BeginIntroSequence();
         }
 
         void CreateEntities()
@@ -252,8 +256,37 @@ namespace SuperPong
                                              2);
         }
 
+        void BeginIntroSequence()
+        {
+            ReadyIntroTextAnimation readyIntroAnimation = new ReadyIntroTextAnimation(_engine,
+                                                                                      FontEntity.Create(_engine,
+                                                                                                        Vector2.Zero,
+                                                                                                        Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
+                                                                                                        Constants.Pong.INTRO_READY_CONTENT),
+                                                                                      _mainCamera,
+                                                                                      GameManager.GraphicsDevice.Viewport);
+
+            GoIntroTextAnimation goIntroAnimation = new GoIntroTextAnimation(_engine,
+                                                                             FontEntity.Create(_engine,
+                                                                                                        Vector2.Zero,
+                                                                                                        Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
+                                                                                               Constants.Pong.INTRO_GO_CONTENT),
+                                                                                      _mainCamera,
+                                                                                      GameManager.GraphicsDevice.Viewport);
+            readyIntroAnimation.SetNext(goIntroAnimation);
+
+            goIntroAnimation.SetNext(new DelegateCommand(() =>
+            {
+                EventManager.Instance.TriggerEvent(new StartEvent());
+            }));
+
+            _processManager.Attach(readyIntroAnimation);
+        }
+
         public override void Update(float dt)
         {
+            _processManager.Update(dt);
+
             // Do not need to be in lock-step
             _aiSystem.Update(dt);
             _inputSystem.Update(dt);

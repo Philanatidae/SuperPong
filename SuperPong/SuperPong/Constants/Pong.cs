@@ -42,5 +42,8 @@ namespace SuperPong.Constants
         public static readonly float BALL_MAX_TRAVEL_ANGLE_DEGREES = 60.0f;
         public static readonly float BALL_SPEED_INCREASE = 5.0f;
 
+        public static readonly string INTRO_READY_CONTENT = "Ready?";
+        public static readonly string INTRO_GO_CONTENT = "Go!";
+
     }
 }
