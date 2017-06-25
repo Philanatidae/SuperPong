@@ -21,6 +21,7 @@ namespace SuperPong.Input
             // Update join/leave
             JoinKeyPressed = currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey1)
                                          || currentState.IsKeyDown(Settings.Instance.Data.SecondaryKey2);
+            StartKeyPressed = currentState.IsKeyDown(Keys.Enter);
         }
     }
 }
