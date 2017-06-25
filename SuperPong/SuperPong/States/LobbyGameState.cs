@@ -959,6 +959,12 @@ namespace SuperPong.States
 
         void StartGame()
         {
+            if (_player1InputMethod == null)
+            {
+                // Can't start game without player1
+                return;
+            }
+
             Player player1;
             Player player2;
 
