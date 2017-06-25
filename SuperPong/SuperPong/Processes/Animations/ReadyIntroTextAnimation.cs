@@ -76,7 +76,7 @@ namespace SuperPong.Processes.Animations
 
         void UpdateTween()
         {
-            float _width = _fontComp.Font.MeasureString(Constants.Pong.INTRO_READY_CONTENT).Width;
+            float _width = _fontComp.Font.MeasureString(_fontComp.Content).Width;
 
             float startX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width, 0)).X;
             float midX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width / 2, 0)).X;

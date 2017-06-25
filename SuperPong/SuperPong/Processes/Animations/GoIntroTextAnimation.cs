@@ -76,7 +76,7 @@ namespace SuperPong.Processes.Animations
 
         void UpdateTween()
         {
-            Vector2 bounds = _fontComp.Font.MeasureString(Constants.Pong.INTRO_READY_CONTENT);
+            Vector2 bounds = _fontComp.Font.MeasureString(_fontComp.Content);
             float _width = bounds.X;
             float _height = bounds.Y;
 
