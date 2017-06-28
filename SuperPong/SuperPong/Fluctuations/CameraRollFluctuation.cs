@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using SuperPong.Common;
 using SuperPong.Directors;
 
@@ -17,6 +16,8 @@ namespace SuperPong.Fluctuations
         readonly PongCamera _camera;
         float _elapsedTime;
         float _exitTime;
+
+        float _rot;
 
         public CameraRollFluctuation(IPongDirectorOwner owner) : base(owner)
         {
@@ -48,20 +49,23 @@ namespace SuperPong.Fluctuations
                     {
                         _elapsedTime += dt;
 
-                        float rot = _elapsedTime
-                            * Constants.Fluctuations.CAMERA_ROTATE_SPEED
+                        float alpha = _elapsedTime / Constants.Fluctuations.CAMERA_ROLL_STEADY_TIME;
+                        float beta = Easings.SineEaseInOut(alpha);
+
+                        float modElapsedTime = Constants.Fluctuations.CAMERA_ROLL_STEADY_TIME * beta;
+
+                        _rot = modElapsedTime
+                              * Constants.Fluctuations.CAMERA_ROLL_SPEED
                             * MathHelper.TwoPi;
                         _camera.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ,
-                                                                          rot);
+                                                                          _rot);
                     }
                     break;
                 case State.Ending:
                     {
                         _exitTime += dt;
 
-                        float currentRot = _elapsedTime
-                            * Constants.Fluctuations.CAMERA_ROTATE_SPEED
-                            * MathHelper.TwoPi;
+                        float currentRot = _rot;
                         currentRot = MathHelper.WrapAngle(currentRot);
 
                         float targetRot = 0;
