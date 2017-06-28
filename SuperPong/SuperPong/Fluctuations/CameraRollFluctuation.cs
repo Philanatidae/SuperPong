@@ -59,19 +59,21 @@ namespace SuperPong.Fluctuations
                     {
                         _exitTime += dt;
 
-                        float rot = _elapsedTime
+                        float currentRot = _elapsedTime
                             * Constants.Fluctuations.CAMERA_ROTATE_SPEED
                             * MathHelper.TwoPi;
+                        currentRot = MathHelper.WrapAngle(currentRot);
 
-                        while (rot >= MathHelper.TwoPi)
-                        {
-                            rot -= MathHelper.TwoPi;
-                        }
+                        float targetRot = 0;
+
+                        float rotDiff = MathHelper.WrapAngle(targetRot - currentRot);
 
                         float alpha = _exitTime / Constants.Fluctuations.CAMERA_ROLL_EXIT_TIME;
-                        float crot = rot * (1 - Easings.QuinticEaseInOut(alpha));
+                        float beta = Easings.QuinticEaseInOut(alpha);
+
+                        float theta = rotDiff * beta;
                         _camera.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ,
-                                                                          crot);
+                                                                          currentRot + theta);
                     }
                     break;
             }

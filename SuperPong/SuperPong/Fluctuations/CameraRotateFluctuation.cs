@@ -58,23 +58,19 @@ namespace SuperPong.Fluctuations
                 case State.Ending:
                     _exitTime += dt;
 
-                    float x = (float)Math.Sin(_elapsedTime
-                                                * Constants.Fluctuations.CAMERA_ROTATE_SPEED
-                                                * MathHelper.TwoPi);
-                    float z = (float)Math.Cos(_elapsedTime
-                                                * Constants.Fluctuations.CAMERA_ROTATE_SPEED
-                                                * MathHelper.TwoPi);
+                    float currRot = _elapsedTime * Constants.Fluctuations.CAMERA_ROTATE_SPEED * MathHelper.TwoPi;
+                    currRot = MathHelper.WrapAngle(currRot);
 
-                    float rad = _elapsedTime * Constants.Fluctuations.CAMERA_ROTATE_SPEED * MathHelper.TwoPi;
-                    while (rad > MathHelper.TwoPi)
-                    {
-                        rad -= MathHelper.TwoPi;
-                    }
+                    float targetRot = 0;
 
-                    float nrad = rad * MathUtils.Clamp(0, 1, 1 - Easings.QuinticEaseInOut(_exitTime / Constants.Fluctuations.CAMERA_ROTATE_EXIT_TIME));
+                    float rotDiff = MathHelper.WrapAngle(targetRot - currRot);
 
-                    _camera.RadialDirection.X = (float)Math.Sin(nrad);
-                    _camera.RadialDirection.Z = (float)Math.Cos(nrad);
+                    float alpha = _exitTime / Constants.Fluctuations.CAMERA_ROTATE_EXIT_TIME;
+                    float beta = Easings.QuinticEaseInOut(alpha);
+
+                    float nrot = currRot + rotDiff * beta;
+                    _camera.RadialDirection.X = (float)Math.Sin(nrot);
+                    _camera.RadialDirection.Z = (float)Math.Cos(nrot);
                     _camera.UpdatePositionFromRadial();
                     break;
             }
