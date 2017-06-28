@@ -24,10 +24,11 @@ struct VertexShaderOutput
 float time;
 float speed;
 float amplitude;
+float period;
 
-float2 SineWave(float2 p, float time, float speed, float amplitude) {
+float2 SineWave(float2 p, float period, float time, float speed, float amplitude) {
 	float pi = 3.14159;
-	float w = 10 * pi;
+	float w = period * 10 * pi;
 	float t = time * speed * pi / 180;
 	float y = sin(w * p.x + t) * amplitude;
 	return float2(p.x, p.y + y);
@@ -36,7 +37,7 @@ float2 SineWave(float2 p, float time, float speed, float amplitude) {
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float2 p = input.TextureCoordinates;
-	float2 uv = SineWave(p, time, speed, amplitude);
+	float2 uv = SineWave(p, period, time, speed, amplitude);
 	return tex2D(SpriteTextureSampler, uv) * input.Color;
 }
 
