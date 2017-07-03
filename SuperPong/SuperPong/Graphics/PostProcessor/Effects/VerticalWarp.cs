@@ -12,6 +12,7 @@ namespace SuperPong.Graphics.PostProcessor.Effects
         public float Time;
         public float Amplitude;
         public float Speed;
+        public float Period = 1.0f;
 
         public VerticalWarp(PostProcessor postProcessor, ContentManager content) : base(postProcessor)
         {
@@ -36,6 +37,7 @@ namespace SuperPong.Graphics.PostProcessor.Effects
             _warpEffect.Parameters["time"].SetValue(Time);
             _warpEffect.Parameters["amplitude"].SetValue(Amplitude);
             _warpEffect.Parameters["speed"].SetValue(Speed);
+            _warpEffect.Parameters["period"].SetValue(Period);
 
             PostProcessor.SpriteBatch.Begin(SpriteSortMode.Deferred,
                                            null,
