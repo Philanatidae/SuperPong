@@ -33,6 +33,7 @@ namespace SuperPong.Common
         public Camera(Viewport viewport)
         {
             _bounds = viewport.Bounds;
+            HandleResize(_bounds.Width, _bounds.Height);
         }
 
         public Vector2 ScreenToWorldCoords(Vector2 position)
@@ -51,21 +52,26 @@ namespace SuperPong.Common
 
             if (resizeEvt != null)
             {
-                _bounds.Width = resizeEvt.Width;
-                _bounds.Height = resizeEvt.Height;
-
-                float newAspectRatio = (float)_bounds.Width / _bounds.Height;
-                if (newAspectRatio < Constants.Global.SCREEN_ASPECT_RATIO) // Width is dominant
-                {
-                    _compensationZoom = (float)_bounds.Width / Constants.Global.SCREEN_WIDTH;
-                }
-                if (newAspectRatio > Constants.Global.SCREEN_ASPECT_RATIO) // Height is dominant
-                {
-                    _compensationZoom = (float)_bounds.Height / Constants.Global.SCREEN_HEIGHT;
-                }
+                HandleResize(resizeEvt.Width, resizeEvt.Height);
             }
 
             return false;
+        }
+
+        void HandleResize(int w, int h)
+        {
+            _bounds.Width = w;
+            _bounds.Height = h;
+
+            float newAspectRatio = (float)_bounds.Width / _bounds.Height;
+            if (newAspectRatio < Constants.Global.SCREEN_ASPECT_RATIO) // Width is dominant
+            {
+                _compensationZoom = (float)_bounds.Width / Constants.Global.SCREEN_WIDTH;
+            }
+            if (newAspectRatio > Constants.Global.SCREEN_ASPECT_RATIO) // Height is dominant
+            {
+                _compensationZoom = (float)_bounds.Height / Constants.Global.SCREEN_HEIGHT;
+            }
         }
     }
 }

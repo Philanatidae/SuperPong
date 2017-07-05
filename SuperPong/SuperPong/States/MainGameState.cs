@@ -116,15 +116,15 @@ namespace SuperPong
             _processManager = new ProcessManager();
 
             _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
-            _pongCamera = new PongCamera();
+            _pongCamera = new PongCamera(GameManager.GraphicsDevice.Viewport);
             // The camera response to size changes
             EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
             EventManager.Instance.RegisterListener<ResizeEvent>(_pongCamera);
 
             PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
             _pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
-                                                   pp.BackBufferWidth,
-                                                   pp.BackBufferHeight,
+                                                   Constants.Global.SCREEN_WIDTH,
+                                                   Constants.Global.SCREEN_HEIGHT,
                                                    false,
                                                    SurfaceFormat.Color,
                                                    DepthFormat.None);

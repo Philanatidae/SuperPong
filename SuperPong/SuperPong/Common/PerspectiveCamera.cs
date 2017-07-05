@@ -1,6 +1,7 @@
 ﻿using System;
 using Events;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Events;
 
 namespace SuperPong.Common
@@ -43,15 +44,25 @@ namespace SuperPong.Common
             }
         }
 
+        public PerspectiveCamera(Viewport viewport)
+        {
+            HandleResize(viewport.Width, viewport.Height);
+        }
+
         public virtual bool Handle(IEvent evt)
         {
-            if (evt is ResizeEvent)
+            ResizeEvent resizeEvent = evt as ResizeEvent;
+            if (resizeEvent != null)
             {
-                ResizeEvent resizeEvent = (ResizeEvent)evt;
-                AspectRatio = (float)resizeEvent.Width / resizeEvent.Height;
+                HandleResize(resizeEvent.Width, resizeEvent.Height);
             }
 
             return false;
+        }
+
+        void HandleResize(int w, int h)
+        {
+            AspectRatio = (float)w / h;
         }
     }
 }

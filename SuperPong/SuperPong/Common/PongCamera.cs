@@ -1,6 +1,7 @@
 ﻿using System;
 using Events;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SuperPong.Events;
 
 namespace SuperPong.Common
@@ -19,8 +20,11 @@ namespace SuperPong.Common
 
         public Vector3 RadialDirection = Vector3.Backward;
 
-        public PongCamera()
+        public PongCamera(Viewport viewport)
+            : base(viewport)
         {
+            HandleResize(viewport.Width, viewport.Height);
+
             ResetRadialDirection();
             UpdatePositionFromRadial();
         }
@@ -44,18 +48,23 @@ namespace SuperPong.Common
 
             if (resizeEvt != null)
             {
-                float newAspectRatio = (float)resizeEvt.Width / resizeEvt.Height;
-                if (newAspectRatio < Constants.Global.SCREEN_ASPECT_RATIO) // Width is dominant
-                {
-                    _zoom = (float)resizeEvt.Width / Constants.Global.SCREEN_WIDTH;
-                }
-                if (newAspectRatio > Constants.Global.SCREEN_ASPECT_RATIO) // Height is dominant
-                {
-                    _zoom = (float)resizeEvt.Height / Constants.Global.SCREEN_HEIGHT;
-                }
+                HandleResize(resizeEvt.Width, resizeEvt.Height);
             }
 
             return base.Handle(evt);
+        }
+
+        void HandleResize(int w, int h)
+        {
+            float newAspectRatio = (float)w / h;
+            if (newAspectRatio < Constants.Global.SCREEN_ASPECT_RATIO) // Width is dominant
+            {
+                _zoom = (float)w / Constants.Global.SCREEN_WIDTH;
+            }
+            if (newAspectRatio > Constants.Global.SCREEN_ASPECT_RATIO) // Height is dominant
+            {
+                _zoom = (float)h / Constants.Global.SCREEN_HEIGHT;
+            }
         }
     }
 }
