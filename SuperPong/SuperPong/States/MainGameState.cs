@@ -346,6 +346,32 @@ namespace SuperPong
                                             null,
                                             center);
             VelocityParticleManager.Draw(_renderSystem.SpriteBatch);
+            _renderSystem.SpriteBatch.Draw(Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
+                                           new Vector2(0, Constants.Pong.PLAYFIELD_HEIGHT / 2
+                                                       + Constants.Pong.EDGE_HEIGHT
+                                                      + 100 / 2),
+                                          null,
+                                           null,
+                                           new Vector2(0.5f, 0.5f),
+                                          0,
+                                           new Vector2(Constants.Pong.PLAYFIELD_WIDTH,
+                                                      100),
+                                           Color.Black,
+                                           SpriteEffects.None,
+                                           0);
+            _renderSystem.SpriteBatch.Draw(Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_EDGE),
+                                           new Vector2(0, -(Constants.Pong.PLAYFIELD_HEIGHT / 2
+                                                       + Constants.Pong.EDGE_HEIGHT
+                                                           + 100 / 2)),
+                                          null,
+                                           null,
+                                           new Vector2(0.5f, 0.5f),
+                                          0,
+                                           new Vector2(Constants.Pong.PLAYFIELD_WIDTH,
+                                                      100),
+                                           Color.Black,
+                                           SpriteEffects.None,
+                                           0);
             _renderSystem.SpriteBatch.End();
             GameManager.GraphicsDevice.SetRenderTarget(null);
 
