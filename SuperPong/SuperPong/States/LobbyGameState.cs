@@ -94,8 +94,27 @@ namespace SuperPong.States
         public override void Initialize()
         {
             // Add the two keyboard input methods
-            _inputMethods.Add(new PrimaryKeyboardInputMethod());
-            _inputMethods.Add(new SecondaryKeyboardInputMethod());
+            PrimaryKeyboardInputMethod primaryKeyboardInputMethod = new PrimaryKeyboardInputMethod();
+            _inputMethods.Add(primaryKeyboardInputMethod);
+            SecondaryKeyboardInputMethod secondaryKeyboardInputMethod = new SecondaryKeyboardInputMethod();
+            _inputMethods.Add(secondaryKeyboardInputMethod);
+
+            if (_player1InputMethod is PrimaryKeyboardInputMethod)
+            {
+                _player1InputMethod = primaryKeyboardInputMethod;
+            }
+            if (_player1InputMethod is SecondaryKeyboardInputMethod)
+            {
+                _player1InputMethod = secondaryKeyboardInputMethod;
+            }
+            if (_player2InputMethod is PrimaryKeyboardInputMethod)
+            {
+                _player2InputMethod = primaryKeyboardInputMethod;
+            }
+            if (_player2InputMethod is SecondaryKeyboardInputMethod)
+            {
+                _player2InputMethod = secondaryKeyboardInputMethod;
+            }
 
             // Add gamepads
             for (int i = 0; i < 4; ++i)
@@ -104,7 +123,23 @@ namespace SuperPong.States
 
                 if (gamePadState.IsConnected)
                 {
-                    _inputMethods.Add(new ControllerInputMethod((PlayerIndex)i));
+                    ControllerInputMethod controllerInputMethod = new ControllerInputMethod((PlayerIndex)i);
+                    _inputMethods.Add(controllerInputMethod);
+
+                    if (_player1InputMethod is ControllerInputMethod)
+                    {
+                        if (((ControllerInputMethod)_player1InputMethod).PlayerIndex == (PlayerIndex)i)
+                        {
+                            _player1InputMethod = controllerInputMethod;
+                        }
+                    }
+                    if (_player2InputMethod is ControllerInputMethod)
+                    {
+                        if (((ControllerInputMethod)_player2InputMethod).PlayerIndex == (PlayerIndex)i)
+                        {
+                            _player2InputMethod = controllerInputMethod;
+                        }
+                    }
                 }
             }
 
