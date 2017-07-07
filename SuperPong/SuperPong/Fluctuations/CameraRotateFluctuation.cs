@@ -19,6 +19,7 @@ namespace SuperPong.Fluctuations
         float _exitTime;
 
         float _rot;
+        float _zoom = 1;
 
         public CameraRotateFluctuation(IPongDirectorOwner owner) : base(owner)
         {
@@ -62,6 +63,27 @@ namespace SuperPong.Fluctuations
                         _camera.RadialDirection.X = (float)Math.Sin(_rot);
                         _camera.RadialDirection.Z = (float)Math.Cos(_rot);
                         _camera.UpdatePositionFromRadial();
+
+                        // Zoom
+                        if (_elapsedTime <= Constants.Fluctuations.CAMERA_ROTATE_ZOOM_IN_TIME)
+                        {
+                            float a = _elapsedTime / Constants.Fluctuations.CAMERA_ROTATE_ZOOM_IN_TIME;
+                            float b = Easings.SineEaseInOut(a);
+                            _zoom = MathHelper.Lerp(1, Constants.Fluctuations.CAMERA_ROTATE_ZOOM, b);
+                        }
+                        else if (_elapsedTime >= Constants.Fluctuations.CAMERA_ROTATE_STEADY_TIME
+                                - Constants.Fluctuations.CAMERA_ROTATE_ZOOM_OUT_TIME)
+                        {
+                            float a = (Constants.Fluctuations.CAMERA_ROTATE_ZOOM_OUT_TIME
+                                       - (Constants.Fluctuations.CAMERA_ROTATE_STEADY_TIME - _elapsedTime)) / Constants.Fluctuations.CAMERA_ROLL_ZOOM_OUT_TIME;
+                            float b = Easings.SineEaseInOut(a);
+                            _zoom = MathHelper.Lerp(Constants.Fluctuations.CAMERA_ROTATE_ZOOM, 1, b);
+                        }
+                        else
+                        {
+                            _zoom = Constants.Fluctuations.CAMERA_ROTATE_ZOOM;
+                        }
+                        _camera.Zoom = _zoom;
                     }
                     break;
                 case State.Ending:
@@ -82,6 +104,11 @@ namespace SuperPong.Fluctuations
                         _camera.RadialDirection.X = (float)Math.Sin(nrot);
                         _camera.RadialDirection.Z = (float)Math.Cos(nrot);
                         _camera.UpdatePositionFromRadial();
+
+                        // Zoom
+                        float zoomBeta = Easings.QuinticEaseInOut(alpha);
+                        float newZoom = MathHelper.Lerp(_zoom, 1, zoomBeta);
+                        _camera.Zoom = newZoom;
                     }
                     break;
             }
