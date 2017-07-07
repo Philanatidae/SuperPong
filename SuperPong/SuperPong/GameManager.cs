@@ -33,8 +33,8 @@ namespace SuperPong
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            Graphics.PreferredBackBufferWidth = (int)Constants.Global.SCREEN_WIDTH;
-            Graphics.PreferredBackBufferHeight = (int)Constants.Global.SCREEN_HEIGHT;
+            Graphics.PreferredBackBufferWidth = (int)Constants.Global.WINDOW_WIDTH;
+            Graphics.PreferredBackBufferHeight = (int)Constants.Global.WINDOW_HEIGHT;
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;

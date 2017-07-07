@@ -20,10 +20,10 @@ namespace SuperPong.Common
 
         public Vector3 RadialDirection = Vector3.Backward;
 
-        public PongCamera(Viewport viewport)
-            : base(viewport)
+        public PongCamera(float width, float height)
+            : base(width, height)
         {
-            HandleResize(viewport.Width, viewport.Height);
+            HandleResize((int)width, (int)height);
 
             ResetRadialDirection();
             UpdatePositionFromRadial();
@@ -56,15 +56,17 @@ namespace SuperPong.Common
 
         void HandleResize(int w, int h)
         {
-            float newAspectRatio = (float)w / h;
-            if (newAspectRatio < Constants.Global.SCREEN_ASPECT_RATIO) // Width is dominant
+            /*float newAspectRatio = (float)w / h;
+            if (newAspectRatio < Constants.Global.WINDOW_ASPECT_RATIO) // Width is dominant
             {
-                _zoom = (float)w / Constants.Global.SCREEN_WIDTH;
+                _zoom = (float)w / Constants.Global.WINDOW_WIDTH;
             }
-            if (newAspectRatio > Constants.Global.SCREEN_ASPECT_RATIO) // Height is dominant
+            if (newAspectRatio > Constants.Global.WINDOW_ASPECT_RATIO) // Height is dominant
             {
-                _zoom = (float)h / Constants.Global.SCREEN_HEIGHT;
+                _zoom = (float)h / Constants.Global.WINDOW_WIDTH;
             }
+
+            _zoom = 1;*/
         }
     }
 }

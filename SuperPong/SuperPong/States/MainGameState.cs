@@ -115,11 +115,10 @@ namespace SuperPong
 
             _processManager = new ProcessManager();
 
-            _mainCamera = new Camera(GameManager.GraphicsDevice.Viewport);
-            _pongCamera = new PongCamera(GameManager.GraphicsDevice.Viewport);
+            _mainCamera = new Camera(Constants.Global.WINDOW_WIDTH, Constants.Global.WINDOW_HEIGHT);
+            _pongCamera = new PongCamera(Constants.Global.SCREEN_WIDTH, Constants.Global.SCREEN_HEIGHT);
             // The camera response to size changes
             EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
-            EventManager.Instance.RegisterListener<ResizeEvent>(_pongCamera);
 
             PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
             _pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
@@ -141,13 +140,15 @@ namespace SuperPong
                                  new Vector3(Constants.Global.SCREEN_ASPECT_RATIO, -1, 0),
                              Vector3.Forward);
 
-            PongPostProcessor = new PostProcessor(GameManager.GraphicsDevice);
-            EventManager.Instance.RegisterListener<ResizeEvent>(PongPostProcessor);
+            PongPostProcessor = new PostProcessor(GameManager.GraphicsDevice,
+                                                  Constants.Global.SCREEN_WIDTH,
+                                                  Constants.Global.SCREEN_HEIGHT);
 
             InitSystems();
 
             _director = new PongDirector(this);
             _director.RegisterEvents();
+
         }
 
         void InitSystems()
@@ -330,8 +331,8 @@ namespace SuperPong
         void DrawPong(float dt, float betweenFrameAlpha)
         {
             GameManager.GraphicsDevice.SetRenderTarget(_pongRenderTarget);
-            Matrix center = Matrix.CreateTranslation(GameManager.GraphicsDevice.Viewport.Width / 2,
-                                                                GameManager.GraphicsDevice.Viewport.Height / 2,
+            Matrix center = Matrix.CreateTranslation(_pongRenderTarget.Bounds.Width / 2,
+                                                     _pongRenderTarget.Bounds.Height / 2,
                                                      0);
             _renderSystem.DrawEntities(center,
                                        Constants.Pong.RENDER_GROUP,
@@ -361,16 +362,18 @@ namespace SuperPong
             }
 
             RenderTarget2D processedPongRender = PongPostProcessor.End(false);
+
             _renderSystem.SpriteBatch.Begin(SpriteSortMode.Deferred,
                                            null,
                                            null,
                                            null,
                                            null,
                                            null,
-                                           Matrix.CreateTranslation(Constants.Pong.BUFFER_RENDER_POSITION.X,
-                                                                Constants.Pong.BUFFER_RENDER_POSITION.Y,
-                                                               0));
-            _renderSystem.SpriteBatch.Draw(processedPongRender, processedPongRender.Bounds, Color.White);
+                                            _mainCamera.TransformMatrix);
+            _renderSystem.SpriteBatch.Draw(processedPongRender, new Rectangle((int)(processedPongRender.Bounds.X - processedPongRender.Bounds.Width / 2 + Constants.Pong.BUFFER_RENDER_POSITION.X),
+                                                                              (int)(processedPongRender.Bounds.Y - processedPongRender.Bounds.Height / 2 + Constants.Pong.BUFFER_RENDER_POSITION.Y),
+                                                                              processedPongRender.Bounds.Width,
+                                                                              processedPongRender.Bounds.Height), Color.White);
             _renderSystem.SpriteBatch.End();
         }
 

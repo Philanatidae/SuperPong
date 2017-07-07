@@ -45,14 +45,14 @@ namespace SuperPong.Graphics.PostProcessor
 
         public List<PostProcessorEffect> Effects = new List<PostProcessorEffect>();
 
-        public PostProcessor(GraphicsDevice graphicsDevice)
+        public PostProcessor(GraphicsDevice graphicsDevice, float bufferWidth, float bufferHeight)
         {
             GraphicsDevice = graphicsDevice;
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Bounds = new Rectangle(0, 0,
-                                   graphicsDevice.Viewport.Width,
-                                   graphicsDevice.Viewport.Height);
+                                (int)bufferWidth,
+                                (int)bufferHeight);
         }
 
         public void Begin()

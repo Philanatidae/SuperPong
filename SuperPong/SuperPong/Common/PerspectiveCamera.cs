@@ -44,9 +44,9 @@ namespace SuperPong.Common
             }
         }
 
-        public PerspectiveCamera(Viewport viewport)
+        public PerspectiveCamera(float width, float height)
         {
-            HandleResize(viewport.Width, viewport.Height);
+            HandleResize((int)width, (int)height);
         }
 
         public virtual bool Handle(IEvent evt)
