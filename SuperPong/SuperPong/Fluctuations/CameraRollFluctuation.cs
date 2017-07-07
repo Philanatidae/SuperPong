@@ -18,6 +18,7 @@ namespace SuperPong.Fluctuations
         float _exitTime;
 
         float _rot;
+        float _zoom = 1;
 
         public CameraRollFluctuation(IPongDirectorOwner owner) : base(owner)
         {
@@ -59,12 +60,35 @@ namespace SuperPong.Fluctuations
                             * MathHelper.TwoPi;
                         _camera.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ,
                                                                           _rot);
+
+                        // Zoom
+                        if (_elapsedTime <= Constants.Fluctuations.CAMERA_ROLL_ZOOM_IN_TIME)
+                        {
+                            float a = _elapsedTime / Constants.Fluctuations.CAMERA_ROLL_ZOOM_IN_TIME;
+                            float b = Easings.SineEaseInOut(a);
+                            _zoom = MathHelper.Lerp(1, Constants.Fluctuations.CAMERA_ROLL_ZOOM, b);
+                        }
+                        else if (_elapsedTime >= Constants.Fluctuations.CAMERA_ROLL_STEADY_TIME
+                                - Constants.Fluctuations.CAMERA_ROLL_ZOOM_OUT_TIME)
+                        {
+                            float a = (Constants.Fluctuations.CAMERA_ROLL_ZOOM_OUT_TIME
+                                       - (Constants.Fluctuations.CAMERA_ROLL_STEADY_TIME - _elapsedTime)) / Constants.Fluctuations.CAMERA_ROLL_ZOOM_OUT_TIME;
+                            float b = Easings.SineEaseInOut(a);
+                            _zoom = MathHelper.Lerp(Constants.Fluctuations.CAMERA_ROLL_ZOOM, 1, b);
+                        }
+                        else
+                        {
+                            _zoom = Constants.Fluctuations.CAMERA_ROLL_ZOOM;
+                        }
+                        _camera.Zoom = _zoom;
                     }
                     break;
                 case State.Ending:
                     {
                         _exitTime += dt;
+                        float alpha = _exitTime / Constants.Fluctuations.CAMERA_ROLL_EXIT_TIME;
 
+                        // Rotation
                         float currentRot = _rot;
                         currentRot = MathHelper.WrapAngle(currentRot);
 
@@ -72,12 +96,16 @@ namespace SuperPong.Fluctuations
 
                         float rotDiff = MathHelper.WrapAngle(targetRot - currentRot);
 
-                        float alpha = _exitTime / Constants.Fluctuations.CAMERA_ROLL_EXIT_TIME;
-                        float beta = Easings.QuinticEaseInOut(alpha);
+                        float rotBeta = Easings.QuinticEaseInOut(alpha);
 
-                        float theta = rotDiff * beta;
+                        float theta = rotDiff * rotBeta;
                         _camera.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ,
                                                                           currentRot + theta);
+
+                        // Zoom
+                        float zoomBeta = Easings.QuinticEaseInOut(alpha);
+                        float newZoom = MathHelper.Lerp(_zoom, 1, zoomBeta);
+                        _camera.Zoom = newZoom;
                     }
                     break;
             }

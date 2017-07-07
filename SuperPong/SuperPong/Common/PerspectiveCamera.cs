@@ -15,15 +15,17 @@ namespace SuperPong.Common
         {
             get
             {
-                return Matrix.CreateLookAt(Position,
+                return Matrix.CreateScale(Zoom)
+                             * Matrix.CreateFromQuaternion(Rotation)
+                             * Matrix.CreateLookAt(Position,
                                            Vector3.Zero,
-                                           Vector3.Up)
-                             * Matrix.CreateFromQuaternion(Rotation);
+                                           Vector3.Up);
             }
         }
 
         public float FieldOfView = 45;
         public float AspectRatio = Constants.Global.SCREEN_ASPECT_RATIO;
+        public float Zoom = 1;
 
         public Matrix PerspectiveMatrix
         {
