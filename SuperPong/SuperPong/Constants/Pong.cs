@@ -49,5 +49,6 @@ namespace SuperPong.Constants
 
         public static readonly string GAME_OVER_CONTENT_SUFFIX = " Wins!";
 
+        public static readonly string PAUSED_CONTENT = "Paused";
     }
 }

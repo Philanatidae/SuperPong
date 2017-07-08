@@ -17,6 +17,8 @@ using SuperPong.Processes;
 using SuperPong.Processes.Animations;
 using System;
 using SuperPong.States;
+using SuperPong.UI;
+using SuperPong.UI.Widgets;
 
 namespace SuperPong
 {
@@ -100,6 +102,26 @@ namespace SuperPong
             }
         }
 
+        bool _paused;
+        public bool Paused
+        {
+            get
+            {
+                return _paused;
+            }
+            set
+            {
+                _paused = value;
+                _pausedBackground.Hidden = !Paused;
+                _pausedLabel.Hidden = !Paused;
+            }
+        }
+        bool _pauseKeyReleased;
+
+        Root _root;
+        Image _pausedBackground;
+        Label _pausedLabel;
+
         public MainGameState(GameManager gameManager,
                              Player player1,
                              Player player2)
@@ -119,6 +141,10 @@ namespace SuperPong
             _pongCamera = new PongCamera(Constants.Global.SCREEN_WIDTH, Constants.Global.SCREEN_HEIGHT);
             // The camera response to size changes
             EventManager.Instance.RegisterListener<ResizeEvent>(_mainCamera);
+
+            _root = new Root(GameManager.GraphicsDevice.Viewport.Width,
+                             GameManager.GraphicsDevice.Viewport.Height);
+            _root.RegisterListeners();
 
             PresentationParameters pp = GameManager.GraphicsDevice.PresentationParameters;
             _pongRenderTarget = new RenderTarget2D(GameManager.GraphicsDevice,
@@ -182,6 +208,8 @@ namespace SuperPong
 
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_PARTICLE_VELOCITY);
 
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_BACKGROUND_BLACK);
+
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_LIVES);
             Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO);
 
@@ -192,6 +220,7 @@ namespace SuperPong
         public override void Show()
         {
             CreateEntities();
+            BuildUI();
 
             BeginIntroSequence();
         }
@@ -261,6 +290,35 @@ namespace SuperPong
                                              2);
         }
 
+        void BuildUI()
+        {
+            _pausedBackground = new Image(Content.Load<Texture2D>(Constants.Resources.TEXTURE_BACKGROUND_BLACK),
+                                    Origin.TopLeft,
+                                   0,
+                                   0,
+                                   0,
+                                   0,
+                                   1,
+                                   0,
+                                   1,
+                                    (float)0);
+            _pausedBackground.Hidden = true;
+            _root.Add(_pausedBackground);
+
+            _pausedLabel = new Label(Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
+                                     Origin.Center,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0.25f,
+                                    0,
+                                     AspectRatioType.HeightMaster);
+            _pausedLabel.Content = Constants.Pong.PAUSED_CONTENT;
+            _pausedLabel.Hidden = true;
+            _root.Add(_pausedLabel);
+        }
+
         void BeginIntroSequence()
         {
             WaitProcess wait1 = new WaitProcess(Constants.Animations.INTRO_WAIT_DURATION);
@@ -290,34 +348,56 @@ namespace SuperPong
             _processManager.Attach(wait1);
         }
 
+        void CheckPause()
+        {
+            if (_inputSystem.IsPauseButtonPressed())
+            {
+                if (_pauseKeyReleased)
+                {
+                    _pauseKeyReleased = false;
+
+                    Paused = !Paused;
+                }
+            }
+            else
+            {
+                _pauseKeyReleased = true;
+            }
+        }
+
         public override void Update(float dt)
         {
-            _processManager.Update(dt);
-
-            // Do not need to be in lock-step
-            _aiSystem.Update(dt);
             _inputSystem.Update(dt);
-            _livesSystem.Update(dt);
-            _goalSystem.Update(dt);
+            CheckPause();
 
-            // Deterministic lock-step
-            _acculmulator += dt;
-            while (_acculmulator >= Constants.Global.TICK_RATE)
+            if (!Paused)
             {
-                _acculmulator -= Constants.Global.TICK_RATE;
+                _processManager.Update(dt);
 
-                _paddleSystem.Update(Constants.Global.TICK_RATE);
-                _ballMovementSystem.Update(Constants.Global.TICK_RATE);
+                // Do not need to be in lock-step
+                _aiSystem.Update(dt);
+                _livesSystem.Update(dt);
+                _goalSystem.Update(dt);
+
+                // Deterministic lock-step
+                _acculmulator += dt;
+                while (_acculmulator >= Constants.Global.TICK_RATE)
+                {
+                    _acculmulator -= Constants.Global.TICK_RATE;
+
+                    _paddleSystem.Update(Constants.Global.TICK_RATE);
+                    _ballMovementSystem.Update(Constants.Global.TICK_RATE);
+                }
+
+                // Update the director
+                _director.Update(dt);
+
+                // Update particles
+                VelocityParticleManager.Update(dt);
+
+                // Update post-processing effects
+                PongPostProcessor.Update(dt);
             }
-
-            // Update the director
-            _director.Update(dt);
-
-            // Update particles
-            VelocityParticleManager.Update(dt);
-
-            // Update post-processing effects
-            PongPostProcessor.Update(dt);
         }
 
         public override void Draw(float dt)
@@ -326,6 +406,10 @@ namespace SuperPong
 
             DrawPong(dt, betweenFrameAlpha);
             DrawRemainder(dt, betweenFrameAlpha);
+
+            _renderSystem.SpriteBatch.Begin();
+            _root.Draw(_renderSystem.SpriteBatch);
+            _renderSystem.SpriteBatch.End();
         }
 
         void DrawPong(float dt, float betweenFrameAlpha)
@@ -417,11 +501,10 @@ namespace SuperPong
             // Remove listeners
             EventManager.Instance.UnregisterListener(this);
             EventManager.Instance.UnregisterListener(_mainCamera);
-            EventManager.Instance.UnregisterListener(_pongCamera);
             _livesSystem.UnregisterEventListeners();
             _director.UnregisterEvents();
+            _root.UnregisterListeners();
 
-            EventManager.Instance.UnregisterListener(PongPostProcessor);
             PongPostProcessor.Dispose();
         }
 

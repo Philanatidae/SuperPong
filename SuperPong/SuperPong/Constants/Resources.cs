@@ -15,6 +15,8 @@ namespace SuperPong.Constants
         public static readonly string TEXTURE_BUTTON_HOVER = "textures/gui/button_over_background";
         public static readonly string TEXTURE_BUTTON_PRESSED = "textures/gui/button_down_background";
 
+        public static readonly string TEXTURE_BACKGROUND_BLACK = "textures/gui/black";
+
         public static readonly string TEXTURE_LOBBY_PANEL_BACKGROUND = "textures/gui/LobbyPanelBackground";
 
         public static readonly string TEXTURE_PARTICLE_VELOCITY = "textures/particles/VelocityParticle";

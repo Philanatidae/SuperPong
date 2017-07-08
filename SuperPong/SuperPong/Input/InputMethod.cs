@@ -19,6 +19,11 @@
             get;
             protected set;
         }
+        public bool PauseKeyPressed
+        {
+            get;
+            protected set;
+        }
 
         public abstract void Update(float dt);
 

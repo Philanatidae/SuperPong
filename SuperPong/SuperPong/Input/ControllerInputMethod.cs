@@ -36,6 +36,7 @@ namespace SuperPong.Input
                 JoinKeyPressed = currentState.IsButtonDown(Buttons.A);
                 LeaveKeyPressed = currentState.IsButtonDown(Buttons.B);
                 StartKeyPressed = currentState.IsButtonDown(Buttons.Start);
+                PauseKeyPressed = currentState.IsButtonDown(Buttons.Start);
             }
         }
     }

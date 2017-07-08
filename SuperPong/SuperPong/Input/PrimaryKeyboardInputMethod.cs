@@ -22,6 +22,7 @@ namespace SuperPong.Input
             JoinKeyPressed = currentState.IsKeyDown(Settings.Instance.Data.PrimaryKey1)
                                          || currentState.IsKeyDown(Settings.Instance.Data.PrimaryKey2);
             StartKeyPressed = currentState.IsKeyDown(Keys.Enter);
+            PauseKeyPressed = currentState.IsKeyDown(Keys.Enter);
         }
     }
 }
