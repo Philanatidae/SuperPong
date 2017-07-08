@@ -41,7 +41,7 @@ namespace SuperPong.Systems
             TransformComponent transformComp = ballEntity.GetComponent<TransformComponent>();
             BallComponent ballComp = ballEntity.GetComponent<BallComponent>();
 
-            // Normalize ball angle
+            // Wrap ball angle
             while (ballComp.Direction < 0)
             {
                 ballComp.Direction += 2 * MathHelper.Pi;
@@ -76,16 +76,26 @@ namespace SuperPong.Systems
                             EventManager.Instance.QueueEvent(new BallBounceEvent(ballEntity, paddleEntity, bouncePosition));
                         }
 
-                        // Determine directional vector of ball
-                        Vector2 ballDirection = new Vector2((float)Math.Cos(ballComp.Direction),
-                                                            (float)Math.Sin(ballComp.Direction));
+                        // Determine alpha of ball relative to the paddle's heigh
+                        float relativeY = transformComp.Position.Y - paddleTransformComp.Position.Y;
+                        float alpha = (relativeY + (paddleComp.Bounds.Y / 2)) / paddleComp.Bounds.Y;
+                        alpha = MathHelper.Clamp(alpha, 0, 1);
 
-                        // Determine reflection vector of ball
-                        Vector2 ballReflectionDir = getReflectionVector(ballDirection, paddleComp.Normal);
+                        // Determine new direction
+                        float newDir = MathHelper.Lerp(Constants.Pong.PADDLE_BOUNCE_MIN,
+                                                       Constants.Pong.PADDLE_BOUNCE_MAX,
+                                                       alpha);
+                        newDir = MathHelper.ToRadians(newDir);
 
-                        // Set angle of new directional vector
-                        ballComp.Direction = (float)Math.Atan2(ballReflectionDir.Y,
-                                                                ballReflectionDir.X);
+                        // Set ball direction
+                        if (paddleComp.Normal.X > 0)
+                        {
+                            ballComp.Direction = newDir;
+                        }
+                        else if (paddleComp.Normal.X < 0)
+                        {
+                            ballComp.Direction = MathHelper.Pi - newDir;
+                        }
 
                         // Make sure ball does not get stuck inside paddle
                         paddleComp.IgnoreCollisions = true;
