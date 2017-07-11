@@ -115,6 +115,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\FontEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Animations\GoIntroTextAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Animations\GameOverTextAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)States\SettingsGameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

@@ -98,6 +98,10 @@ namespace SuperPong.States
                                     0,
                                     2.15f,
                                      AspectRatioType.HeightMaster);
+            _optionsButton.Action = () =>
+            {
+                GameManager.ChangeState(new SettingsGameState(GameManager));
+            };
             Label optionsLabel = new Label(Content.Load<BitmapFont>(Constants.Resources.FONT_MENU_BUTTON),
                                            Origin.Center,
                                            0,

@@ -156,7 +156,7 @@ namespace SuperPong.UI.Widgets
                     if (ButtonState == ButtonState.Pressed
                         && mouseButtonEvent.LeftButtonState == Microsoft.Xna.Framework.Input.ButtonState.Released)
                     {
-                        if (Action != null)
+                        if (Action != null && !Hidden)
                         {
                             Action.Invoke();
                         }

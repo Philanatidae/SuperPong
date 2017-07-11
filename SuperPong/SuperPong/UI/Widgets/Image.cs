@@ -6,8 +6,21 @@ namespace SuperPong.UI.Widgets
 {
     public class Image : Widget
     {
-        readonly Texture2D _texture;
-        readonly Vector2 _bounds;
+        Texture2D _texture;
+        Vector2 _bounds;
+
+        public Texture2D Texture
+        {
+            get
+            {
+                return _texture;
+            }
+            set
+            {
+                _texture = value;
+                _bounds = new Vector2(_texture.Width, _texture.Height);
+            }
+        }
 
         public Image(Texture2D texture,
                       Origin origin,
