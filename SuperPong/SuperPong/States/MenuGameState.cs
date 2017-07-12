@@ -1,10 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.TextureAtlases;
-using SuperPong.Input;
 using SuperPong.UI;
 using SuperPong.UI.Widgets;
 
@@ -20,6 +17,9 @@ namespace SuperPong.States
 
         Root _root;
 
+        readonly float _logoAspectRatio = 1.51878787879f;
+
+        Image _logo;
         Button _playButton;
         Button _optionsButton;
         Button _exitButton;
@@ -40,6 +40,7 @@ namespace SuperPong.States
 
         public override void LoadContent()
         {
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_LOGO);
             Content.Load<BitmapFont>(Constants.Resources.FONT_MENU_BUTTON);
 
             _buttonReleased = new NinePatchRegion2D(new TextureRegion2D(Content.Load<Texture2D>(Constants.Resources.TEXTURE_BUTTON_RELEASED)),
@@ -57,6 +58,18 @@ namespace SuperPong.States
 
         void BuildUI()
         {
+            _logo = new Image(Content.Load<Texture2D>(Constants.Resources.TEXTURE_LOGO),
+                              Origin.Center,
+                             0,
+                             0,
+                             -0.275f,
+                             0,
+                             0.412f,
+                             0,
+                              _logoAspectRatio,
+                              AspectRatioType.HeightMaster);
+            _root.Add(_logo);
+
             _playButton = new Button(_buttonReleased,
                                      _buttonHover,
                                      _buttonPressed,
