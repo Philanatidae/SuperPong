@@ -331,7 +331,7 @@ namespace SuperPong
                                                                                                         Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
                                                                                                         Constants.Pong.INTRO_READY_CONTENT),
                                                                                       _mainCamera,
-                                                                                      GameManager.GraphicsDevice.Viewport);
+                                                                                      GameManager.GraphicsDevice);
             wait1.SetNext(readyIntroAnimation);
 
             GoIntroTextAnimation goIntroAnimation = new GoIntroTextAnimation(_engine,
@@ -340,7 +340,7 @@ namespace SuperPong
                                                                                                         Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
                                                                                                Constants.Pong.INTRO_GO_CONTENT),
                                                                                       _mainCamera,
-                                                                                      GameManager.GraphicsDevice.Viewport);
+                                                                                      GameManager.GraphicsDevice);
             readyIntroAnimation.SetNext(goIntroAnimation);
 
             goIntroAnimation.SetNext(new DelegateCommand(() =>
@@ -524,7 +524,7 @@ namespace SuperPong
                                                                         Content.Load<BitmapFont>(Constants.Resources.FONT_PONG_INTRO),
                                                                          gameOverContent),
                                                        _mainCamera,
-                                                       GameManager.GraphicsDevice.Viewport))
+                                                       GameManager.GraphicsDevice))
                             .SetNext(new WaitProcess(Constants.Animations.GAME_OVER_POST_WAIT))
                             .SetNext(new DelegateCommand(() =>
                             {

@@ -15,9 +15,9 @@ namespace SuperPong.Processes.Animations
         readonly TransformComponent _transformComp;
         readonly FontComponent _fontComp;
         readonly Camera _camera;
-        readonly Viewport _viewport;
+        readonly GraphicsDevice _graphicsDevice;
 
-        public GoIntroTextAnimation(Engine engine, Entity entity, Camera camera, Viewport viewport)
+        public GoIntroTextAnimation(Engine engine, Entity entity, Camera camera, GraphicsDevice graphicsDevice)
         {
             _engine = engine;
             _entity = entity;
@@ -35,7 +35,7 @@ namespace SuperPong.Processes.Animations
             }
 
             _camera = camera;
-            _viewport = viewport;
+            _graphicsDevice = graphicsDevice;
 
             _fontComp.Hidden = true;
         }
@@ -80,13 +80,13 @@ namespace SuperPong.Processes.Animations
             float _width = bounds.X;
             float _height = bounds.Y;
 
-            float startX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width, 0)).X;
-            float endX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width / 2, 0)).X;
+            float startX = _camera.ScreenToWorldCoords(new Vector2(_graphicsDevice.Viewport.Width, 0)).X;
+            float endX = _camera.ScreenToWorldCoords(new Vector2(_graphicsDevice.Viewport.Width / 2, 0)).X;
 
             startX += _width / 2;
 
-            float startY = _camera.ScreenToWorldCoords(new Vector2(0, _viewport.Height / 2)).Y;
-            float endY = _camera.ScreenToWorldCoords(new Vector2(0, _viewport.Height)).Y;
+            float startY = _camera.ScreenToWorldCoords(new Vector2(0, _graphicsDevice.Viewport.Height / 2)).Y;
+            float endY = _camera.ScreenToWorldCoords(new Vector2(0, _graphicsDevice.Viewport.Height)).Y;
 
             endY += _height / 2;
 

@@ -15,9 +15,9 @@ namespace SuperPong.Processes.Animations
         readonly TransformComponent _transformComp;
         readonly FontComponent _fontComp;
         readonly Camera _camera;
-        readonly Viewport _viewport;
+        readonly GraphicsDevice _graphicsDevice;
 
-        public ReadyIntroTextAnimation(Engine engine, Entity entity, Camera camera, Viewport viewport)
+        public ReadyIntroTextAnimation(Engine engine, Entity entity, Camera camera, GraphicsDevice graphicsDevice)
         {
             _engine = engine;
             _entity = entity;
@@ -35,7 +35,7 @@ namespace SuperPong.Processes.Animations
             }
 
             _camera = camera;
-            _viewport = viewport;
+            _graphicsDevice = graphicsDevice;
 
             _fontComp.Hidden = true;
         }
@@ -78,8 +78,8 @@ namespace SuperPong.Processes.Animations
         {
             float _width = _fontComp.Font.MeasureString(_fontComp.Content).Width;
 
-            float startX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width, 0)).X;
-            float midX = _camera.ScreenToWorldCoords(new Vector2(_viewport.Width / 2, 0)).X;
+            float startX = _camera.ScreenToWorldCoords(new Vector2(_graphicsDevice.Viewport.Width, 0)).X;
+            float midX = _camera.ScreenToWorldCoords(new Vector2(_graphicsDevice.Viewport.Width / 2, 0)).X;
             float endX = _camera.ScreenToWorldCoords(new Vector2(0, 0)).X;
 
             startX += _width / 2;
