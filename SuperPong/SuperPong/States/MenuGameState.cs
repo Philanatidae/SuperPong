@@ -18,8 +18,10 @@ namespace SuperPong.States
         Root _root;
 
         readonly float _logoAspectRatio = 1.51878787879f;
+        readonly float _creditsAspectRatio = 4.22093023256f;
 
         Image _logo;
+        Image _credits;
         Button _playButton;
         Button _optionsButton;
         Button _exitButton;
@@ -41,6 +43,7 @@ namespace SuperPong.States
         public override void LoadContent()
         {
             Content.Load<Texture2D>(Constants.Resources.TEXTURE_LOGO);
+            Content.Load<Texture2D>(Constants.Resources.TEXTURE_CREDITS_AND_VERSION);
             Content.Load<BitmapFont>(Constants.Resources.FONT_MENU_BUTTON);
 
             _buttonReleased = new NinePatchRegion2D(new TextureRegion2D(Content.Load<Texture2D>(Constants.Resources.TEXTURE_BUTTON_RELEASED)),
@@ -69,6 +72,18 @@ namespace SuperPong.States
                               _logoAspectRatio,
                               AspectRatioType.HeightMaster);
             _root.Add(_logo);
+
+            _credits = new Image(Content.Load<Texture2D>(Constants.Resources.TEXTURE_CREDITS_AND_VERSION),
+                                 Origin.BottomLeft,
+                                0,
+                                5,
+                                0,
+                                5,
+                                0.3f,
+                                 0,
+                                 _creditsAspectRatio,
+                                 AspectRatioType.WidthMaster);
+            _root.Add(_credits);
 
             _playButton = new Button(_buttonReleased,
                                      _buttonHover,

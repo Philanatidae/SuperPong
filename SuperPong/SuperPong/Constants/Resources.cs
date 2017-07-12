@@ -16,6 +16,7 @@ namespace SuperPong.Constants
         public static readonly string TEXTURE_BUTTON_PRESSED = "textures/gui/button_down_background";
 
         public static readonly string TEXTURE_LOGO = "textures/logo";
+        public static readonly string TEXTURE_CREDITS_AND_VERSION = "textures/CreditsAndVersion";
 
         public static readonly string TEXTURE_BACKGROUND_BLACK = "textures/gui/black";
 
