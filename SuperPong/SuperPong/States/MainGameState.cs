@@ -223,6 +223,9 @@ namespace SuperPong
             BuildUI();
 
             BeginIntroSequence();
+
+            EventManager.Instance.TriggerEvent(new ResizeEvent(GameManager.GraphicsDevice.Viewport.Width,
+                                                              GameManager.GraphicsDevice.Viewport.Height));
         }
 
         void CreateEntities()
