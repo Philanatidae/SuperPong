@@ -6,20 +6,22 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>SuperPong</string>
+    <key>CFBundleIconFile</key>
+    <string>SuperPong.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.philiprader.superpong</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Super Ping Pong 9000</string>
+	<string>Super Ping Pong</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>xmmd</string>
 	<key>CFBundleVersion</key>
-	<string>0.0.0</string>
+	<string>1.0.0</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>NO</string>
     <key>NSHighResolutionCapable</key>
