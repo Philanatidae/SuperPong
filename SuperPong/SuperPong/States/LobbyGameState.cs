@@ -1005,7 +1005,7 @@ namespace SuperPong.States
 
             if (_player1InputMethod == null)
             {
-                player1 = new AIPlayer(0, "Computer Player");
+                player1 = new AIPlayer(0, "Computer");
             }
             else
             {
@@ -1014,7 +1014,7 @@ namespace SuperPong.States
 
             if (_player2InputMethod == null)
             {
-                player2 = new AIPlayer(1, "Computer Player");
+                player2 = new AIPlayer(1, "Computer");
             }
             else
             {
