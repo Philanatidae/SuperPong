@@ -1,71 +1,40 @@
-﻿using System;
-using ECS;
+﻿using ECS;
 using Events;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SuperPong.Common;
 using SuperPong.Components;
 using SuperPong.Entities;
 using SuperPong.Events;
-using SuperPong.Fluctuations;
-using SuperPong.Graphics.PostProcessor;
-using SuperPong.Particles;
 using SuperPong.Processes;
 
 namespace SuperPong.Directors
 {
-    public class PongDirector : IEventListener
+    public class PongDirector : BaseDirector, IEventListener
     {
-        enum DirectorState
-        {
-            WaitingToStart,
-            InProgress,
-            WaitingForFluctuationEnd,
-            GameOver
-        }
-
-        readonly IPongDirectorOwner _owner;
-
-        ProcessManager _processManager = new ProcessManager();
-        readonly MTRandom _random;
-
         readonly Family _ballFamily = Family.All(typeof(BallComponent), typeof(TransformComponent)).Get();
         readonly ImmutableList<Entity> _ballEntities;
-
-        readonly Family _edgeFamily = Family.All(typeof(EdgeComponent), typeof(TransformComponent)).Get();
-        readonly ImmutableList<Entity> _edgeEntities;
-
-        readonly Timer _fluctuationTimer = new Timer(0);
-        bool _fluctuationTimerEnabled = false;
-        int _fluctuationUnlockedLevel = 1;
-        Type _lastFluctuation = null;
-
-        DirectorState _state = DirectorState.WaitingToStart;
 
         int player1Lives = Constants.Pong.LIVES_COUNT;
         int player2Lives = Constants.Pong.LIVES_COUNT;
 
+        bool _fluctuationActive = false;
+
         public PongDirector(IPongDirectorOwner owner)
+            : base(owner)
         {
-            _owner = owner;
-
-            _random = new MTRandom();
-
             _ballEntities = _owner.Engine.GetEntitiesFor(_ballFamily);
-            _edgeEntities = _owner.Engine.GetEntitiesFor(_edgeFamily);
         }
 
-        public void RegisterEvents()
+        public override void RegisterEvents()
         {
             EventManager.Instance.RegisterListener<StartEvent>(this);
             EventManager.Instance.RegisterListener<GoalEvent>(this);
             EventManager.Instance.RegisterListener<BallBounceEvent>(this);
+            EventManager.Instance.RegisterListener<FluctuationBeginEvent>(this);
             EventManager.Instance.RegisterListener<FluctuationEndEvent>(this);
-            EventManager.Instance.RegisterListener<PlayerLostEvent>(this);
         }
 
-        public void UnregisterEvents()
+        public override void UnregisterEvents()
         {
             EventManager.Instance.UnregisterListener(this);
         }
@@ -84,98 +53,16 @@ namespace SuperPong.Directors
             {
                 HandleBallBounce(evt as BallBounceEvent);
             }
+            if (evt is FluctuationBeginEvent)
+            {
+                HandleFluctuationBegin(evt as FluctuationBeginEvent);
+            }
             if (evt is FluctuationEndEvent)
             {
                 HandleFluctuationEnd(evt as FluctuationEndEvent);
             }
-            if (evt is PlayerLostEvent)
-            {
-                HandlePlayerLost(evt as PlayerLostEvent);
-            }
 
             return false;
-        }
-
-        public void Update(float dt)
-        {
-            _processManager.Update(dt);
-
-            switch (_state)
-            {
-                case DirectorState.InProgress:
-                    if (_fluctuationTimerEnabled)
-                    {
-                        _fluctuationTimer.Update(dt);
-                        if (_fluctuationTimer.HasElapsed())
-                        {
-                            AttachRandomFluctuation();
-                        }
-                    }
-                    break;
-            }
-        }
-
-        void CreateExplosion(Vector2 position)
-        {
-            for (int i = 0; i < 150; i++)
-            {
-                float speed = 2000 * (1f - 1 / _random.NextSingle(1, 10));
-                float dir = _random.NextSingle(0, MathHelper.TwoPi);
-                VelocityParticleInfo info = new VelocityParticleInfo()
-                {
-                    Velocity = new Vector2((float)(speed * Math.Cos(dir)), (float)(speed * Math.Sin(dir))),
-                    LengthMultiplier = 1f,
-                    EdgeEntities = _edgeEntities
-                };
-
-                _owner.VelocityParticleManager.CreateParticle(_owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PARTICLE_VELOCITY),
-                                                        position,
-                                                        Color.White,
-                                                        150,
-                                                        Vector2.One,
-                                                        info);
-            }
-        }
-
-        void ResetFluctuationTimer()
-        {
-            float duration = _random.NextSingle()
-                                    * (Constants.Fluctuations.TIMER_MAX - Constants.Fluctuations.TIMER_MIN)
-                                    + Constants.Fluctuations.TIMER_MIN;
-            _fluctuationTimer.Reset(duration);
-            _fluctuationTimerEnabled = true;
-        }
-
-        void AttachRandomFluctuation()
-        {
-            int availableFluctuationsCount = 0;
-            for (int i = 0; i < _fluctuationUnlockedLevel; i++)
-            {
-                availableFluctuationsCount += Constants.Fluctuations.FLUCTUATIONS[i].Length;
-            }
-
-            Type[] fluctuations = new Type[availableFluctuationsCount];
-            int k = 0;
-            for (int i = 0; i < _fluctuationUnlockedLevel; i++)
-            {
-                for (int j = 0; j < Constants.Fluctuations.FLUCTUATIONS[i].Length; j++)
-                {
-                    fluctuations[k++] = Constants.Fluctuations.FLUCTUATIONS[i][j];
-                }
-            }
-
-            Type fluctuationType = null;
-            do
-            {
-                int index = _random.Next(0, fluctuations.Length - 1);
-                fluctuationType = fluctuations[index];
-            } while (fluctuationType == _lastFluctuation);
-
-            _processManager.Attach((Fluctuation)Activator.CreateInstance(fluctuationType, _owner));
-            _lastFluctuation = fluctuationType;
-
-            _fluctuationUnlockedLevel = MathHelper.Min(++_fluctuationUnlockedLevel, Constants.Fluctuations.FLUCTUATIONS.Length);
-            _fluctuationTimerEnabled = false;
         }
 
         void PlayNewBall(Player playerToServe, bool wait)
@@ -189,49 +76,17 @@ namespace SuperPong.Directors
                 direction = Constants.Pong.BALL_PLAYER1_STARTING_ROTATION_DEGREES;
             }
 
-            _fluctuationUnlockedLevel = 1;
-
             ballReturnSequence.SetNext(new DelegateCommand(() =>
             {
-                BallEntity.Create(_owner.Engine,
+                Entity ballEntity = BallEntity.Create(_owner.Engine,
                                   _owner.Content.Load<Texture2D>(Constants.Resources.TEXTURE_PONG_BALL),
                                   Vector2.Zero,
                                   direction);
-                ResetFluctuationTimer();
-                _state = DirectorState.InProgress;
+                EventManager.Instance.QueueEvent(new BallServeEvent(ballEntity, Vector2.Zero));
             }));
         }
 
-        // GETTERS!
-        bool IsFluctuationAttached()
-        {
-            return GetCurrentFluctuation() != null;
-        }
-
-        Fluctuation GetCurrentFluctuation()
-        {
-            foreach (Process process in _processManager.Processes)
-            {
-                Fluctuation fluctuation = process as Fluctuation;
-                if (fluctuation != null)
-                {
-                    return fluctuation;
-                }
-            }
-
-            return null;
-        }
-
-        void EndCurrentFluctuation()
-        {
-            Fluctuation runningFluctuation = GetCurrentFluctuation();
-            if (runningFluctuation != null)
-            {
-                runningFluctuation.SoftEnd();
-            }
-        }
-
-        // HANDLERS!
+        ///// HANDERS!!!
         void HandleStart(StartEvent startEvent)
         {
             PlayNewBall(_owner.Player1, false);
@@ -239,20 +94,15 @@ namespace SuperPong.Directors
 
         void HandleGoal(GoalEvent goalEvent)
         {
-            // Create an explosion
-            CreateExplosion(goalEvent.Position);
-
             GoalComponent goalComp = goalEvent.Goal.GetComponent<GoalComponent>();
 
             _owner.Engine.DestroyEntity(goalEvent.Ball);
-            _fluctuationTimerEnabled = false;
 
             if (goalComp.For.Index == 0)
             {
                 if (--player1Lives <= 0)
                 {
                     EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player1, _owner.Player2));
-                    EndCurrentFluctuation();
                     return;
                 }
             }
@@ -261,7 +111,6 @@ namespace SuperPong.Directors
                 if (--player2Lives <= 0)
                 {
                     EventManager.Instance.QueueEvent(new PlayerLostEvent(_owner.Player2, _owner.Player1));
-                    EndCurrentFluctuation();
                     return;
                 }
             }
@@ -280,11 +129,8 @@ namespace SuperPong.Directors
             });
 
             // If there is a fluctuation, attach the serve to the fluctuation's end
-            if (IsFluctuationAttached())
+            if (_fluctuationActive)
             {
-                EndCurrentFluctuation();
-                _state = DirectorState.WaitingForFluctuationEnd;
-
                 WaitForEvent fluctuationEnd = new WaitForEvent(typeof(FluctuationEndEvent));
                 fluctuationEnd.SetNext(ballPlayProcess);
                 _processManager.Attach(fluctuationEnd);
@@ -308,55 +154,13 @@ namespace SuperPong.Directors
             }
         }
 
+        void HandleFluctuationBegin(FluctuationBeginEvent fluctuationBeginEvent)
+        {
+            _fluctuationActive = true;
+        }
         void HandleFluctuationEnd(FluctuationEndEvent fluctuationEndEvent)
         {
-            if (_state == DirectorState.InProgress)
-            {
-                ResetFluctuationTimer();
-            }
-        }
-
-        void HandlePlayerLost(PlayerLostEvent playerLost)
-        {
-            _state = DirectorState.GameOver;
-        }
-    }
-
-    public interface IPongDirectorOwner
-    {
-        Engine Engine
-        {
-            get;
-        }
-
-        PostProcessor PongPostProcessor
-        {
-            get;
-        }
-
-        ParticleManager<VelocityParticleInfo> VelocityParticleManager
-        {
-            get;
-        }
-
-        PongCamera PongCamera
-        {
-            get;
-        }
-
-        ContentManager Content
-        {
-            get;
-        }
-
-        Player Player1
-        {
-            get;
-        }
-
-        Player Player2
-        {
-            get;
+            _fluctuationActive = false;
         }
     }
 }

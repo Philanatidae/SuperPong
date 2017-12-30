@@ -74,7 +74,7 @@ namespace SuperPong.Fluctuations
             }
         }
 
-        public override void SoftEnd()
+        protected override void SoftEnd()
         {
             _state = State.Ending;
         }

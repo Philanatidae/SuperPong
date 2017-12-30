@@ -11,9 +11,16 @@ namespace SuperPong.Events
             private set;
         }
 
-        public FluctuationEndEvent(Fluctuation fluctuation)
+        public Fluctuation.KillReason KillReason
+        {
+            get;
+            private set;
+        }
+
+        public FluctuationEndEvent(Fluctuation fluctuation, Fluctuation.KillReason killReason)
         {
             Fluctuation = fluctuation;
+            KillReason = killReason;
         }
     }
 }

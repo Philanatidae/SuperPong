@@ -40,7 +40,7 @@ namespace SuperPong
         LivesSystem _livesSystem;
         RenderSystem _renderSystem;
 
-        PongDirector _director;
+        BaseDirector[] _directors;
 
         Camera _mainCamera;
         PongCamera _pongCamera;
@@ -172,9 +172,15 @@ namespace SuperPong
 
             InitSystems();
 
-            _director = new PongDirector(this);
-            _director.RegisterEvents();
-
+            _directors = new BaseDirector[]{
+                new PongDirector(this),
+                new AstheticsDirector(this),
+                new FluctuationDirector(this)
+            };
+            for (int i = 0; i < _directors.Length; i++)
+            {
+                _directors[i].RegisterEvents();
+            }
         }
 
         void InitSystems()
@@ -392,8 +398,11 @@ namespace SuperPong
                     _ballMovementSystem.Update(Constants.Global.TICK_RATE);
                 }
 
-                // Update the director
-                _director.Update(dt);
+                // Update the directors
+                for (int i = 0; i < _directors.Length; i++)
+                {
+                    _directors[i].Update(dt);
+                }
 
                 // Update particles
                 VelocityParticleManager.Update(dt);
@@ -505,7 +514,10 @@ namespace SuperPong
             EventManager.Instance.UnregisterListener(this);
             EventManager.Instance.UnregisterListener(_mainCamera);
             _livesSystem.UnregisterEventListeners();
-            _director.UnregisterEvents();
+            for (int i = 0; i < _directors.Length; i++)
+            {
+                _directors[i].UnregisterEvents();
+            }
             _root.UnregisterListeners();
 
             PongPostProcessor.Dispose();

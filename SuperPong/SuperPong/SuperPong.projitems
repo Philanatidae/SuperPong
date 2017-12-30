@@ -53,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Process.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\IntervalProcess.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Directors\PongDirector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Command.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\StartEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\LivesComponent.cs" />
@@ -117,6 +116,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Processes\Animations\GameOverTextAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)States\SettingsGameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Options.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directors\BaseDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directors\PongDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\BallServeEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directors\AstheticsDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directors\FluctuationDirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processes\WaitProcessKillOnEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Input\" />

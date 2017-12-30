@@ -90,7 +90,7 @@ namespace SuperPong.Fluctuations
             _warpEffect.Amplitude = _amplitude * Constants.Fluctuations.MOVING_WARP_AMPLITUDE;
         }
 
-        public override void SoftEnd()
+        protected override void SoftEnd()
         {
             if (_state == State.In)
             {
