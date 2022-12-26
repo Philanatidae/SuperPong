@@ -1,6 +1,6 @@
 # Super Ping Pong
 
-<https://pjrader1.itch.io/super-ping-pong>
+<https://philanatidae.itch.io/super-ping-pong>
 
 This is the public repository for the Super Ping Pong game released on itch.io. Development has stopped, however I am releasing the code for whoever is curious about how the game was coded.
 
