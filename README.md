@@ -2,7 +2,7 @@
 
 <https://philanatidae.itch.io/super-ping-pong>
 
-This is the public repository for the Super Ping Pong game released on itch.io. Development has stopped, however I am releasing the code for whoever is curious about how the game was coded.
+This is the public repository for Super Ping Pong, a game released on itch.io. I am releasing the code for whoever is curious about how the game was coded.
 
 ## Building
 Super Ping Pong (Super Pong) requires [MonoGame](http://www.monogame.net) and VS2017 (or Visual Studio for Mac). After installing VS2017 and MonoGame, open `SuperPong/SuperPong.sln`. You can then build and run the game.
